@@ -69,7 +69,7 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
       const state = reactive({
         contactModal: false,
         email: 'support@ehonos.com',
-        whatsApp: '+86 137601',
+        whatsApp: '+86 13760182010',
         contactModalOp: {
           title: '',
           content: '',

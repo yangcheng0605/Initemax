@@ -8,8 +8,12 @@
               :navigation="true"
               @swiper="onSwiper"
               :effect="'fade'"
+              :autoplay="{
+                delay: 8000,
+                disableOnInteraction: false,
+              }"
               :loop="true"
-              :modules="[EffectFade, Navigation]"
+              :modules="modules"
             >
               <swiper-slide v-for="(item) in bannerList" :key="item.id">
                 <div class="home_banner">
@@ -73,26 +77,27 @@
                 <div class="home_img_r hoverBox wow animate__fadeInTopRight" data-wow-offset="50">
                   <div class="shade"></div>
                   <img class="hoverImg" src="@/assets/img/home/live_2.png" alt="">
-                  <p class="img_text AntonFont">Text content</p>
+                  <p class="img_text AntonFont">HOLA</p>
                 </div>
               </div>
               <div class="imgs_rl">
                 <div class="home_img_r hoverBox wow animate__fadeInBottomLeft " data-wow-offset="50">
                   <div class="shade"></div>
                   <img class="hoverImg" src="@/assets/img/home/live_3.png" alt="">
-                  <p class="img_text AntonFont">Text content</p>
+                  <p class="img_text AntonFont">TAKE EASY</p>
                 </div>
                 <div class="home_img_s hoverBox wow animate__fadeInBottomRight" data-wow-offset="50">
                   <div class="shade"></div>
                   <img class="hoverImg" src="@/assets/img/home/live_4.png" alt="">
-                  <p class="img_text AntonFont">Text content</p>
+                  <p class="img_text AntonFont">RELAX</p>
                 </div>
               </div>
             </div>
             <div class="home_imgs_right hoverBox wow animate__bounceInRight"  data-wow-offset="50" data-wow-delay='.2s'>
                 <div class="shade"></div>
                 <img class="hoverImg" src="@/assets/img/home/live_5.png" alt="">
-                <p class="img_text AntonFont">Text content</p>
+                <p class="img_text AntonFont">Cultural
+transmission</p>
             </div>
           </div>
         </div>
@@ -102,7 +107,7 @@
 </template>
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { EffectFade, Navigation } from 'swiper/modules';
+import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, h } from 'vue';
 import { LoadingOutlined } from '@ant-design/icons-vue';
 import Storage from '@/utils/storage';
@@ -126,8 +131,7 @@ import { useRouter } from 'vue-router';
         spin: true,
       });
       const state = reactive({
-        EffectFade,
-        Navigation,
+        modules: [Autoplay, EffectFade, Navigation],
         activeKey: 1,
         perView: 4,
         between: 40,
@@ -312,7 +316,7 @@ import { useRouter } from 'vue-router';
     }
     .swiper_box {
       .home_sildePre, .home_sildeNext {
-        bottom: 11rem;
+        bottom: 3.75rem;
       }
       .home_sildePre{
         left: 7.5rem;
@@ -321,7 +325,7 @@ import { useRouter } from 'vue-router';
         left: 12.5rem;
       }
       .home_sildePre:hover{
-      background: url('../../assets/img/arrow_yellow_l.png') no-repeat 100%/contain;
+        background: url('../../assets/img/arrow_yellow_l.png') no-repeat 100%/contain;
       }
       .home_sildeNext:hover{
         background: url('../../assets/img/arrow_yellow_r.png') no-repeat 100%/contain;

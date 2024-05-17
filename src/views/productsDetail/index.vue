@@ -143,10 +143,14 @@ import 'swiper/css';
 </script>
 <style lang="less">
 .productsDetail{
-  .proImg{
-    margin-bottom: 1rem;
+  .pro_banner{
+    height: 50rem;
     img{
+      height: 100%;
     }
+  }
+  .proImg{
+    margin-bottom: .9rem;
   }
   .other_pro{
     padding: 6.25rem 15rem;

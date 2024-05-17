@@ -22,43 +22,39 @@
           </div>
           <div class="a_text_bottom">
             <p>
-              Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.
+              Shenzhen XingfanTechnology., Ltd.(EHONOS VAPE) is an innovative company dedicated to providing high-quality electronic cigarette products and comprehensive customer service.Since its establishment, Ehonos has been committed to integrating design, research and development, manufacturing, sales, marketing, and brand management.
             </p>
             <br>
             <p>
-              Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.
+              With a focus on user experience, Ehonos adheres to a development strategy centered around users and guided by the market. We attach great importance to our professional research and development team and innovative talents, continuously improving our products and services, and enjoying a good reputation worldwide.
             </p>
-            <br>
-            <p>
-              Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.Beauty and Beast Performance 650mAh and 8000 puffs yeah bro.
-            </p>
-            <p class="sub_title">Contact Us</p>
+            <!-- <p class="sub_title">Contact Us</p> -->
           </div>
         </div>
       </div>
-      <a-row :gutter="30" class="a_bottom_box">
-        <a-col class="gutter-row" :xs="24" :sm="24" :md="6">
+      <a-row :gutter="gutter" class="a_bottom_box">
+        <a-col class="gutter-row" :xs="12" :sm="12" :md="6">
           <img src="@/assets/img/about/credential_1.png" alt="">
           <!-- <div class="gutter-box wow animate__fadeInUp" data-wow-offset="50">
             <p class="a_title AntonFont">OUR PHILOSOPHY</p>
             <p class="a_bottom_text">Beauty and Beast Performance 650mAh and 8000 puffs yeah 8000 puffs yeah bro.Beauty and Beast Performance 650mAh puffs yeah 8000 puffs yeah bro.</p>
           </div> -->
         </a-col>
-        <a-col class="gutter-row" :xs="24" :sm="24" :md="6">
+        <a-col class="gutter-row" :xs="12" :sm="12" :md="6">
           <img src="@/assets/img/about/credential_1.png" alt="">
           <!-- <div class="gutter-box wow animate__fadeInUp" data-wow-offset="50">
             <p class="a_title AntonFont">OUR VISION</p>
             <p class="a_bottom_text">Beauty and Beast Performance 650mAh and 8000 puffs yeah 8000 puffs yeah bro.Beauty and Beast Performance 650mAh puffs yeah 8000 puffs yeah bro.</p>
           </div> -->
         </a-col>
-        <a-col class="gutter-row" :xs="24" :sm="24" :md="6">
+        <a-col class="gutter-row" :xs="12" :sm="12" :md="6">
           <!-- <div class="gutter-box wow animate__fadeInUp" data-wow-offset="50">
             <p class="a_title AntonFont">OUR VALUE</p>
             <p class="a_bottom_text">Beauty and Beast Performance 650mAh and 8000 puffs yeah 8000 puffs yeah bro.Beauty and Beast Performance 650mAh puffs yeah 8000 puffs yeah bro.</p>
           </div> -->
           <img src="@/assets/img/about/credential_2.png" alt="">
         </a-col>
-        <a-col class="gutter-row" :xs="24" :sm="24" :md="6">
+        <a-col class="gutter-row" :xs="12" :sm="12" :md="6">
           <img src="@/assets/img/about/credential_2.png" alt="">
         </a-col>
       </a-row>
@@ -74,9 +70,12 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
     setup() {
       const { proxy } = getCurrentInstance();
       const state = reactive({
+        gutter: 30
       })
 
       onMounted(async () => { 
+        handleResize();
+        window.addEventListener('resize', handleResize);
         nextTick(() => {
           var wow = new proxy.$wow.WOW({boxClass: "wow",
               animateClass: "animated", 
@@ -92,7 +91,14 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
           wow.init()
         })
       })
-
+      const handleResize = () => {
+        const windowWidth = window.innerWidth;
+       if (windowWidth < 750) {
+          state.gutter = [15, 15]
+        } else {
+          state.gutter = 30
+        }
+      };
       const onSwiper = (swiper) => {
         console.log(swiper);
       };
@@ -113,7 +119,7 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
   align-items: flex-start;
   justify-content: space-between;
   padding-bottom: 5rem;
-  margin-bottom: 3.75rem;
+  margin-bottom: 5rem;
   border-bottom: 1px solid rgba(0, 0, 0, .1);
   .a_c_left{
     width: 50rem;
@@ -127,6 +133,7 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
   }
   .a_c_right{
     font-size: 1rem;
+    margin-top: 1.25rem;
   }
   .a_c_left{
     font-size: 0;
@@ -147,7 +154,7 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
   .a_text_bottom{
     color: #111;
     font-size: 1rem;
-    line-height: 1.25rem;
+    line-height: 1.5rem;
   }
 }
 .a_bottom_box{
