@@ -1,9 +1,9 @@
 {
-  "name": "EHONOS",
+  "name": "造光",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "concurrently \"onchange **/*.{js,jsx,ts,tsx,vue,less,md,json} -- prettier --write {{changed}}\" \"vue-cli-service serve\"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -37,6 +37,7 @@
     "eslint-plugin-vue": "^8.0.3",
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
+    "onchange": "^7.1.0",
     "prettier": "^2.4.1"
   },
   "eslintConfig": {
