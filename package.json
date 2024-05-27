@@ -1,9 +1,9 @@
 {
-  "name": "造光",
+  "name": "Initemax",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "concurrently \"onchange **/*.{js,jsx,ts,tsx,vue,less,md,json} -- prettier --write {{changed}}\" \"vue-cli-service serve\"",
+    "serve": "concurrently \"onchange **/* -- prettier --write {{changed}}\" \"vue-cli-service serve\"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },

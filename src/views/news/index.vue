@@ -1,0 +1,101 @@
+<template>
+  <div class="wholesale">
+    <div class="top_banner2">
+      <!-- <img src="@/assets/img/about/news_banner.png" alt=""> -->
+      <div class="t_box">
+        <p class="text_1">BECOME A news</p>
+        <p class="title SmileFont">How can we help you?</p>
+        <p class="text_2">Please check the sections below related to your inquiry</p>
+      </div>
+    </div>
+    <div class="a_content">
+      <a-row :gutter="30">
+        <a-col class="gutter-row" :xs="24" :sm="24" :md="8">
+          <div class="gutter-box hoverBox wow animate__bounceIn" data-wow-offset="50" @click="contact(1)">
+            <!-- <img class="hoverImg" src="@/assets/img/about/img_1.png" alt=""> -->
+            <div class="a_text">
+              <p class="a_title SmileFont">Support</p>
+              <p class="a_title SmileFont">Customer Service</p>
+              <!-- <p class="a_email smallArrow_box">WhatsApp: {{ whatsApp }}<img class="smallArrow" src="../../assets/img/about/arrow_r.png" alt="" /></p> -->
+            </div>
+          </div>
+        </a-col>
+      </a-row>
+    </div>
+    <a-modal class="contact_pop" v-model:open="contactModal" :width="480" title="" :closable="false" :footer="null" centered>
+      <div class="pop_top">
+        <span class="title SmileFont">{{ contactModalOp.title }}</span>
+        <img :src="contactModalOp.url" alt="" />
+      </div>
+      <p class="email">{{ contactModalOp.content }}</p>
+      <a-button class="copyBtn" shape="round" :data-text="contactModalOp.content" @click="handleCopy">{{ contactModalOp.btn_text }}</a-button>
+    </a-modal>
+  </div>
+</template>
+<script>
+import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
+export default {
+  name: 'wholesale',
+  components: {},
+  setup() {
+    const { proxy } = getCurrentInstance()
+    const state = reactive({
+      contactModal: false,
+      email: 'support@ehonos.com',
+      whatsApp: '+86 13760182010',
+      contactModalOp: {}
+    })
+    onMounted(async () => {
+      nextTick(() => {})
+    })
+    const contact = type => {
+      state.contactModal = true
+      let obj
+      if (type == 1) {
+        obj = {
+          title: 'WhatsApp',
+          content: state.whatsApp,
+          btn_text: 'Copy whatsapp'
+          // url: require('@/assets/img/phone.png')
+        }
+      } else {
+        obj = {
+          title: 'Email',
+          content: state.email,
+          btn_text: 'Copy email address'
+          // url: require('@/assets/img/email.png')
+        }
+      }
+      state.contactModalOp = obj
+    }
+    const handleCopy = e => {
+      var text = e.target.dataset.text
+      copyToClipboard(text)
+      state.contactModal = false
+      proxy.$message.success('Success copy')
+    }
+    const copyToClipboard = text => {
+      if (navigator.clipboard) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {})
+          .catch(err => {
+            console.error('无法复制到剪贴板: ', err)
+          })
+      } else {
+        const textArea = document.createElement('textarea')
+        textArea.value = text
+        document.body.appendChild(textArea)
+        textArea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textArea)
+      }
+    }
+    return {
+      ...toRefs(state),
+      contact,
+      handleCopy
+    }
+  }
+}
+</script>

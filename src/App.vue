@@ -4,7 +4,7 @@
     <main class="wrapper">
       <div id="shopify-section-home" class="shopify-section">
         <div class="homepage">
-          <!-- <router-view /> -->
+          <router-view />
         </div>
       </div>
     </main>

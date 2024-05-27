@@ -23,9 +23,9 @@ const routes = [
     component: () => import('@/views/productsDetail/index.vue')
   },
   {
-    path: '/wholesale',
-    name: 'wholesale',
-    component: () => import('@/views/wholesale/index.vue')
+    path: '/news',
+    name: 'news',
+    component: () => import('@/views/news/index.vue')
   },
   {
     path: '/contact',

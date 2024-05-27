@@ -2,7 +2,7 @@
   <div class="home">
     <div class="banner1">
       <div class="Desktop_swiper">
-        <div class="homeSwiper">
+        <!-- <div class="homeSwiper">
           <div class="swiper_box" v-if="bannerList && bannerList.length>0">
             <swiper
               :navigation="true"
@@ -33,7 +33,7 @@
         <div class="home_block home_center">
           <div class="home_tag"><img src="@/assets/img/home/tag.png" alt=""></div>
           <div class="homt_pros">
-            <p class="title AntonFont wow animate__fadeInLeft" data-wow-offset="50">Our Recommendations</p>
+            <p class="title SmileFont wow animate__fadeInLeft" data-wow-offset="50">Our Recommendations</p>
              <div class="home_tab wow animate__fadeInLeft" data-wow-offset="50">
               <a-tabs v-model:activeKey="activeKey" @change="changeTab">
                 <a-tab-pane :tab="item.cateName" v-for="item in mpType" :key='item.cateId'></a-tab-pane>
@@ -61,7 +61,7 @@
         </div>
         <div class="home_block home_bottom">
           <div class="home_b_top">
-            <p class="title AntonFont wow animate__fadeInLeft" data-wow-offset="50">EHONOS Live</p>
+            <p class="title SmileFont wow animate__fadeInLeft" data-wow-offset="50">EHONOS Live</p>
             <div class="wow animate__fadeInRight" data-wow-offset="50"><img src="@/assets/img/live.png" alt=""></div>
           </div>
           <div class="home_imgs">
@@ -71,241 +71,230 @@
                   <a href="/#/contact">
                     <div class="shade"></div>
                     <img class="hoverImg" src="@/assets/img/home/live_1.png" alt="">
-                    <p class="img_text AntonFont">CONTACT US</p>
+                    <p class="img_text SmileFont">联系我们</p>
                   </a>
                 </div>
                 <div class="home_img_r hoverBox wow animate__fadeInTopRight" data-wow-offset="50">
                   <div class="shade"></div>
                   <img class="hoverImg" src="@/assets/img/home/live_2.png" alt="">
-                  <p class="img_text AntonFont">HOLA</p>
+                  <p class="img_text SmileFont">HOLA</p>
                 </div>
               </div>
               <div class="imgs_rl">
                 <div class="home_img_r hoverBox wow animate__fadeInBottomLeft " data-wow-offset="50">
                   <div class="shade"></div>
                   <img class="hoverImg" src="@/assets/img/home/live_3.png" alt="">
-                  <p class="img_text AntonFont">TAKE EASY</p>
+                  <p class="img_text SmileFont">TAKE EASY</p>
                 </div>
                 <div class="home_img_s hoverBox wow animate__fadeInBottomRight" data-wow-offset="50">
                   <div class="shade"></div>
                   <img class="hoverImg" src="@/assets/img/home/live_4.png" alt="">
-                  <p class="img_text AntonFont">RELAX</p>
+                  <p class="img_text SmileFont">RELAX</p>
                 </div>
               </div>
             </div>
             <div class="home_imgs_right hoverBox wow animate__bounceInRight"  data-wow-offset="50" data-wow-delay='.2s'>
                 <div class="shade"></div>
                 <img class="hoverImg" src="@/assets/img/home/live_5.png" alt="">
-                <p class="img_text AntonFont">Cultural
+                <p class="img_text SmileFont">Cultural
 transmission</p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 </template>
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
-import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, h } from 'vue';
-import { LoadingOutlined } from '@ant-design/icons-vue';
-import Storage from '@/utils/storage';
-import 'swiper/css/navigation';
-import 'swiper/css';
-import { useRouter } from 'vue-router';
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Autoplay, EffectFade, Navigation } from 'swiper/modules'
+import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, h } from 'vue'
+import { LoadingOutlined } from '@ant-design/icons-vue'
+import Storage from '@/utils/storage'
+import 'swiper/css/navigation'
+import 'swiper/css'
+import { useRouter } from 'vue-router'
 
-  export default {
-    name: "home",
-    components: {
-      Swiper,
-      SwiperSlide,
-    },
-    setup() {
-      const router = useRouter()
-      const { proxy } = getCurrentInstance();
-      const indicator = h(LoadingOutlined, {
-        style: {
-          fontSize: '24px',
-        },
-        spin: true,
-      });
-      const state = reactive({
-        modules: [Autoplay, EffectFade, Navigation],
-        activeKey: 1,
-        perView: 4,
-        between: 40,
-        swiper1: null,
-        swiper2: null,
-        isMobile: false,
-        bannerList: null,
-        mpType:[
-          { cateId: 1, cateName: 'Our Recommendations'},
-          { cateId: 2, cateName: 'New'},
-          { cateId: 3, cateName: 'Disposable'},
-          { cateId: 4, cateName: 'Pod Series'},
-          { cateId: 5, cateName: 'E-liquid'},
-        ],
-        proList: null,
-        indicator: indicator,
+export default {
+  name: 'home',
+  components: {
+    Swiper,
+    SwiperSlide
+  },
+  setup() {
+    const router = useRouter()
+    const { proxy } = getCurrentInstance()
+    const indicator = h(LoadingOutlined, {
+      style: {
+        fontSize: '24px'
+      },
+      spin: true
+    })
+    const state = reactive({
+      modules: [Autoplay, EffectFade, Navigation],
+      activeKey: 1,
+      perView: 4,
+      between: 40,
+      swiper1: null,
+      swiper2: null,
+      isMobile: false,
+      bannerList: null,
+      mpType: [
+        { cateId: 1, cateName: 'Our Recommendations' },
+        { cateId: 2, cateName: 'New' },
+        { cateId: 3, cateName: 'Disposable' },
+        { cateId: 4, cateName: 'Pod Series' },
+        { cateId: 5, cateName: 'E-liquid' }
+      ],
+      proList: null,
+      indicator: indicator
+    })
+    onMounted(async () => {
+      getPicList()
+      // if (!Storage.getItem('navList')) {
+      //   getCategoryList()
+      // } else {
+      // state.mpType = Storage.getItem('navList')
+      // state.activeKey = state.mpType[0].cateId
+      getProductListByCate(state.activeKey)
+      // }
+      nextTick(() => {
+        var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
+        wow.init()
       })
-      onMounted(async () => { 
-        getPicList()
-        // if (!Storage.getItem('navList')) {
-        //   getCategoryList()
-        // } else {
-          // state.mpType = Storage.getItem('navList')
-          // state.activeKey = state.mpType[0].cateId
-          getProductListByCate(state.activeKey)
-        // }
-        nextTick(() => {
-           var wow = new proxy.$wow.WOW({boxClass: "wow",
-               animateClass: "animated", 
-               offset: 0, 
-               mobile: true,
-               live: true,
-               callback: function () {
-               },
-               scrollContainer: null,
-               resetAnimation: true,
-             }
-           )
-           wow.init()
-        })
-        handleResize();
-        window.addEventListener('resize', handleResize);
+      handleResize()
+      window.addEventListener('resize', handleResize)
+    })
+
+    const getPicList = () => {
+      proxy.$api.picList('').then(res => {
+        state.bannerList = res
       })
-     
-      const getPicList = () => {
-        proxy.$api.picList('').then(res=>{
-          state.bannerList = res
-        })
-      };
-      // const getCategoryList = () => {
-      //   proxy.$api.categoryList('').then(res=>{
-      //     state.mpType = res
-      //     state.activeKey = res[0].cateId
-      //     getProductListByCate(res[0].cateId)
-      //     Storage.setItem('navList', res)
-      //   })
-      // };
-      const getProductListByCate = (id) => {
-        proxy.$api.productListByCate(id).then(res=>{
-          state.proList = res
-        })
-      };
-      const changeTab = (res) => {
-         getProductListByCate(res)
-      };
-      const handleResize = () => {
-        const windowWidth = window.innerWidth;
-       if (windowWidth < 750) {
-         state.between = 15
-         state.perView = 'auto'
-         state.isMobile = true
-        } else {
-          state.between = 40
-          state.perView = 4
-          state.isMobile = false
-        }
-      };
-      const onSwiper = (swiper) => {
-        state.swiper1 = swiper
-      };
-      const onSwiper2 = (swiper) => {
-        state.swiper2 = swiper
-      };
-      const linkTo = (res) => {
-        router.push('/productsDetail?id=' + res.proId);
-      };
-      const sildePre = (e) => {
-        state[`swiper${e}`].slidePrev(500, res=>{
-        })
-      };
-      const sildeNext = (e) => {
-        state[`swiper${e}`].slideNext(500, res=>{
-        })
-      };
-      return {
-        ...toRefs(state),
-        onSwiper,
-        onSwiper2,
-        linkTo,
-        sildePre,
-        sildeNext,
-        changeTab,
-      };
-    },
-  };
+    }
+    // const getCategoryList = () => {
+    //   proxy.$api.categoryList('').then(res=>{
+    //     state.mpType = res
+    //     state.activeKey = res[0].cateId
+    //     getProductListByCate(res[0].cateId)
+    //     Storage.setItem('navList', res)
+    //   })
+    // };
+    const getProductListByCate = id => {
+      proxy.$api.productListByCate(id).then(res => {
+        state.proList = res
+      })
+    }
+    const changeTab = res => {
+      getProductListByCate(res)
+    }
+    const handleResize = () => {
+      const windowWidth = window.innerWidth
+      if (windowWidth < 750) {
+        state.between = 15
+        state.perView = 'auto'
+        state.isMobile = true
+      } else {
+        state.between = 40
+        state.perView = 4
+        state.isMobile = false
+      }
+    }
+    const onSwiper = swiper => {
+      state.swiper1 = swiper
+    }
+    const onSwiper2 = swiper => {
+      state.swiper2 = swiper
+    }
+    const linkTo = res => {
+      router.push('/productsDetail?id=' + res.proId)
+    }
+    const sildePre = e => {
+      state[`swiper${e}`].slidePrev(500, res => {})
+    }
+    const sildeNext = e => {
+      state[`swiper${e}`].slideNext(500, res => {})
+    }
+    return {
+      ...toRefs(state),
+      onSwiper,
+      onSwiper2,
+      linkTo,
+      sildePre,
+      sildeNext,
+      changeTab
+    }
+  }
+}
 </script>
-<style lang="less" >
-.home{
-  .home_block{
-    .home_tag{
+<style lang="less">
+.home {
+  .home_block {
+    .home_tag {
       width: 12.5rem;
       position: absolute;
       right: 7.5rem;
       top: -6.25rem;
       z-index: 10;
-      animation: home_rotate 10s linear infinite ;
+      animation: home_rotate 10s linear infinite;
     }
-    .homt_pros{
-      .title{
+    .homt_pros {
+      .title {
         line-height: 2.5rem;
       }
-      .home_tab{
-        margin: .812rem 0 3.75rem;
-        .ant-tabs-nav{
+      .home_tab {
+        margin: 0.812rem 0 3.75rem;
+        .ant-tabs-nav {
           margin: 0;
-          &::before{
+          &::before {
             border: none;
           }
         }
-        .ant-tabs-nav-wrap{
+        .ant-tabs-nav-wrap {
           padding: 0;
         }
-        .ant-tabs-tab{
+        .ant-tabs-tab {
           padding: 9px 0;
           font-weight: 500;
           color: #111 !important;
           font-size: 1rem;
-          .ant-tabs-tab-btn{
+          .ant-tabs-tab-btn {
             letter-spacing: 0;
           }
           .ant-tabs-tab-btn:hover,
-          .ant-tabs-tab-btn:focus{
+          .ant-tabs-tab-btn:focus {
             color: #111;
           }
         }
-        .ant-tabs-tab-active .ant-tabs-tab-btn{
+        .ant-tabs-tab-active .ant-tabs-tab-btn {
           color: #111 !important;
           text-shadow: none;
         }
-        .ant-tabs-ink-bar{
+        .ant-tabs-ink-bar {
           background: #111 !important;
         }
       }
     }
   }
-  
-  .swiper_box{
+
+  .swiper_box {
     position: relative;
-    .home_sildePre, .home_sildeNext {
+    .home_sildePre,
+    .home_sildeNext {
       width: 2.5rem;
       height: 2.5rem;
       position: absolute;
       z-index: 2;
       cursor: pointer;
     }
-    .home_sildePre{
-      background: url('../../assets/img/arrow_white_l.png') no-repeat 100%/contain;
+    .home_sildePre {
+      background: url('../../assets/img/arrow_white_l.png') no-repeat 100% / contain;
     }
-    .home_sildeNext{
-      background: url('../../assets/img/arrow_white_r.png') no-repeat 100%/contain;
+    .home_sildeNext {
+      background: url('../../assets/img/arrow_white_r.png') no-repeat 100% / contain;
     }
   }
-  .homeSwiper{
-    .spin{
+  .homeSwiper {
+    .spin {
       width: 100%;
       height: 100vh;
       text-align: center;
@@ -315,88 +304,90 @@ import { useRouter } from 'vue-router';
       }
     }
     .swiper_box {
-      .home_sildePre, .home_sildeNext {
+      .home_sildePre,
+      .home_sildeNext {
         bottom: 3.75rem;
       }
-      .home_sildePre{
+      .home_sildePre {
         left: 7.5rem;
       }
-      .home_sildeNext{
+      .home_sildeNext {
         left: 12.5rem;
       }
-      .home_sildePre:hover{
-        background: url('../../assets/img/arrow_yellow_l.png') no-repeat 100%/contain;
+      .home_sildePre:hover {
+        background: url('../../assets/img/arrow_yellow_l.png') no-repeat 100% / contain;
       }
-      .home_sildeNext:hover{
-        background: url('../../assets/img/arrow_yellow_r.png') no-repeat 100%/contain;
+      .home_sildeNext:hover {
+        background: url('../../assets/img/arrow_yellow_r.png') no-repeat 100% / contain;
       }
     }
   }
-  .home_center{
+  .home_center {
     .swiper_box {
-      .swiper{
+      .swiper {
         padding-right: 2.5rem;
       }
-      .home_sildePre, .home_sildeNext {
+      .home_sildePre,
+      .home_sildeNext {
         top: 50%;
       }
-      .home_sildePre{
+      .home_sildePre {
         left: -5rem;
       }
-      .home_sildeNext{
+      .home_sildeNext {
         right: -5rem;
       }
     }
-    .home_sildePre{
-      background: url('../../assets/img/arrow_l.png') no-repeat 100%/contain;
+    .home_sildePre {
+      background: url('../../assets/img/arrow_gray_l.png') no-repeat 100% / contain;
     }
-    .home_sildeNext{
-      background: url('../../assets/img/arrow_r.png') no-repeat 100%/contain;
+    .home_sildeNext {
+      background: url('../../assets/img/arrow_gray_r.png') no-repeat 100% / contain;
     }
   }
-  .title{
+  .title {
     color: #111;
     font-size: 2.5rem;
   }
-  .home_center{
-    background: #F5B81A url('../../assets/img/home/yellow_bg.png') no-repeat 100% / cover;
+  .home_center {
+    // background: #f5b81a url('../../assets/img/home/yellow_bg.png') no-repeat 100% / cover;
     position: relative;
     padding: 6.25rem 15rem 6.75rem;
-    .proImg{
+    .proImg {
       height: 27.5rem;
       border-radius: 8px;
-      background: url('../../assets/img/product/bg_r.png') no-repeat 100% / cover;
-      img{
+      // background: url('../../assets/img/product/bg_r.png') no-repeat 100% / cover;
+      img {
         height: 100%;
         object-fit: cover;
       }
     }
   }
-  .home_bottom{
-    background: #FEF8E8;
+  .home_bottom {
+    background: #fef8e8;
     padding: 6.25rem 15rem 7.5rem;
-    .home_b_top{
+    .home_b_top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 3.75rem;
-      .title{
+      .title {
         line-height: 2.5rem;
       }
-      img{
+      img {
         width: 8.375rem;
       }
     }
-    .home_imgs{
+    .home_imgs {
       display: flex;
       align-items: center;
       color: #fff;
       font-size: 2rem;
-      .home_imgs_left{
+      .home_imgs_left {
         height: 37.5rem;
         position: relative;
       }
-      .home_imgs_right{
+      .home_imgs_right {
         border-radius: 8px;
         width: 25rem;
         height: 37.5rem;
@@ -404,23 +395,25 @@ import { useRouter } from 'vue-router';
         flex-shrink: 0;
         position: relative;
       }
-      .shade{
+      .shade {
         background: linear-gradient(225deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
         position: absolute;
         top: 0;
         width: 100%;
         height: 100%;
-        transition: all .5s;
+        transition: all 0.5s;
         z-index: 10;
       }
     }
-    .imgs_lr,.imgs_rl{
+    .imgs_lr,
+    .imgs_rl {
       display: flex;
       position: relative;
-      img{
+      img {
         height: 17.5rem;
       }
-      .home_img_s,.home_img_r{
+      .home_img_s,
+      .home_img_r {
         border-radius: 8px;
       }
     }
@@ -434,14 +427,14 @@ import { useRouter } from 'vue-router';
         z-index: 12;
       }
     }
-    .imgs_lr{
+    .imgs_lr {
       margin-bottom: 2.5rem;
-      .home_img_s{
+      .home_img_s {
         margin-right: 2.5rem;
       }
     }
-    .imgs_rl{
-      .home_img_r{
+    .imgs_rl {
+      .home_img_r {
         margin-right: 2.5rem;
       }
     }
