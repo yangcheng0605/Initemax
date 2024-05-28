@@ -27,8 +27,10 @@
             </div>
           </swiper-slide>
         </swiper>
-        <div class="home_sildePre" @click="sildePre"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
-        <div class="home_sildeNext" @click="sildeNext"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+        <div class="home_silde">
+          <div class="home_sildePre" @click="sildePre"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
+          <div class="home_sildeNext" @click="sildeNext"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+        </div>
       </div>
     </div>
     <div class="news_industry">
@@ -43,7 +45,7 @@
           <div class="li_box">
             <p class="li_date">{{ item.date }}</p>
             <p class="li_name line_clamp_2" :title="item.name">{{ item.name }}</p>
-            <p class="li_text line_clamp_2" :title="item.contain">{{ item.contain }}</p>
+            <p class="li_text line_clamp_2" v-if="!isMobile" :title="item.contain">{{ item.contain }}</p>
             <a-button type="link" class="subBtn">查看全部</a-button>
           </div>
         </li>
@@ -194,9 +196,9 @@ export default {
 <style lang="less">
 .new_title {
   text-align: center;
-  padding-bottom: 1.25rem;
   margin-bottom: 5rem;
   p {
+    padding-bottom: 1.25rem;
     font-size: 2.5rem;
     line-height: 3.75rem;
     display: inline-block;
@@ -285,7 +287,9 @@ export default {
   color: #fff;
   ul li {
     display: flex;
-    margin-bottom: 2.5rem;
+    &:not(:last-of-type) {
+      margin-bottom: 2.5rem;
+    }
     .hoverBox {
       flex-shrink: 0;
     }
