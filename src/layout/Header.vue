@@ -30,26 +30,26 @@
         <div :class="['Main_popup', show ? 'Main_popup_active' : '']">
           <div class="Main_item">
             <!-- <a-collapse ghost accordion :expand-icon-position="'end'"> -->
-            <p class="Mnav">
-              <a href="/#/" @click="show = false">首页</a>
+            <a href="/#/" class="Mnav" @click="show = false">
+              <span>首页</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </p>
-            <p class="Mnav">
-              <a href="/#/products" @click="show = false">案例</a>
+            </a>
+            <a href="/#/products" class="Mnav" @click="show = false">
+              <span>案例</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </p>
-            <p class="Mnav">
-              <a href="/#/news" @click="show = false">最新资讯</a>
+            </a>
+            <a href="/#/news" class="Mnav" @click="show = false">
+              <span>最新资讯</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </p>
-            <p class="Mnav">
-              <a href="/#/contact" @click="show = false">联系我们 </a>
+            </a>
+            <a href="/#/contact" class="Mnav" @click="show = false">
+              <span>联系我们 </span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </p>
-            <p class="Mnav">
-              <a href="/#/about" @click="show = false">关于我们</a>
+            </a>
+            <a href="/#/about" class="Mnav" @click="show = false">
+              <span>关于我们</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </p>
+            </a>
             <!-- </a-collapse> -->
           </div>
         </div>
@@ -119,7 +119,7 @@ export default {
       e => {
         var path = e.fullPath
         const current = state.navList.filter(item => path === item.path)
-        state.activeKey = current.key
+        state.activeKey = current[0].key
         window.scrollTo({
           top: 0,
           behavior: 'smooth'

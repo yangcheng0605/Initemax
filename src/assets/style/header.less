@@ -25,13 +25,13 @@
     &::before {
       border: none;
     }
-  }
-  span {
-    cursor: pointer;
-    display: inline-block;
-    padding: 1.25rem 0;
-    font-weight: 500;
-    margin-left: 3.75rem;
+    span {
+      cursor: pointer;
+      display: inline-block;
+      padding: 1.25rem 0;
+      font-weight: 500;
+      margin-left: 3.75rem;
+    }
   }
   .search {
     display: inline-block;
@@ -93,8 +93,10 @@
     padding: 0 1.5rem;
     position: relative;
     height: 4rem;
-    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
     z-index: 2;
+    &:not(.transp) {
+      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    }
   }
 
   .main_left {
@@ -155,7 +157,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    a {
+    cursor: none;
+    span {
       font-weight: 500;
     }
     img {

@@ -1,8 +1,7 @@
 .footer {
-  background: url('../img/footer/bg.png') no-repeat 100%/ 100%;
-  background-size: 100%;
+  background: url('../img/footer/bg.png') no-repeat 100%/100%;
   color: #fff;
-  padding: 10rem 15rem 5.6875rem;
+  padding: 10rem 15rem 5.5rem;
   .desktop-only {
     .d_top {
       display: flex;
@@ -21,8 +20,11 @@
           margin: 3.75rem 0 2.5rem;
           font-size: 1.125rem;
           letter-spacing: 1px;
-          p:not(:last-of-type) {
-            margin-bottom: 1.125rem;
+          p {
+            line-height: 1.125rem;
+            &:not(:last-of-type) {
+              margin-bottom: 1.125rem;
+            }
           }
         }
       }
@@ -93,6 +95,7 @@
     justify-content: space-between;
     .explain {
       font-size: 1.25rem;
+      line-height: 1.25rem;
       letter-spacing: 1px;
       cursor: pointer;
       span {

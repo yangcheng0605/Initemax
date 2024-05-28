@@ -1,101 +1,327 @@
 <template>
-  <div class="wholesale">
-    <div class="top_banner2">
-      <!-- <img src="@/assets/img/about/news_banner.png" alt=""> -->
+  <div class="news">
+    <div class="top_banner new_banner">
+      <img src="@/assets/img/news/bg_top.png" alt="" />
       <div class="t_box">
-        <p class="text_1">BECOME A news</p>
-        <p class="title SmileFont">How can we help you?</p>
-        <p class="text_2">Please check the sections below related to your inquiry</p>
+        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50"><span>洞悉前沿资讯</span> <span>让视频效益最大化</span></p>
       </div>
     </div>
-    <div class="a_content">
-      <a-row :gutter="30">
-        <a-col class="gutter-row" :xs="24" :sm="24" :md="8">
-          <div class="gutter-box hoverBox wow animate__bounceIn" data-wow-offset="50" @click="contact(1)">
-            <!-- <img class="hoverImg" src="@/assets/img/about/img_1.png" alt=""> -->
-            <div class="a_text">
-              <p class="a_title SmileFont">Support</p>
-              <p class="a_title SmileFont">Customer Service</p>
-              <!-- <p class="a_email smallArrow_box">WhatsApp: {{ whatsApp }}<img class="smallArrow" src="../../assets/img/about/arrow_r.png" alt="" /></p> -->
+    <div class="news_hot">
+      <div class="new_title">
+        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">热门资讯</p>
+      </div>
+      <div class="swiper_box wow animate__fadeInUp" data-wow-offset="50" v-if="hotList && hotList.length > 0">
+        <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="onSwiper">
+          <swiper-slide v-for="item in hotList" :key="item.id">
+            <div class="hot_contain">
+              <div class="hoverBox">
+                <img class="hoverImg" :src="item.img" alt="" />
+              </div>
+              <div>
+                <p class="hot_name line_clamp_2" :title="item.name">{{ item.name }}</p>
+                <p class="hot_date">{{ item.date }}</p>
+                <div class="hot_tags">
+                  <span v-for="item2 in item.tags" :key="item2.id">{{ item2.name }}</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </a-col>
-      </a-row>
-    </div>
-    <a-modal class="contact_pop" v-model:open="contactModal" :width="480" title="" :closable="false" :footer="null" centered>
-      <div class="pop_top">
-        <span class="title SmileFont">{{ contactModalOp.title }}</span>
-        <img :src="contactModalOp.url" alt="" />
+          </swiper-slide>
+        </swiper>
+        <div class="home_sildePre" @click="sildePre"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
+        <div class="home_sildeNext" @click="sildeNext"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
       </div>
-      <p class="email">{{ contactModalOp.content }}</p>
-      <a-button class="copyBtn" shape="round" :data-text="contactModalOp.content" @click="handleCopy">{{ contactModalOp.btn_text }}</a-button>
-    </a-modal>
+    </div>
+    <div class="news_industry">
+      <div class="new_title">
+        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">行业资讯</p>
+      </div>
+      <ul>
+        <li v-for="item in newsList" :key="item.id" class="wow animate__fadeInUp" data-wow-offset="50">
+          <div class="hoverBox">
+            <img class="hoverImg" :src="item.img" alt="" />
+          </div>
+          <div class="li_box">
+            <p class="li_date">{{ item.date }}</p>
+            <p class="li_name line_clamp_2" :title="item.name">{{ item.name }}</p>
+            <p class="li_text line_clamp_2" :title="item.contain">{{ item.contain }}</p>
+            <a-button type="link" class="subBtn">查看全部</a-button>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <script>
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation } from 'swiper/modules'
+import 'swiper/css/navigation'
+import 'swiper/css'
+
 export default {
-  name: 'wholesale',
-  components: {},
+  name: 'news',
+  components: {
+    Swiper,
+    SwiperSlide
+  },
   setup() {
     const { proxy } = getCurrentInstance()
     const state = reactive({
-      contactModal: false,
-      email: 'support@ehonos.com',
-      whatsApp: '+86 13760182010',
-      contactModalOp: {}
+      modules: [Navigation],
+      isMobile: false,
+      swiper: null,
+      perView: 4,
+      between: 40,
+      hotList: [
+        {
+          id: 1,
+          date: '2024/1/31',
+          name: '造光2024年造光2024年造光2024年造光2024年造光2024年造光2024年',
+          img: require('@/assets/img/news/new_3.png'),
+          tags: [
+            { id: 1, name: 'TAG标签' },
+            { id: 2, name: '5G' },
+            { id: 3, name: '政治' }
+          ]
+        },
+        {
+          id: 2,
+          date: '2024/2/11',
+          name: '造光22024年发大大大财',
+          img: require('@/assets/img/news/new_3.png'),
+          tags: [
+            { id: 1, name: 'TAG标签' },
+            { id: 2, name: '5G' }
+          ]
+        },
+        {
+          id: 3,
+          date: '2024/3/21',
+          name: '造大财，造光2024年发大大大财',
+          img: require('@/assets/img/news/new_3.png'),
+          tags: [{ id: 1, name: '5G' }]
+        },
+        {
+          id: 4,
+          date: '2024/4/4',
+          name: '造光2024年发大大大造光2024年发大大大财，造光2024年发大大大财财，造光2024年发大大大财',
+          img: require('@/assets/img/news/new_3.png'),
+          tags: [{ id: 1, name: 'Tag' }]
+        },
+        {
+          id: 5,
+          date: '2024/5/3',
+          name: '造光大大大财，造光2024年发大大大财',
+          img: require('@/assets/img/news/new_3.png'),
+          tags: [{ id: 1, name: '5G' }]
+        }
+      ],
+      newsList: [
+        { id: 1, date: '2024/1/31', name: '造光2024年', contain: '内容部分展示内容部分展展示内容部分', img: require('@/assets/img/news/new_4.png') },
+        {
+          id: 2,
+          date: '2024/2/11',
+          name: '造光22024年发大大大财',
+          contain:
+            '内容部分展示内容部分展示内容部分展示内容部分展示内容部分展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示容部分展展示容部分展展示容部分展展示内容部分展展示内容部分',
+          img: require('@/assets/img/news/new_4.png')
+        },
+        {
+          id: 3,
+          date: '2024/3/21',
+          name: '造大财，造光2024年发大大大财',
+          contain:
+            '内容部分展示内容部分展示内容部分展示内容部分展示内容部分展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示容部分展展示容部分展展示容部分展展示内容部分展展示内容部分',
+          img: require('@/assets/img/news/new_4.png')
+        },
+        {
+          id: 4,
+          date: '2024/4/4',
+          name: '造光2024年发大大大造光2024年发大大大财，造光2024年发大大大财财，造光2024年发大大大财',
+          contain:
+            '内容部分展示内容部分展示内容部分展示内容部分展示内容部分展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示容部分展展示容部分展展示容部分展展示内容部分展展示内容部分',
+          img: require('@/assets/img/news/new_4.png')
+        },
+        {
+          id: 5,
+          date: '2024/5/3',
+          name: '造光大大大财，造光2024年发大大大财',
+          contain:
+            '内容部分展示内容部分展示内容部分展示内容部分展示内容部分展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示容部分展展示容部分展展示容部分展展示内容部分展展示内容部分',
+          img: require('@/assets/img/news/new_4.png')
+        }
+      ]
     })
+
     onMounted(async () => {
-      nextTick(() => {})
+      nextTick(() => {
+        handleResize()
+        window.addEventListener('resize', handleResize)
+        var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
+        wow.init()
+      })
     })
-    const contact = type => {
-      state.contactModal = true
-      let obj
-      if (type == 1) {
-        obj = {
-          title: 'WhatsApp',
-          content: state.whatsApp,
-          btn_text: 'Copy whatsapp'
-          // url: require('@/assets/img/phone.png')
-        }
+    const handleResize = () => {
+      const windowWidth = window.innerWidth
+      if (windowWidth < 750) {
+        state.between = 24
+        state.perView = 'auto'
+        state.isMobile = true
       } else {
-        obj = {
-          title: 'Email',
-          content: state.email,
-          btn_text: 'Copy email address'
-          // url: require('@/assets/img/email.png')
-        }
+        state.between = 30
+        state.perView = 'auto'
+        state.isMobile = false
       }
-      state.contactModalOp = obj
     }
-    const handleCopy = e => {
-      var text = e.target.dataset.text
-      copyToClipboard(text)
-      state.contactModal = false
-      proxy.$message.success('Success copy')
+    const onSwiper = swiper => {
+      state.swiper = swiper
     }
-    const copyToClipboard = text => {
-      if (navigator.clipboard) {
-        navigator.clipboard
-          .writeText(text)
-          .then(() => {})
-          .catch(err => {
-            console.error('无法复制到剪贴板: ', err)
-          })
-      } else {
-        const textArea = document.createElement('textarea')
-        textArea.value = text
-        document.body.appendChild(textArea)
-        textArea.select()
-        document.execCommand('copy')
-        document.body.removeChild(textArea)
-      }
+    const sildePre = e => {
+      state.swiper.slidePrev(500, res => {})
+    }
+    const sildeNext = e => {
+      state.swiper.slideNext(500, res => {})
     }
     return {
       ...toRefs(state),
-      contact,
-      handleCopy
+      onSwiper,
+      sildePre,
+      sildeNext
     }
   }
 }
 </script>
+<style lang="less">
+.new_title {
+  text-align: center;
+  padding-bottom: 1.25rem;
+  margin-bottom: 5rem;
+  p {
+    font-size: 2.5rem;
+    line-height: 3.75rem;
+    display: inline-block;
+    border-bottom: 0.5rem solid #ff8a2c;
+  }
+}
+.news_hot {
+  padding: 7.5rem 10rem 11.25rem;
+  .hot_contain {
+    font-size: 1.5rem;
+    color: #666;
+    img {
+      width: 100%;
+      height: 18.75rem;
+      overflow: hidden;
+      border-radius: 0.5rem;
+    }
+    .hot_name {
+      height: 4.5rem;
+      font-weight: 500;
+      line-height: 2.25rem;
+      color: #232323;
+      margin-top: 1.875rem;
+    }
+    .hot_date {
+      margin: 1.75rem 0;
+      line-height: 2.25rem;
+    }
+    .hot_tags {
+      span {
+        width: 8.75rem;
+        text-align: center;
+        display: inline-block;
+        line-height: 2.25rem;
+        border-radius: 0.625rem;
+        border: 1px solid #ff8a2c;
+        padding: 0.625rem 0;
+        box-sizing: border-box;
+        &:not(:last-of-type) {
+          margin-right: 0.9375rem;
+        }
+      }
+    }
+  }
+  .swiper_box {
+    position: relative;
+    .swiper {
+      // padding-right: 1.25rem;
+      .swiper-wrapper {
+        // margin-left: 1.25rem;
+        .swiper-slide {
+          width: 28.125rem !important;
+        }
+        .swiper-slide:last-of-type {
+          // margin-right: 1.25rem;
+        }
+      }
+    }
+    .home_sildePre,
+    .home_sildeNext {
+      width: 3.125rem;
+      height: 3.125rem;
+      border-radius: 4px;
+      border: 1px solid #232323;
+      z-index: 2;
+      cursor: pointer;
+      position: absolute;
+      top: -5rem;
+      right: 0;
+      img {
+        width: 1.5rem;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .home_sildePre {
+      right: 3.75rem;
+    }
+  }
+}
+.news_industry {
+  padding: 7.5rem 15rem 10rem;
+  background: url(../../assets/img/news/bg.png);
+  color: #fff;
+  ul li {
+    display: flex;
+    margin-bottom: 2.5rem;
+    .hoverBox {
+      flex-shrink: 0;
+    }
+    img {
+      width: 28.75rem;
+      height: 14.375rem;
+      border-radius: 0.5rem;
+    }
+    .li_box {
+      margin-left: 2.5rem;
+      .li_date {
+        font-size: 1.25rem;
+        line-height: 2.5rem;
+      }
+      .li_name {
+        font-size: 3rem;
+        line-height: 3rem;
+        font-weight: 500;
+      }
+      .li_text {
+        font-size: 1rem;
+        height: 4rem;
+        line-height: 2rem;
+        margin: 0.625rem 0 0.75rem;
+      }
+      .subBtn {
+        width: 11.25rem;
+        height: 3.5rem;
+        border-radius: 36px;
+        border: 1px solid #ff8a2c;
+        padding: 1rem 3.625rem;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        color: #ff8a2c;
+      }
+    }
+  }
+}
+</style>
