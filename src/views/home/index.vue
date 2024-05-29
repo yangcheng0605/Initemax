@@ -1,227 +1,38 @@
-<template>
-  <div class="home">
-    <div class="banner1">
-      <div class="Desktop_swiper">
-        <!-- <div class="homeSwiper">
-          <div class="swiper_box" v-if="bannerList && bannerList.length>0">
-            <swiper
-              :navigation="true"
-              @swiper="onSwiper"
-              :effect="'fade'"
-              :autoplay="{
-                delay: 8000,
-                disableOnInteraction: false,
-              }"
-              :loop="true"
-              :modules="modules"
-            >
-              <swiper-slide v-for="(item) in bannerList" :key="item.id">
-                <div class="home_banner">
-                  <img :src="isMobile?item.pSPath:item.pPath" alt="">
-                </div>
-              </swiper-slide>
-            </swiper>
-            <div class="home_sildePre" @click="sildePre(1)">
-            </div>
-            <div class="home_sildeNext" @click="sildeNext(1)">
-            </div>
-          </div>
-          <div class="spin" v-else>
-            <a-spin :indicator="indicator" size="large" />
-          </div>
-        </div>
-        <div class="home_block home_center">
-          <div class="home_tag"><img src="@/assets/img/home/tag.png" alt=""></div>
-          <div class="homt_pros">
-            <p class="title SmileFont wow animate__fadeInLeft" data-wow-offset="50">Our Recommendations</p>
-             <div class="home_tab wow animate__fadeInLeft" data-wow-offset="50">
-              <a-tabs v-model:activeKey="activeKey" @change="changeTab">
-                <a-tab-pane :tab="item.cateName" v-for="item in mpType" :key='item.cateId'></a-tab-pane>
-              </a-tabs>
-            </div>
-          </div>
-          <div class="swiper_box wow animate__slideInUp" data-wow-offset="50">
-            <swiper
-              :slides-per-view="perView"
-              :space-between="between"
-              :navigation="true"
-              @swiper="onSwiper2"
-            >
-              <swiper-slide v-for="(item) in proList" :key="item.proId">
-                <div class="hoverBox proImg" @click="linkTo(item)">
-                  <img class="hoverImg" :src="item.cover" alt="">
-                </div>
-              </swiper-slide>
-            </swiper>
-            <div class="home_sildePre" @click="sildePre(2)">
-            </div>
-            <div class="home_sildeNext" @click="sildeNext(2)">
-            </div>
-          </div>
-        </div>
-        <div class="home_block home_bottom">
-          <div class="home_b_top">
-            <p class="title SmileFont wow animate__fadeInLeft" data-wow-offset="50">EHONOS Live</p>
-            <div class="wow animate__fadeInRight" data-wow-offset="50"><img src="@/assets/img/live.png" alt=""></div>
-          </div>
-          <div class="home_imgs">
-            <div class="home_imgs_left">
-              <div class="imgs_lr">
-                <div class="home_img_s hoverBox wow animate__fadeInTopLeft" data-wow-offset="50">
-                  <a href="/#/contact">
-                    <div class="shade"></div>
-                    <img class="hoverImg" src="@/assets/img/home/live_1.png" alt="">
-                    <p class="img_text SmileFont">联系我们</p>
-                  </a>
-                </div>
-                <div class="home_img_r hoverBox wow animate__fadeInTopRight" data-wow-offset="50">
-                  <div class="shade"></div>
-                  <img class="hoverImg" src="@/assets/img/home/live_2.png" alt="">
-                  <p class="img_text SmileFont">HOLA</p>
-                </div>
-              </div>
-              <div class="imgs_rl">
-                <div class="home_img_r hoverBox wow animate__fadeInBottomLeft " data-wow-offset="50">
-                  <div class="shade"></div>
-                  <img class="hoverImg" src="@/assets/img/home/live_3.png" alt="">
-                  <p class="img_text SmileFont">TAKE EASY</p>
-                </div>
-                <div class="home_img_s hoverBox wow animate__fadeInBottomRight" data-wow-offset="50">
-                  <div class="shade"></div>
-                  <img class="hoverImg" src="@/assets/img/home/live_4.png" alt="">
-                  <p class="img_text SmileFont">RELAX</p>
-                </div>
-              </div>
-            </div>
-            <div class="home_imgs_right hoverBox wow animate__bounceInRight"  data-wow-offset="50" data-wow-delay='.2s'>
-                <div class="shade"></div>
-                <img class="hoverImg" src="@/assets/img/home/live_5.png" alt="">
-                <p class="img_text SmileFont">Cultural
-transmission</p>
-            </div>
-          </div>
-        </div> -->
-      </div>
-    </div>
-  </div>
-</template>
+<template><div class="search">12313</div></template>
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Autoplay, EffectFade, Navigation } from 'swiper/modules'
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, h } from 'vue'
-import { LoadingOutlined } from '@ant-design/icons-vue'
-import Storage from '@/utils/storage'
-import 'swiper/css/navigation'
-import 'swiper/css'
 import { useRouter } from 'vue-router'
 
 export default {
-  name: 'home',
-  components: {
-    Swiper,
-    SwiperSlide
-  },
+  name: 'search',
+  components: {},
   setup() {
     const router = useRouter()
     const { proxy } = getCurrentInstance()
-    const indicator = h(LoadingOutlined, {
-      style: {
-        fontSize: '24px'
-      },
-      spin: true
-    })
     const state = reactive({
-      modules: [Autoplay, EffectFade, Navigation],
-      activeKey: 1,
-      perView: 4,
-      between: 40,
-      swiper1: null,
-      swiper2: null,
-      isMobile: false,
-      bannerList: null,
-      mpType: [
-        { cateId: 1, cateName: 'Our Recommendations' },
-        { cateId: 2, cateName: 'New' },
-        { cateId: 3, cateName: 'Disposable' },
-        { cateId: 4, cateName: 'Pod Series' },
-        { cateId: 5, cateName: 'E-liquid' }
-      ],
-      proList: null,
-      indicator: indicator
+      bannerList: null
     })
     onMounted(async () => {
       getPicList()
-      // if (!Storage.getItem('navList')) {
-      //   getCategoryList()
-      // } else {
-      // state.mpType = Storage.getItem('navList')
-      // state.activeKey = state.mpType[0].cateId
-      getProductListByCate(state.activeKey)
-      // }
       nextTick(() => {
         var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
         wow.init()
       })
-      handleResize()
-      window.addEventListener('resize', handleResize)
     })
-
     const getPicList = () => {
       proxy.$api.picList('').then(res => {
         state.bannerList = res
       })
     }
-    // const getCategoryList = () => {
-    //   proxy.$api.categoryList('').then(res=>{
-    //     state.mpType = res
-    //     state.activeKey = res[0].cateId
-    //     getProductListByCate(res[0].cateId)
-    //     Storage.setItem('navList', res)
-    //   })
-    // };
-    const getProductListByCate = id => {
-      proxy.$api.productListByCate(id).then(res => {
-        state.proList = res
-      })
+    const linkToDetail = () => {
+      //  router.push('/search?search=' + state.searchName)
     }
-    const changeTab = res => {
-      getProductListByCate(res)
-    }
-    const handleResize = () => {
-      const windowWidth = window.innerWidth
-      if (windowWidth < 750) {
-        state.between = 15
-        state.perView = 'auto'
-        state.isMobile = true
-      } else {
-        state.between = 40
-        state.perView = 4
-        state.isMobile = false
-      }
-    }
-    const onSwiper = swiper => {
-      state.swiper1 = swiper
-    }
-    const onSwiper2 = swiper => {
-      state.swiper2 = swiper
-    }
-    const linkTo = res => {
-      router.push('/productsDetail?id=' + res.proId)
-    }
-    const sildePre = e => {
-      state[`swiper${e}`].slidePrev(500, res => {})
-    }
-    const sildeNext = e => {
-      state[`swiper${e}`].slideNext(500, res => {})
-    }
+
     return {
       ...toRefs(state),
-      onSwiper,
-      onSwiper2,
       linkTo,
-      sildePre,
-      sildeNext,
-      changeTab
+      ...toRefs(state),
+      linkTo
     }
   }
 }

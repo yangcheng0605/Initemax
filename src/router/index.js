@@ -28,6 +28,12 @@ const routes = [
     component: () => import('@/views/news/index.vue')
   },
   {
+    path: '/search',
+    name: 'search',
+    meta: { transp: 1 },
+    component: () => import('@/views/search/index.vue')
+  },
+  {
     path: '/contact',
     name: 'contact',
     component: () => import('@/views/contact/index.vue')

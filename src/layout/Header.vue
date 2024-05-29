@@ -1,6 +1,6 @@
 <template>
   <div class="shopify-section-header">
-    <div class="header">
+    <div :class="['header', transp ? '' : 'specialHeader']">
       <div class="desktop-only">
         <div :class="['main', transp ? 'transp' : 'main_white']">
           <div class="main_left">
@@ -11,7 +11,7 @@
               <a-tab-pane :key="item.key" :tab="item.name" v-for="item in navList"></a-tab-pane>
             </a-tabs>
             <!-- <span :href="item.path" :class="item.active ? 'nav_active' : ''" @click="linkTo(item)" @mouseover="hoverTo(index)">{{ item.name }}</span> -->
-            <div class="search" @click="search">
+            <div class="search" @click="showSearch = true">
               <img :src="transp ? search_white : search_black" alt="" />
             </div>
           </div>
@@ -55,14 +55,30 @@
         </div>
       </div>
     </div>
+    <a-drawer height="auto" :closable="false" placement="top" :open="showSearch">
+      <template #extra> </template>
+      <div class="drawer_search">
+        <div class="d_top">
+          <p class="d_title">请输入您要查找的信息</p>
+          <p class="d_close" @click="showSearch = false"><img src="@/assets/img/search_close.png" alt="" /></p>
+        </div>
+        <div class="d_bottom">
+          <a-input v-model:value="searchName" placeholder="请输入一个关键词" @keydown.enter="search">
+            <template #suffix>
+              <img class="d_search_icon" src="@/assets/img/search_b.png" alt="" />
+            </template>
+          </a-input>
+        </div>
+      </div>
+    </a-drawer>
   </div>
 </template>
 
 <script>
-import { getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue'
+import { getCurrentInstance, h, onMounted, reactive, toRefs, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Empty } from 'ant-design-vue'
-import Storage from '@/utils/storage'
+// import Storage from '@/utils/storage'
 import '@/assets/style/header.less'
 export default {
   name: 'Header',
@@ -74,13 +90,14 @@ export default {
       show: false,
       transp: true,
       activeKey: 1,
+      searchName: '',
       logo_white: require('@/assets/img/logo_w.png'),
       logo_black: require('@/assets/img/logo_b.png'),
       search_white: require('@/assets/img/search_w.png'),
       search_black: require('@/assets/img/search_b.png'),
       mb_nav_white: require('@/assets/img/mb_nav_w.png'),
       mb_nav_black: require('@/assets/img/mb_nav_b.png'),
-      search: false,
+      showSearch: false,
       popIndex: null,
       navList: [
         { key: 0, name: '首页', path: '/', active: false },
@@ -97,7 +114,7 @@ export default {
       console.log(id)
     }
     const search = () => {
-      state.search = true
+      router.push('/search?search=' + state.searchName)
     }
     const targetShowNav = () => {
       state.show = !state.show
@@ -118,12 +135,16 @@ export default {
       route,
       e => {
         var path = e.fullPath
+        var meta = e.meta
+        state.transp = meta?.transp == 1 ? false : true
         const current = state.navList.filter(item => path === item.path)
-        state.activeKey = current[0].key
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        })
+        if (current && current.length > 0) {
+          state.activeKey = current[0].key
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
+        }
       },
       { immediate: true }
     )
