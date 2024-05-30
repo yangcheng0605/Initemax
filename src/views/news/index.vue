@@ -163,6 +163,16 @@ export default {
         wow.init()
       })
     })
+    const gethotList = () => {
+      // proxy.$api.gethotList().then(res => {
+      //   state.hotList = res
+      // })
+    }
+    const getNewList = () => {
+      // proxy.$api.getNewList().then(res => {
+      //   state.newsList = res
+      // })
+    }
     const handleResize = () => {
       const windowWidth = window.innerWidth
       if (windowWidth < 750) {

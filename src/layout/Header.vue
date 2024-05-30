@@ -114,6 +114,7 @@ export default {
       console.log(id)
     }
     const search = () => {
+      state.showSearch = false
       router.push('/search?search=' + state.searchName)
     }
     const targetShowNav = () => {
@@ -138,12 +139,15 @@ export default {
         var meta = e.meta
         state.transp = meta?.transp == 1 ? false : true
         const current = state.navList.filter(item => path === item.path)
+        console.log(current)
         if (current && current.length > 0) {
           state.activeKey = current[0].key
           window.scrollTo({
             top: 0,
             behavior: 'smooth'
           })
+        } else {
+          state.activeKey = ''
         }
       },
       { immediate: true }

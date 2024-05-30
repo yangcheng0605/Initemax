@@ -84,12 +84,8 @@ export default {
         state.gutter = 30
       }
     }
-    const onSwiper = swiper => {
-      console.log(swiper)
-    }
-    const onSlideChange = () => {
-      console.log('slide change')
-    }
+    const onSwiper = swiper => {}
+    const onSlideChange = () => {}
     return {
       ...toRefs(state),
       onSwiper,
