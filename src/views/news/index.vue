@@ -271,7 +271,7 @@ export default {
     .home_sildeNext {
       width: 3.125rem;
       height: 3.125rem;
-      border-radius: 4px;
+      border-radius: 0.25rem;
       border: 1px solid #232323;
       z-index: 2;
       cursor: pointer;

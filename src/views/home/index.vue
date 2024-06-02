@@ -1,4 +1,6 @@
-<template><div class="search">12313</div></template>
+<template>
+  <div class="search">12313</div>
+</template>
 <script>
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, h } from 'vue'
 import { useRouter } from 'vue-router'
@@ -31,8 +33,7 @@ export default {
     return {
       ...toRefs(state),
       linkTo,
-      ...toRefs(state),
-      linkTo
+      ...toRefs(state)
     }
   }
 }

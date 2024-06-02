@@ -41,6 +41,7 @@ const routes = [
   {
     path: '/about',
     name: 'about',
+    meta: { transp: 1 },
     component: () => import('@/views/about/index.vue')
   }
 ]
