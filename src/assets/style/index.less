@@ -700,7 +700,7 @@ textarea {
     }
   }
 }
-
+/* ********************公共****************** */
 // 图片放大
 .hoverImg,
 .hoverBox {
@@ -716,6 +716,39 @@ textarea {
   // }
   .hoverImg {
     transform: scale(1.1);
+  }
+}
+.home_silde {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .home_sildePre,
+  .home_sildeNext {
+    width: 3.125rem;
+    height: 3.125rem;
+    border-radius: 0.25rem;
+    border: 1px solid #fff;
+    z-index: 2;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    img {
+      width: 1.5rem;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .blackborder {
+    border: 1px solid #232323 !important;
+  }
+  .progress {
+    width: 7.625rem;
+    height: 3.125rem;
+    font-size: 2rem;
+    line-height: 3rem;
   }
 }
 

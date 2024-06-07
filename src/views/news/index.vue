@@ -56,12 +56,11 @@
 <script>
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation } from 'swiper/modules'
 import 'swiper/css/navigation'
 import 'swiper/css'
 
 export default {
-  name: 'news',
+  name: 'INews',
   components: {
     Swiper,
     SwiperSlide
@@ -69,7 +68,6 @@ export default {
   setup() {
     const { proxy } = getCurrentInstance()
     const state = reactive({
-      modules: [Navigation],
       isMobile: false,
       swiper: null,
       perView: 4,
@@ -163,16 +161,6 @@ export default {
         wow.init()
       })
     })
-    const gethotList = () => {
-      // proxy.$api.gethotList().then(res => {
-      //   state.hotList = res
-      // })
-    }
-    const getNewList = () => {
-      // proxy.$api.getNewList().then(res => {
-      //   state.newsList = res
-      // })
-    }
     const handleResize = () => {
       const windowWidth = window.innerWidth
       if (windowWidth < 750) {
@@ -189,10 +177,10 @@ export default {
       state.swiper = swiper
     }
     const sildePre = e => {
-      state.swiper.slidePrev(500, res => {})
+      state.swiper.slidePrev(500)
     }
     const sildeNext = e => {
-      state.swiper.slideNext(500, res => {})
+      state.swiper.slideNext(500)
     }
     return {
       ...toRefs(state),
@@ -269,22 +257,11 @@ export default {
     }
     .home_sildePre,
     .home_sildeNext {
-      width: 3.125rem;
-      height: 3.125rem;
-      border-radius: 0.25rem;
       border: 1px solid #232323;
       z-index: 2;
-      cursor: pointer;
       position: absolute;
       top: -5rem;
       right: 0;
-      img {
-        width: 1.5rem;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
     }
     .home_sildePre {
       right: 3.75rem;

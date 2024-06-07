@@ -26,13 +26,10 @@ export default {
         state.bannerList = res
       })
     }
-    const linkToDetail = () => {
-      //  router.push('/search?search=' + state.searchName)
-    }
-
+    // const linkToDetail = () => {
+    //   //  router.push('/search?search=' + state.searchName)
+    // }
     return {
-      ...toRefs(state),
-      linkTo,
       ...toRefs(state)
     }
   }

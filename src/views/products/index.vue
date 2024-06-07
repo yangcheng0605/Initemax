@@ -131,12 +131,11 @@
 <script>
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation } from 'swiper/modules'
 import 'swiper/css/navigation'
 import 'swiper/css'
 
 export default {
-  name: 'products',
+  name: 'IProducts',
   components: {
     Swiper,
     SwiperSlide
@@ -144,7 +143,6 @@ export default {
   setup() {
     const { proxy } = getCurrentInstance()
     const state = reactive({
-      modules: [Navigation],
       isMobile: false,
       swiper: null,
       gutter: [20, 20],

@@ -93,7 +93,7 @@
 <script>
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 export default {
-  name: 'contact',
+  name: 'IContact',
   components: {},
   setup() {
     const { proxy } = getCurrentInstance()
