@@ -523,6 +523,7 @@ export default {
   }
   .img_box {
     display: flex;
+    width: auto;
     .top_down {
       display: inline-flex;
       flex-flow: column;
@@ -573,7 +574,7 @@ export default {
     position: relative;
   }
   .scroll-content {
-    width: 100%;
+    width: 147.5rem;
     animation: scroll-left 10s linear infinite;
   }
 
