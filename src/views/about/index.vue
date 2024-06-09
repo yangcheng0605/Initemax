@@ -12,12 +12,12 @@
           :navigation="true"
           @swiper="e => onSwiper(e, 1)"
           @slideChange="e => onSlideChange(e, 1)"
-          :autoplay="{
-            delay: 5000,
-            disableOnInteraction: false
-          }"
           :speed="1000"
         >
+          <!-- :autoplay="{
+            delay: 5000,
+            disableOnInteraction: false
+          }" -->
           <swiper-slide v-for="item in bannerList" :key="item.id">
             <div class="about_contain">
               <img :src="item.img" alt="" />
@@ -72,7 +72,7 @@
       </div>
       <div class="year_box">
         <div>
-          <swiper class="swiper-no-swiping" :modules="modules" slides-per-view="auto" :space-between="0" centeredSlides loop :navigation="true" @swiper="e => onSwiper(e, 4)" noSwiping>
+          <swiper class="swiper-no-swiping" :modules="modules" slides-per-view="auto" :space-between="0" centeredSlides loop @swiper="e => onSwiper(e, 4)" noSwiping>
             <swiper-slide v-for="item in courseList" :key="item.id">
               <div class="year">
                 <p class="SmileFont">{{ item.year }}</p>
@@ -135,6 +135,22 @@
             <img class="width_max height_240" src="@/assets/img/about/JYSP_6.png" alt="" />
           </div>
         </div>
+        <div class="img_box scroll-content2">
+          <div class="top_down width_600">
+            <img class="height_300 mb_20" src="@/assets/img/about/JYSP_1.png" alt="" />
+            <img class="height_300" src="@/assets/img/about/JYSP_2.png" alt="" />
+          </div>
+          <div class="single width_560">
+            <img class="heighth_max" src="@/assets/img/about/JYSP_3.png" alt="" />
+          </div>
+          <div class="top_down">
+            <div class="left_right mb_20">
+              <img class="width_560 height_360 mr_20" src="@/assets/img/about/JYSP_4.png" alt="" />
+              <img class="width_560 height_360" src="@/assets/img/about/JYSP_5.png" alt="" />
+            </div>
+            <img class="width_max height_240" src="@/assets/img/about/JYSP_6.png" alt="" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -171,10 +187,10 @@ export default {
       perView_introduce: 1,
       between: '0.79%',
       bannerList: [
-        { id: 1, title: 'Spark More1', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_1.png') },
-        { id: 2, title: 'Spark More2', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_2.png') },
-        { id: 3, title: 'Spark More3', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_1.png') },
-        { id: 3, title: 'Spark More3', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_2.png') }
+        { id: 1, title: 'Spark More', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_1.png') },
+        { id: 2, title: 'Spark More', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_2.png') },
+        { id: 3, title: 'Spark More', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_1.png') },
+        { id: 3, title: 'Spark More', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_2.png') }
       ],
       about_contain: [
         {
@@ -197,10 +213,10 @@ export default {
         }
       ],
       courseList: [
-        { id: 1, year: '2021', name: '为万科、融侨城、金辉集团等企业机构制作数条企业宣传片/产品TVC', img: require('@/assets/img/news/new_3.png') },
-        { id: 2, year: '2022', name: '为万科、融侨城、金辉集团等企业机构制', img: require('@/assets/img/news/new_3.png') },
-        { id: 3, year: '2023', name: '为万科、融侨城、金辉集团等企业机构制作数产品TVC', img: require('@/assets/img/news/new_3.png') },
-        { id: 4, year: '2024', name: '团等企业机构制作数条企业宣传片/产品TVC', img: require('@/assets/img/news/new_3.png') }
+        { id: 1, year: '2021', name: '2021为万科、融侨城、金辉集团等企业机构制作数条企业宣传片/产品TVC', img: require('@/assets/img/news/new_3.png') },
+        { id: 2, year: '2022', name: '2022为万科、融侨城、金辉集团等企业机构制', img: require('@/assets/img/news/new_3.png') },
+        { id: 3, year: '2023', name: '2023为万科、融侨城、金辉集团等企业机构制作数产品TVC', img: require('@/assets/img/news/new_3.png') },
+        { id: 4, year: '2024', name: '2024团等企业机构制作数条企业宣传片/产品TVC', img: require('@/assets/img/news/new_3.png') }
       ],
       brandList: [
         { id: 1, img: require('@/assets/img/about/brand_1.png') },
@@ -242,7 +258,7 @@ export default {
       const windowWidth = window.innerWidth
       if (windowWidth < 750) {
         state.colSpan = 8
-        state.gutter = [20, 30]
+        state.gutter = [40, 40]
         state.isMobile = true
         state.perView_introduce = 'auto'
         state.between = 10
@@ -261,16 +277,10 @@ export default {
       state[`swiper${type}_active`] = e.realIndex + 1
     }
     const sildePre = e => {
-      if (e == 3) {
-        state[`swiper4`].slidePrev(1000, true)
-      }
       state[`swiper${e}`].slidePrev(1000, true)
       state[`swiper${e}_active`] = state[`swiper${e}`].realIndex + 1
     }
     const sildeNext = e => {
-      if (e == 3) {
-        state[`swiper4`].slideNext(1000, true)
-      }
       state[`swiper${e}`].slideNext(1000, true)
       state[`swiper${e}_active`] = state[`swiper${e}`].realIndex + 1
     }
@@ -475,6 +485,7 @@ export default {
     transition: 0.5s;
     .contain_top {
       position: relative;
+      height: 18.75rem;
       .shadow {
         width: 100%;
         height: 100%;
@@ -510,20 +521,13 @@ export default {
 }
 .about_debris {
   padding: 6.25rem 0 12rem;
-  .about_contain {
-  }
-  .swiper {
-    .swiper-wrapper {
-      // margin: 0 10px;
-      .swiper-slide {
-      }
-      .swiper-slide:last-of-type {
-      }
-    }
-  }
   .img_box {
     display: flex;
     width: auto;
+    img {
+      object-fit: cover;
+      border-radius: 1.25rem;
+    }
     .top_down {
       display: inline-flex;
       flex-flow: column;
@@ -572,10 +576,15 @@ export default {
   .scroll-container {
     overflow: hidden;
     position: relative;
+    display: flex;
   }
   .scroll-content {
     width: 147.5rem;
-    animation: scroll-left 10s linear infinite;
+    white-space: nowrap;
+    animation: scroll-left 30s linear infinite;
+  }
+  .scroll-content2 {
+    animation: scroll-left 30s linear infinite;
   }
 
   @keyframes scroll-left {
@@ -583,7 +592,15 @@ export default {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-100%);
+      transform: translateX(-147.5rem);
+    }
+  }
+  @keyframes scroll-left2 {
+    0% {
+      transform: translateX(-147.5rem);
+    }
+    100% {
+      transform: translateX(0);
     }
   }
 }

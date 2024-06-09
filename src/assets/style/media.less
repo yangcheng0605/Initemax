@@ -207,7 +207,6 @@
       }
     }
   }
-  // 产品列表
   // 案例
   .products {
     .new_title {
@@ -354,105 +353,223 @@
       }
     }
   }
-  // 首页
-  .home {
-    .title {
-      font-size: 1.75rem !important;
-    }
-    .home_banner {
-      height: 31.25rem;
-      img {
-        height: 100%;
-        object-fit: cover;
+  // 关于我们
+  .about {
+    .new_title {
+      margin-bottom: 2.5rem;
+      & > p {
+        font-size: 1.5rem;
+        line-height: 2.25rem;
+        border-bottom: 0.25rem solid #ff8a2c;
       }
     }
-    .home_sildePre,
-    .home_sildeNext {
-      display: none;
+    .about_banner {
+      padding: 2.5rem 0 3.75rem;
+      .about_contain {
+        border-radius: 0.625rem;
+        height: 100%;
+        .content {
+          width: 100%;
+          bottom: 3.75rem;
+          top: initial;
+          transform: translateX(-50%);
+          .title {
+            font-size: 2.25rem;
+            line-height: 3.375rem;
+            letter-spacing: 0.4375rem;
+          }
+          .text {
+            font-size: 1.25rem;
+            line-height: 1.875rem;
+            margin-top: 0;
+          }
+        }
+        img {
+          border-radius: 0.625rem;
+          object-fit: cover;
+        }
+      }
+      .swiper_box {
+        .swiper {
+          .swiper-wrapper {
+            .swiper-slide {
+              width: 17.5rem !important;
+              height: 25rem !important;
+              &.swiper-slide-active {
+                img {
+                  transform: scale(1);
+                }
+              }
+            }
+          }
+        }
+      }
+      .home_silde {
+        margin-top: 2.875rem;
+      }
     }
-    .home_block.home_center {
-      padding: 2.5rem 0;
-      .homt_pros {
-        .title {
-          padding: 0 1.25rem;
+    .about_introduce {
+      padding: 3.75rem 0;
+      background: url(../../assets/img/about/text_bg.png) no-repeat center/cover;
+      .about_contain {
+        padding: 0 1.5rem;
+        p {
+          font-size: 0.875rem;
           line-height: 1.75rem;
         }
       }
-      .swiper-wrapper {
-        margin-left: 1.25rem;
-      }
-      .swiper-slide {
-        width: 16.5rem !important;
-      }
-      .proImg {
-        height: 22rem;
-      }
-      .homt_pros .home_tab {
-        margin: 0.25rem 0 2rem 0;
-        .ant-tabs-nav-wrap {
-          overflow-x: scroll !important;
-          .ant-tabs-tab:first-of-type {
-            margin-left: 1.25rem;
-          }
-          .ant-tabs-tab {
-            margin-right: 1rem;
-          }
-        }
-      }
-      .home_tag {
-        width: 5rem;
-        top: -2.5rem;
-        right: 0.625rem;
+      .home_silde {
+        margin-top: 6.25rem;
       }
     }
-    .home_block.home_bottom {
-      padding: 2.5rem 1.25rem;
-      .title {
-        line-height: 1.75rem !important;
+    .about_brand {
+      padding: 3.75rem 1.75rem 2.5rem;
+      img {
+        width: 5rem;
+        height: 5rem;
       }
-      .home_b_top {
-        margin-bottom: 1.5rem;
+    }
+    .about_course {
+      padding: 3.75rem 0;
+      background: url(../../assets/img/product/text_bg.png) no-repeat center / cover;
+      .new_title {
+        margin-bottom: 0;
       }
-      .home_imgs {
-        flex-flow: column;
-        font-size: 1.25rem;
-        .img_text {
-          position: absolute;
-          left: 0.75rem;
-          bottom: 0.625rem;
+      .year_box {
+        & > div {
+          padding: 0;
+        }
+        .swiper {
+          .swiper-wrapper {
+            .swiper-slide {
+              width: 15rem !important;
+              height: 7.9375rem !important;
+              &.swiper-slide-active {
+                .year {
+                  p {
+                    transform: scale(1);
+                    line-height: 4.5rem;
+                  }
+                  .circle {
+                    margin-top: 0.625rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .year {
+          p {
+            font-size: 3rem;
+          }
+          .circle {
+            width: 0.9375rem;
+            height: 0.9375rem;
+            border: 0.125rem solid #ff8a2c;
+            margin-top: 0.625rem;
+          }
+        }
+        .line {
+          bottom: 0.7rem;
+        }
+      }
+      .course_box {
+        padding: 0;
+        margin-top: 3.125rem;
+        .swiper {
+          .swiper-wrapper {
+            .swiper-slide {
+              width: 15rem !important;
+              height: 19.875rem !important;
+              &.swiper-slide-active {
+                .about_contain {
+                  .name {
+                    font-size: 1rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .about_contain {
+        border-radius: 0.625rem;
+        .contain_top {
+          width: 15rem;
+          height: 15rem;
+          .shadow {
+            border-radius: 0.625rem;
+          }
+          img {
+            border-radius: 0.625rem;
+          }
+        }
+        .name {
+          font-size: 1rem;
+          margin-top: 1.875rem;
           line-height: 1.5rem;
         }
-        .home_imgs_left {
-          height: auto;
-          margin-bottom: 0.9375rem;
-          img {
-            width: 10rem;
-            height: 10rem;
-            object-fit: cover;
-            object-position: left;
-          }
-          .imgs_lr {
-            margin-bottom: 0.9375rem;
-            .home_img_s {
-              margin-right: 0.9375rem;
-            }
-          }
-          .imgs_rl {
-            .home_img_r {
-              margin-right: 0.9375rem;
-            }
-          }
+      }
+      .home_silde {
+        margin-top: 5.3125rem;
+      }
+    }
+    .about_debris {
+      padding: 2.5rem 0 3.5rem;
+      .img_box {
+        img {
+          border-radius: 0.625rem;
         }
-        .home_imgs_right {
-          width: 20.9375rem;
-          margin: 0;
-          height: 10rem;
-          img {
-            object-fit: cover;
-            object-position: bottom;
-            height: inherit;
-          }
+        .top_down {
+          margin: 0 0.36458rem;
         }
+        .single {
+          height: 22.604rem;
+          margin: 0 0.36458rem;
+        }
+        .width_600 {
+          width: 21.875rem;
+        }
+        .width_560 {
+          width: 20.416rem;
+        }
+        .width_1140 {
+          width: 71.25rem;
+        }
+        .height_360 {
+          height: 13.125rem;
+        }
+        .height_300 {
+          height: 10.9375rem;
+        }
+        .height_240 {
+          height: 8.75rem;
+        }
+        .mb_20 {
+          margin-bottom: 0.875rem;
+        }
+        .mr_20 {
+          margin-right: 0.875rem;
+        }
+      }
+      .scroll-content {
+        width: 147.5rem;
+      }
+    }
+    .home_silde {
+      .home_sildePre,
+      .home_sildeNext {
+        width: 1.875rem;
+        height: 1.875rem;
+        img {
+          width: 1rem;
+        }
+      }
+      .progress {
+        width: 3.9375rem;
+        height: 1.875rem;
+        font-size: 1.25rem;
+        line-height: 1.875rem;
       }
     }
   }
