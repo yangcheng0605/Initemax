@@ -601,6 +601,94 @@
       }
     }
   }
+  .home {
+    .h_first {
+      padding: 0;
+      height: 100vh;
+      .title {
+        font-size: 3.125rem;
+        line-height: 4.6875rem;
+        letter-spacing: 0.625rem;
+      }
+      .subtitle {
+        font-size: 1.875rem;
+        line-height: 2.8125rem;
+      }
+    }
+    .h_second {
+      padding: 5rem 2.5rem 6.25rem;
+      height: 100vh;
+      .s_top {
+        margin-bottom: 9.875rem;
+        .title {
+          font-size: 2.5rem;
+          line-height: 3rem;
+        }
+        .s_text {
+          width: auto;
+          font-size: 1rem;
+          line-height: 1.5rem;
+          margin: 1.25rem 0 0;
+        }
+      }
+      .s_bottom {
+        width: auto;
+        position: relative;
+        .type_box {
+          transform: scale(0.625);
+          border-radius: 0.8125rem;
+        }
+        .swiper {
+          .swiper-wrapper {
+            .swiper-slide {
+              width: 7.125rem !important;
+              height: 10rem !important;
+              &.swiper-slide-active {
+                .type_box {
+                  p {
+                    width: 1.75rem;
+                    font-size: 2.125rem;
+                    line-height: 2.563rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .home_silde {
+          margin-top: 0;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 2;
+          width: 100%;
+          .home_sildePre,
+          .home_sildeNext {
+            width: 1.875rem;
+            height: 1.875rem;
+            img {
+              width: 1rem;
+            }
+          }
+          .home_sildePre {
+            left: -10rem;
+          }
+          .home_sildeNext {
+            right: -10rem;
+          }
+        }
+      }
+      .s_btn {
+        width: 11.25rem !important;
+        height: 3.5rem;
+        font-size: 1.25rem;
+        line-height: 1.875rem;
+      }
+    }
+    .h_third {
+      padding: 3.75rem 0 2.5rem;
+    }
+  }
   // 年龄弹窗
   .adult_pop {
     width: 76% !important;
