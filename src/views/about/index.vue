@@ -109,7 +109,6 @@
         </swiper>
         <div class="home_silde">
           <div class="home_sildePre" @click="sildePre(3)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
-          <p class="progress">{{ swiper3_active }}/{{ courseList.length }}</p>
           <div class="home_sildeNext" @click="sildeNext(3)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
         </div>
       </div>
@@ -213,7 +212,7 @@ export default {
         }
       ],
       courseList: [
-        { id: 1, year: '2021', name: '2021为万科、融侨城、金辉集团等企业机构制作数条企业宣传片/产品TVC', img: require('@/assets/img/news/new_3.png') },
+        { id: 1, year: '2021', name: '为万科、融侨城、金辉集团等企业机构制作数条企业宣传片/产品TVC', img: require('@/assets/img/news/new_3.png') },
         { id: 2, year: '2022', name: '2022为万科、融侨城、金辉集团等企业机构制', img: require('@/assets/img/news/new_3.png') },
         { id: 3, year: '2023', name: '2023为万科、融侨城、金辉集团等企业机构制作数产品TVC', img: require('@/assets/img/news/new_3.png') },
         { id: 4, year: '2024', name: '2024团等企业机构制作数条企业宣传片/产品TVC', img: require('@/assets/img/news/new_3.png') }
@@ -514,9 +513,12 @@ export default {
       -webkit-line-clamp: 2;
     }
   }
-
   .home_silde {
     margin-top: 6.125rem;
+    .home_sildePre,
+    .home_sildeNext {
+      margin: 0 0.3125rem;
+    }
   }
 }
 .about_debris {

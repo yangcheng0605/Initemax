@@ -39,26 +39,26 @@
       </div>
       <div class="mobile-only">
         <div class="footer-top">
-          <p class="Fnav">
-            <a href="/#/" @click="show = false">首页</a>
+          <a class="Fnav" href="/#/">
+            <p @click="show = false">首页</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </p>
-          <p class="Fnav">
-            <a href="/#/products" @click="show = false">案例</a>
+          </a>
+          <a class="Fnav" href="/#/products">
+            <p @click="show = false">案例</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </p>
-          <p class="Fnav">
-            <a href="/#/news" @click="show = false">最新资讯</a>
+          </a>
+          <a class="Fnav" href="/#/news">
+            <p @click="show = false">最新资讯</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </p>
-          <p class="Fnav">
-            <a href="/#/contact" @click="show = false">联系我们 </a>
+          </a>
+          <a class="Fnav" href="/#/contact">
+            <p @click="show = false">联系我们</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </p>
-          <p class="Fnav">
-            <a href="/#/about" @click="show = false">关于我们</a>
+          </a>
+          <a class="Fnav" href="/#/about">
+            <p @click="show = false">关于我们</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </p>
+          </a>
         </div>
         <div class="footer-bottom">
           <img class="f_logo" src="@/assets/img/footer/f_logo.png" alt="" />

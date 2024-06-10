@@ -455,12 +455,31 @@
                   }
                 }
               }
+              &.swiper-slide-prev {
+                .year {
+                  position: absolute;
+                  right: 0;
+                  .circle {
+                    display: none;
+                  }
+                }
+              }
+              &.swiper-slide-next {
+                .year {
+                  position: absolute;
+                  left: 0;
+                  .circle {
+                    display: none;
+                  }
+                }
+              }
             }
           }
         }
         .year {
           p {
             font-size: 3rem;
+            transition: 0s;
           }
           .circle {
             width: 0.9375rem;
@@ -485,6 +504,10 @@
                 .about_contain {
                   .name {
                     font-size: 1rem;
+                    display: inline-block;
+                    width: 20.4375rem;
+                    position: absolute;
+                    left: -2.75rem;
                   }
                 }
               }
@@ -508,10 +531,15 @@
           font-size: 1rem;
           margin-top: 1.875rem;
           line-height: 1.5rem;
+          display: none;
         }
       }
       .home_silde {
         margin-top: 5.3125rem;
+        .home_sildePre,
+        .home_sildeNext {
+          margin: 0 0.375rem;
+        }
       }
     }
     .about_debris {
