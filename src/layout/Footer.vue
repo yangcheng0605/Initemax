@@ -1,5 +1,5 @@
 <template>
-  <div id="shopify-section-footer" class="shopify-section">
+  <div id="shopify-section-footer" class="shopify-section wiper_4">
     <section class="footer">
       <div class="desktop-only">
         <div class="d_top">

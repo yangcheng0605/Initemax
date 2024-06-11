@@ -1,6 +1,6 @@
 <template>
   <div class="home" @wheel="handleMouseWheel">
-    <!-- <swiper
+    <swiper
       class="swiper-no-swiping pageSwiper"
       :direction="'vertical'"
       :slidesPerView="1"
@@ -10,122 +10,179 @@
       @swiper="e => onSwiper(e, 1)"
       @slideChange="e => onSlideChange(e)"
     >
-      <swiper-slide class="pageSwiper_slide"> -->
-    <div class="h_first">
-      <div class="title wow animate__fadeInUp" data-wow-offset="50">
-        <p class="SmileFont title">Spark More</p>
-        <p class="SmileFont subtitle">去发现，无限可能</p>
-      </div>
-    </div>
-    <!-- </swiper-slide>
-      <swiper-slide> -->
-    <div class="h_second">
-      <div class="s_top">
-        <p class="SmileFont title">造光 IGNITEMAX</p>
-        <p class="s_text">
-          致力于艺术与科技的完美融合，利用影像让一切更有价值的企业 造光核心团队成员拥有多年创作经验与丰富执行资源 出身于华为、迈瑞千万级的视频供应商团队
-          华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验
-        </p>
-        <a-button type="link" class="s_btn" v-if="!isMobile">了解详情</a-button>
-      </div>
-      <div class="s_bottom" v-if="!isMobile">
-        <swiper :modules="modules" slides-per-view="auto" loop centeredSlides :space-between="10" @swiper="e => onSwiper(e, 2)">
-          <swiper-slide v-for="item in typeList" :key="item.id">
-            <div class="type_box">
-              <img class="type_bg" :src="item.img" alt="" />
-              <p class="SmileFont">{{ item.name }}</p>
-              <div class="black"></div>
-            </div>
-          </swiper-slide>
-        </swiper>
-        <div class="home_silde">
-          <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
-          <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+      <swiper-slide class="pageSwiper_slide">
+        <div class="h_first wiper_1">
+          <div class="title wow animate__fadeInUp" data-wow-offset="50">
+            <p class="SmileFont title">Spark More</p>
+            <p class="SmileFont subtitle">去发现，无限可能</p>
+          </div>
+          <div class="downLoad" v-if="isMobile">
+            <img src="@/assets/img/down.png" alt="" />
+          </div>
         </div>
-      </div>
-      <div class="s_bottom" v-else>
-        <swiper :modules="modules" slides-per-view="auto" loop centeredSlides :space-between="0" @swiper="e => onSwiper(e, 2)">
-          <swiper-slide v-for="item in typeList" :key="item.id">
-            <div class="type_box">
-              <img class="type_bg" :src="item.img" alt="" />
-              <p class="SmileFont">{{ item.name }}</p>
-              <div class="black"></div>
-            </div>
-          </swiper-slide>
-        </swiper>
-        <div class="home_silde">
-          <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
-          <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
-        </div>
-      </div>
-      <a-button type="link" class="s_btn" v-if="isMobile">了解详情</a-button>
-    </div>
-    <!-- </swiper-slide>
-      <swiper-slide> -->
-    <div class="h_third">
-      <div class="h_types" v-if="!isMobile">
-        <div :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id)" v-for="item in typeList" :key="item.id">
-          <img class="type_bg" :src="item.img" alt="" />
-          <p class="SmileFont">{{ item.name }}</p>
-          <div class="black" v-if="currentType !== item.id"></div>
-        </div>
-      </div>
-      <div class="h_types" v-else>
-        <p
-          :class="['type_box_mb', 'SmileFont', currentType == item.id ? 'active' : '', item.id == currentType - 1 || item.id == currentType + 1 ? 'subactive' : '']"
-          @click="chooseType(item.id)"
-          v-for="item in typeList"
-          :key="item.id"
-        >
-          {{ item.name }}
-        </p>
-      </div>
-      <div class="h_tags">
-        <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
-          <swiper-slide v-for="item in tagList" :key="item.id">
-            <p :class="['tag', tags.indexOf(item.id) > -1 ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
-          </swiper-slide>
-        </swiper>
-      </div>
-      <div class="h_video">
-        <div class="swiper_box">
-          <swiper :modules="modules" slides-per-view="auto" centeredSlides loop @swiper="e => onSwiper(e, 4)" :speed="1000">
-            <swiper-slide v-for="item in proList" :key="item.id">
-              <div class="about_contain">
-                <img :src="item.img" alt="" />
-                <div class="content">
-                  <p class="title SmileFont">{{ item.name }}</p>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="h_second wiper_2">
+          <div class="s_top">
+            <p class="SmileFont title">造光 IGNITEMAX</p>
+            <p class="s_text">
+              <span>致力于艺术与科技的完美融合，利用影像让一切更有价值的企业</span>
+              <span>造光核心团队成员拥有多年创作经验与丰富执行资源</span>
+              <span>出身于华为、迈瑞千万级的视频供应商团队</span>
+              <span>华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验</span>
+            </p>
+            <a-button type="link" class="s_btn" v-if="!isMobile">了解详情</a-button>
+          </div>
+          <div class="s_bottom" v-if="!isMobile">
+            <swiper class="swiper-no-swiping" :modules="modules" observer observeParents loop grabCursor slides-per-view="5" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)">
+              <swiper-slide v-for="item in typeList" :key="item.id">
+                <div class="type_box">
+                  <img class="type_bg" :src="item.img" alt="" />
+                  <p class="SmileFont">{{ item.name }}</p>
+                  <div class="black"></div>
                 </div>
-              </div>
-            </swiper-slide>
+              </swiper-slide>
+            </swiper>
             <div class="home_silde">
-              <div class="home_sildePre blackborder" @click="sildePre(4)"><img src="@/assets/img/arrow_white_l.png" alt="" /></div>
-              <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
+              <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
+              <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
             </div>
-          </swiper>
+          </div>
+          <div class="s_bottom" v-else>
+            <swiper :modules="modules" loop observer observeParents slides-per-view="auto" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)">
+              <swiper-slide v-for="item in typeList" :key="item.id">
+                <div class="type_box">
+                  <img class="type_bg" :src="item.img" alt="" />
+                  <p class="SmileFont">{{ item.name }}</p>
+                  <div class="black"></div>
+                </div>
+              </swiper-slide>
+            </swiper>
+            <div class="home_silde">
+              <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
+              <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+            </div>
+          </div>
+          <div class="btn_box">
+            <a-button type="link" class="s_btn" v-if="isMobile">了解详情</a-button>
+          </div>
         </div>
-      </div>
-      <div class="btn_box">
-        <a-button type="link" class="s_btn">了解详情</a-button>
-      </div>
-    </div>
-    <!-- </swiper-slide>
-    </swiper> -->
+      </swiper-slide>
+      <swiper-slide>
+        <div class="h_third wiper_3">
+          <div class="h_types">
+            <div v-if="isMobile">
+              <p
+                :class="['type_box_mb', 'SmileFont', currentType == item.id ? 'active' : '', item.id == currentType - 1 || item.id == currentType + 1 ? 'subactive' : '']"
+                @click="chooseType(item.id)"
+                v-for="item in secondList"
+                :key="item.id"
+              >
+                {{ item.name }}
+              </p>
+            </div>
+            <div v-else :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id)" v-for="item in secondList" :key="item.id">
+              <img class="type_bg" :src="item.img" alt="" />
+              <p class="SmileFont">{{ item.name }}</p>
+              <div class="black" v-if="currentType !== item.id"></div>
+            </div>
+          </div>
+          <div class="h_tags">
+            <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
+              <swiper-slide v-for="item in tagList" :key="item.id">
+                <p :class="['tag', tags.indexOf(item.id) > -1 ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
+              </swiper-slide>
+            </swiper>
+          </div>
+          <div class="h_video">
+            <div class="swiper_box" v-if="!isMobile">
+              <swiper
+                :modules="modules"
+                slides-per-view="auto"
+                centeredSlides
+                loop
+                @swiper="e => onSwiper(e, 4)"
+                :speed="1000"
+                @slideChangeTransitionStart="transitionStart"
+                @slideChangeTransitionEnd="transitionEnd"
+              >
+                <swiper-slide v-for="item in proList" :key="item.id">
+                  <div class="about_contain">
+                    <img :src="item.img" alt="" />
+                    <div class="play">
+                      <img src="@/assets/img/play.png" alt="" />
+                    </div>
+                    <div class="content">
+                      <p class="title SmileFont">{{ item.name }}</p>
+                    </div>
+                  </div>
+                </swiper-slide>
+                <div class="home_silde" v-if="showSilde">
+                  <div class="home_sildePre blackborder" @click="sildePre(4)"><img src="@/assets/img/arrow_white_l.png" alt="" /></div>
+                  <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
+                </div>
+              </swiper>
+            </div>
+            <div class="swiper_box" v-else>
+              <swiper
+                :modules="modules"
+                :effect="'coverflow'"
+                :coverflowEffect="{
+                  rotate: 0,
+                  stretch: 0,
+                  depth: 200,
+                  modifier: 1,
+                  slideShadows: false
+                }"
+                loop
+                slidesPerView="auto"
+                centeredSlides
+                :speed="1000"
+                @swiper="e => onSwiper(e, 4)"
+                @slideChange="e => onSlideVideoChange(e)"
+              >
+                <swiper-slide v-for="item in proList" :key="item.id">
+                  <div class="about_contain">
+                    <img :src="item.img" alt="" />
+                    <div class="play">
+                      <img src="@/assets/img/play.png" alt="" />
+                    </div>
+                  </div>
+                </swiper-slide>
+              </swiper>
+              <div class="home_silde" v-if="showSilde">
+                <div class="home_sildePre blackborder" @click="sildePre(4)"><img src="@/assets/img/arrow_white_l.png" alt="" /></div>
+                <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
+              </div>
+              <div class="content">
+                <p class="title">{{ proList[currentVideoIndex].name }}</p>
+              </div>
+            </div>
+            <div class="btn_box">
+              <a-button type="link" class="s_btn">了解详情</a-button>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper>
+    <Pop></Pop>
   </div>
 </template>
 <script>
-import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, h, computed } from 'vue'
+import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Mousewheel, Pagination, Navigation } from 'swiper/modules'
+import { Mousewheel, Navigation, EffectCoverflow } from 'swiper/modules'
+import { debounce } from 'lodash'
+import Pop from '@/components/pop.vue'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css'
-import { debounce } from 'lodash'
 
 export default {
   name: 'IHome',
   components: {
+    Pop,
     Swiper,
     SwiperSlide
   },
@@ -133,14 +190,16 @@ export default {
     const router = useRouter()
     const { proxy } = getCurrentInstance()
     const state = reactive({
-      modules: [Mousewheel],
+      modules: [Mousewheel, EffectCoverflow],
       bannerList: null,
       swiper1: null,
       swiper2: null,
       swiper3: null,
       swiper4: null,
+      currentVideoIndex: 0,
       mousewheel: true,
       isMobile: false,
+      showSilde: true,
       curentPage: 1,
       curentIndex: 0,
       perView: 8,
@@ -148,6 +207,36 @@ export default {
       currentType: 3,
       tags: [0],
       typeList: [
+        {
+          id: 1,
+          name: '造月',
+          img: require('@/assets/img/type_h_1.png'),
+          bgImg: require('@/assets/img/home/bg_1.png'),
+          title:
+            '致力于艺术与科技的完美融合，利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
+        },
+        {
+          id: 2,
+          name: '造暗',
+          img: require('@/assets/img/type_h_2.png'),
+          bgImg: require('@/assets/img/home/bg_2.png'),
+          title: '造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
+        },
+        {
+          id: 3,
+          name: '造光',
+          img: require('@/assets/img/type_h_3.png'),
+          bgImg: require('@/assets/img/home/bg_3.png'),
+          title: '利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
+        },
+        {
+          id: 4,
+          name: '造火',
+          img: require('@/assets/img/type_h_4.png'),
+          bgImg: require('@/assets/img/home/bg_1.png'),
+          title: '出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
+        },
+        { id: 5, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.png'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
         {
           id: 1,
           name: '造月',
@@ -214,6 +303,7 @@ export default {
         var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
         wow.init()
       })
+      // getPicList()
     })
     const getPicList = () => {
       proxy.$api.picList('').then(res => {
@@ -221,8 +311,8 @@ export default {
       })
     }
     const handleMouseWheel = debounce(function (e) {
-      const swiperelement = document.getElementsByClassName('swiper-no-swiping')[0]
-      const element = document.getElementsByClassName('footer')[0]
+      // const swiperelement = document.getElementsByClassName('swiper-no-swiping')[0]
+      // const element = document.getElementsByClassName('footer')[0]
       // if (e.deltaY > 0) {
       //   state.curentIndex += 1
       //   if (state.curentPage == 3 && state.curentIndex > 2) {
@@ -238,11 +328,20 @@ export default {
       //   }
       //   swiperelement.scrollIntoView({ behavior: 'smooth' })
       // }
-    }, 500) // 设置防抖的等待时间为200毫秒
+    }, 500)
     const onSlideChange = e => {
       state.curentPage = e.realIndex + 1
       // state.mousewheel = computed(() => (e.realIndex + 1 == 3 ? false : true))
       // state.modules = computed(() => (e.realIndex + 1 == 3 ? null : [Mousewheel]))
+    }
+    const onSlideVideoChange = e => {
+      state.currentVideoIndex = e.realIndex
+    }
+    const transitionStart = () => {
+      state.showSilde = false
+    }
+    const transitionEnd = () => {
+      state.showSilde = true
     }
     const handleResize = () => {
       const windowWidth = window.innerWidth
@@ -289,6 +388,9 @@ export default {
       onSwiper,
       sildePre,
       onSlideChange,
+      onSlideVideoChange,
+      transitionStart,
+      transitionEnd,
       handleMouseWheel,
       sildeNext,
       chooseType,
@@ -351,7 +453,7 @@ export default {
     height: 67.5rem;
   }
   .pageSwiper_slide {
-    height: 100% !important;
+    height: 100%;
   }
   .home_silde {
     .home_sildePre,
@@ -367,8 +469,8 @@ export default {
   }
 }
 .h_first {
-  padding: 25rem 0 26.5rem;
-  height: 100%;
+  // padding: 25rem 0 26.5rem;
+  height: 100vh;
   background: url(../../assets/img/home/bg_1.png) no-repeat 100% / cover;
   text-align: center;
   display: flex;
@@ -391,6 +493,7 @@ export default {
   height: 100%;
   background: url(../../assets/img/home/bg_2.png) no-repeat center / cover;
   color: #fff;
+  overflow: hidden;
   .s_top {
     margin-bottom: 4.125rem;
     .title {
@@ -402,15 +505,16 @@ export default {
       font-size: 1.5rem;
       line-height: 2.25rem;
       margin: 1.875rem 0 3.125rem;
+      span {
+        display: block;
+      }
     }
   }
   .s_bottom {
     width: 64rem;
-    // float: right;
+    float: right;
     .type_box {
       text-align: center;
-      // width: 10rem;
-      // height: 14rem;
       // width: 12.5rem;
       // height: 17.5rem;
       border-radius: 1rem;
@@ -423,7 +527,8 @@ export default {
         width: 3rem;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, 50%);
+        font-size: 3.75rem;
+        transform: translate(-50%, -50%) scale(0.8);
       }
     }
     .swiper {
@@ -435,15 +540,20 @@ export default {
           // display: flex;
           // justify-content: center;
           // align-items: flex-end;
+          // width: 10rem !important;
+          // height: 14rem !important;
           width: 12.5rem !important;
           height: 17.5rem !important;
           &.swiper-slide-active {
+            margin: 0 1.25rem;
+            border-radius: 1rem;
+            border: 0.375rem solid #fff;
             .type_box {
               transform: scale(1);
               // border: 0.375rem solid #ffffff;
               p {
-                font-size: 3.75rem;
                 line-height: 4.5rem;
+                transform: translate(-50%, -50%) scale(1);
               }
               .black {
                 opacity: 0;
@@ -534,9 +644,6 @@ export default {
               img {
                 transform: scale(1);
               }
-              .shadow {
-                opacity: 0;
-              }
               .title {
                 font-size: 2rem;
                 line-height: 3rem;
@@ -563,7 +670,21 @@ export default {
         opacity: 0;
         transition: 0.5s;
       }
-      img {
+      .play {
+        background: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 1.25rem;
+        cursor: pointer;
+        img {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+      }
+      & > img {
         border-radius: 1.25rem;
         width: 100%;
         height: 100%;
@@ -590,6 +711,9 @@ export default {
       .home_sildeNext {
         right: -31rem;
       }
+    }
+    .btn_box {
+      margin-top: 3.75rem;
     }
   }
   .btn_box {
