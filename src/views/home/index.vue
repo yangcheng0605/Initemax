@@ -1,15 +1,6 @@
 <template>
   <div class="home" @wheel="handleMouseWheel">
-    <swiper
-      class="swiper-no-swiping pageSwiper"
-      :direction="'vertical'"
-      :slidesPerView="1"
-      :mousewheel="mousewheel"
-      :modules="modules"
-      :speed="700"
-      @swiper="e => onSwiper(e, 1)"
-      @slideChange="e => onSlideChange(e)"
-    >
+    <swiper class="pageSwiper" :direction="'vertical'" :slidesPerView="1" :mousewheel="mousewheel" :modules="modules" :speed="700" @swiper="e => onSwiper(e, 1)" @slideChange="e => onSlideChange(e)">
       <swiper-slide class="pageSwiper_slide">
         <div class="h_first wiper_1">
           <div class="title wow animate__fadeInUp" data-wow-offset="50">
@@ -450,7 +441,8 @@ export default {
   }
   .pageSwiper {
     width: 100%;
-    height: 67.5rem;
+    // height: 67.5rem;
+    height: 100vh;
   }
   .pageSwiper_slide {
     height: 100%;
