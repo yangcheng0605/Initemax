@@ -603,16 +603,13 @@
   }
   // 首页
   .home {
-    // & > .swiper {
-    //   .swiper-wrapper {
-    //     .swiper-slide {
-    //       height: 100vh !important;
-    //     }
-    //   }
-    // }
+    .pageSwiper {
+      & > .swiper-wrapper > .swiper-slide {
+        height: 100% !important;
+      }
+    }
     .h_first {
       padding: 0;
-      height: 100vh;
       .title {
         font-size: 3.125rem;
         line-height: 4.6875rem;
@@ -632,7 +629,6 @@
     }
     .h_second {
       padding: 5rem 1.5rem 6.25rem;
-      height: 100vh;
       .s_top {
         margin-bottom: 9.875rem;
         .title {
@@ -649,6 +645,7 @@
       .s_bottom {
         width: 100%;
         position: relative;
+        float: none;
         .type_box {
           transform: scale(0.623);
           border-radius: 0.8125rem;
@@ -711,7 +708,6 @@
     }
     .h_third {
       padding: 3.75rem 0 2.5rem;
-      height: 100vh;
       .h_types {
         padding: 0 2.5em;
         text-align: center;
@@ -850,10 +846,18 @@
         }
       }
     }
+    .test {
+      height: 1500px;
+      background: red;
+      font-size: 100px;
+      word-break: break-all;
+    }
   }
   // 浮窗
   .pop.pop_box {
     right: 0.5rem;
+    bottom: 1rem;
+    top: initial;
     .pop_block {
       width: 3rem;
       height: 3rem;
@@ -901,9 +905,7 @@
         margin-bottom: 6.25rem;
       }
       .btn_box {
-        .s_btn {
-          margin-top: 1.875rem;
-        }
+        margin-top: 1.875rem;
       }
     }
     .h_third {

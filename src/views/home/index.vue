@@ -1,7 +1,20 @@
 <template>
   <div class="home" @wheel="handleMouseWheel">
-    <swiper class="pageSwiper" :direction="'vertical'" :slidesPerView="1" :mousewheel="mousewheel" :modules="modules" :speed="700" @swiper="e => onSwiper(e, 1)" @slideChange="e => onSlideChange(e)">
-      <swiper-slide class="pageSwiper_slide">
+    <swiper
+      class="pageSwiper"
+      autoHeight
+      :resistanceRatio="0"
+      direction="vertical"
+      :mousewheel="mousewheel"
+      :observer="true"
+      :observeParents="true"
+      :speed="700"
+      :modules="modules"
+      @swiper="e => onSwiper(e, 1)"
+      @slideChange="e => onSlideChange(e)"
+      v-if="isMobile"
+    >
+      <swiper-slide class="s_1">
         <div class="h_first wiper_1">
           <div class="title wow animate__fadeInUp" data-wow-offset="50">
             <p class="SmileFont title">Spark More</p>
@@ -12,7 +25,7 @@
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide>
+      <swiper-slide class="s_2">
         <div class="h_second wiper_2">
           <div class="s_top">
             <p class="SmileFont title">造光 IGNITEMAX</p>
@@ -60,7 +73,193 @@
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div class="h_third wiper_3">
+        <swiper
+          direction="vertical"
+          slidesPerView="auto"
+          :resistanceRatio="0"
+          :modules="modules"
+          :freeMode="true"
+          @swiper="e => onSwiper(e, 5)"
+          @slideChange="e => onSlideChange(e)"
+          nested
+          style="height: 100%"
+        >
+          <swiper-slide>
+            <div class="h_third s_3">
+              <div class="h_types">
+                <div v-if="isMobile">
+                  <p
+                    :class="['type_box_mb', 'SmileFont', currentType == item.id ? 'active' : '', item.id == currentType - 1 || item.id == currentType + 1 ? 'subactive' : '']"
+                    @click="chooseType(item.id)"
+                    v-for="item in secondList"
+                    :key="item.id"
+                  >
+                    {{ item.name }}
+                  </p>
+                </div>
+                <div v-else :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id)" v-for="item in secondList" :key="item.id">
+                  <img class="type_bg" :src="item.img" alt="" />
+                  <p class="SmileFont">{{ item.name }}</p>
+                  <div class="black" v-if="currentType !== item.id"></div>
+                </div>
+              </div>
+              <div class="h_tags">
+                <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
+                  <swiper-slide v-for="item in tagList" :key="item.id">
+                    <p :class="['tag', tags.indexOf(item.id) > -1 ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
+                  </swiper-slide>
+                </swiper>
+              </div>
+              <div class="h_video">
+                <div class="swiper_box" v-if="!isMobile">
+                  <swiper
+                    :modules="modules"
+                    slides-per-view="auto"
+                    centeredSlides
+                    loop
+                    @swiper="e => onSwiper(e, 4)"
+                    :speed="1000"
+                    @slideChangeTransitionStart="transitionStart"
+                    @slideChangeTransitionEnd="transitionEnd"
+                  >
+                    <swiper-slide v-for="item in proList" :key="item.id">
+                      <div class="about_contain">
+                        <img :src="item.img" alt="" />
+                        <div class="play">
+                          <img src="@/assets/img/play.png" alt="" />
+                        </div>
+                        <div class="content">
+                          <p class="title SmileFont">{{ item.name }}</p>
+                        </div>
+                      </div>
+                    </swiper-slide>
+                    <div class="home_silde" v-if="showSilde">
+                      <div class="home_sildePre blackborder" @click="sildePre(4)"><img src="@/assets/img/arrow_white_l.png" alt="" /></div>
+                      <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
+                    </div>
+                  </swiper>
+                </div>
+                <div class="swiper_box" v-else>
+                  <swiper
+                    :modules="modules"
+                    :effect="'coverflow'"
+                    :coverflowEffect="{
+                      rotate: 0,
+                      stretch: 0,
+                      depth: 200,
+                      modifier: 1,
+                      slideShadows: false
+                    }"
+                    loop
+                    slidesPerView="auto"
+                    centeredSlides
+                    :speed="1000"
+                    @swiper="e => onSwiper(e, 4)"
+                    @slideChange="e => onSlideVideoChange(e)"
+                  >
+                    <swiper-slide v-for="item in proList" :key="item.id">
+                      <div class="about_contain">
+                        <img :src="item.img" alt="" />
+                        <div class="play">
+                          <img src="@/assets/img/play.png" alt="" />
+                        </div>
+                      </div>
+                    </swiper-slide>
+                  </swiper>
+                  <div class="home_silde" v-if="showSilde">
+                    <div class="home_sildePre blackborder" @click="sildePre(4)"><img src="@/assets/img/arrow_white_l.png" alt="" /></div>
+                    <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
+                  </div>
+                  <div class="content">
+                    <p class="title">{{ proList[currentVideoIndex].name }}</p>
+                  </div>
+                </div>
+                <div class="btn_box">
+                  <a-button type="link" class="s_btn">了解详情</a-button>
+                </div>
+              </div>
+            </div>
+          </swiper-slide>
+          <swiper-slide>
+            <Footer></Footer>
+          </swiper-slide>
+        </swiper>
+      </swiper-slide>
+    </swiper>
+
+    <full-page ref="fullpage" :options="options" id="fullpage" v-else>
+      <!-- <div class="section s_1">
+        <div class="h_first wiper_1">
+          <div class="title wow animate__fadeInUp" data-wow-offset="50">
+            <p class="SmileFont title">Spark More</p>
+            <p class="SmileFont subtitle">去发现，无限可能</p>
+          </div>
+          <div class="downLoad" v-if="isMobile">
+            <img src="@/assets/img/down.png" alt="" />
+          </div>
+        </div>
+      </div> -->
+      <div class="section s_2">
+        <div class="h_second wiper_2">
+          <div class="s_top">
+            <p class="SmileFont title">造光 IGNITEMAX</p>
+            <p class="s_text">
+              <span>致力于艺术与科技的完美融合，利用影像让一切更有价值的企业</span>
+              <span>造光核心团队成员拥有多年创作经验与丰富执行资源</span>
+              <span>出身于华为、迈瑞千万级的视频供应商团队</span>
+              <span>华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验</span>
+            </p>
+            <a-button type="link" class="s_btn" v-if="!isMobile">了解详情</a-button>
+          </div>
+          <div class="s_bottom" v-if="!isMobile">
+            <swiper
+              class="swiper-no-swiping"
+              loop
+              centeredSlides
+              observer
+              observeParents
+              grabCursor
+              :loopedSlides="2"
+              :slides-per-view="5"
+              :space-between="0"
+              @swiper="e => onSwiper(e, 2)"
+              @transitionStart="transitionStart_s"
+            >
+              <swiper-slide v-for="item in typeList" :key="item.id">
+                <div class="type_box">
+                  <img class="type_bg" :src="item.img" alt="" />
+                  <p class="SmileFont">{{ item.name }}</p>
+                  <div class="black"></div>
+                </div>
+              </swiper-slide>
+            </swiper>
+            <div class="home_silde">
+              <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
+              <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+            </div>
+          </div>
+          <div class="s_bottom" v-else>
+            <swiper :modules="modules" loop observer observeParents slides-per-view="auto" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)">
+              <swiper-slide v-for="item in typeList" :key="item.id">
+                <div class="type_box">
+                  <img class="type_bg" :src="item.img" alt="" />
+                  <p class="SmileFont">{{ item.name }}</p>
+                  <div class="black"></div>
+                </div>
+              </swiper-slide>
+            </swiper>
+            <div class="home_silde">
+              <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
+              <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+            </div>
+          </div>
+          <div class="btn_box">
+            <a-button type="link" class="s_btn" v-if="isMobile">了解详情</a-button>
+          </div>
+        </div>
+      </div>
+      <div class="section s_3">
+        <div class="h_third">
           <div class="h_types">
             <div v-if="isMobile">
               <p
@@ -154,26 +353,26 @@
             </div>
           </div>
         </div>
-      </swiper-slide>
-    </swiper>
-    <Pop></Pop>
+      </div>
+      <div class="section fp-auto-height">
+        <Footer></Footer>
+      </div>
+    </full-page>
   </div>
 </template>
 <script>
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Mousewheel, Navigation, EffectCoverflow } from 'swiper/modules'
+import { Mousewheel, FreeMode, EffectCoverflow } from 'swiper/modules'
 import { debounce } from 'lodash'
-import Pop from '@/components/pop.vue'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import Footer from '@/layout/Footer.vue'
 import 'swiper/css'
 
 export default {
   name: 'IHome',
   components: {
-    Pop,
+    Footer,
     Swiper,
     SwiperSlide
   },
@@ -181,12 +380,19 @@ export default {
     const router = useRouter()
     const { proxy } = getCurrentInstance()
     const state = reactive({
-      modules: [Mousewheel, EffectCoverflow],
+      modules: [FreeMode, Mousewheel, EffectCoverflow],
       bannerList: null,
+      options: {
+        resize: true,
+        scrollingSpeed: 700,
+        touchSensitivity: 100,
+        loopHorizontal: false
+      },
       swiper1: null,
       swiper2: null,
       swiper3: null,
       swiper4: null,
+      swiper5: null,
       currentVideoIndex: 0,
       mousewheel: true,
       isMobile: false,
@@ -200,6 +406,21 @@ export default {
       typeList: [
         {
           id: 1,
+          name: '造光',
+          img: require('@/assets/img/type_h_3.png'),
+          bgImg: require('@/assets/img/home/bg_3.png'),
+          title: '利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
+        },
+        {
+          id: 2,
+          name: '造火',
+          img: require('@/assets/img/type_h_4.png'),
+          bgImg: require('@/assets/img/home/bg_1.png'),
+          title: '出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
+        },
+        { id: 3, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.png'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
+        {
+          id: 4,
           name: '造月',
           img: require('@/assets/img/type_h_1.png'),
           bgImg: require('@/assets/img/home/bg_1.png'),
@@ -207,29 +428,29 @@ export default {
             '致力于艺术与科技的完美融合，利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
         {
-          id: 2,
+          id: 5,
           name: '造暗',
           img: require('@/assets/img/type_h_2.png'),
           bgImg: require('@/assets/img/home/bg_2.png'),
           title: '造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
-        {
-          id: 3,
-          name: '造光',
-          img: require('@/assets/img/type_h_3.png'),
-          bgImg: require('@/assets/img/home/bg_3.png'),
-          title: '利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        {
-          id: 4,
-          name: '造火',
-          img: require('@/assets/img/type_h_4.png'),
-          bgImg: require('@/assets/img/home/bg_1.png'),
-          title: '出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        { id: 5, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.png'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
         {
           id: 1,
+          name: '造光',
+          img: require('@/assets/img/type_h_3.png'),
+          bgImg: require('@/assets/img/home/bg_3.png'),
+          title: '利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
+        },
+        {
+          id: 2,
+          name: '造火',
+          img: require('@/assets/img/type_h_4.png'),
+          bgImg: require('@/assets/img/home/bg_1.png'),
+          title: '出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
+        },
+        { id: 3, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.png'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
+        {
+          id: 4,
           name: '造月',
           img: require('@/assets/img/type_h_1.png'),
           bgImg: require('@/assets/img/home/bg_1.png'),
@@ -237,27 +458,12 @@ export default {
             '致力于艺术与科技的完美融合，利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
         {
-          id: 2,
+          id: 5,
           name: '造暗',
           img: require('@/assets/img/type_h_2.png'),
           bgImg: require('@/assets/img/home/bg_2.png'),
           title: '造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        {
-          id: 3,
-          name: '造光',
-          img: require('@/assets/img/type_h_3.png'),
-          bgImg: require('@/assets/img/home/bg_3.png'),
-          title: '利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        {
-          id: 4,
-          name: '造火',
-          img: require('@/assets/img/type_h_4.png'),
-          bgImg: require('@/assets/img/home/bg_1.png'),
-          title: '出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        { id: 5, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.png'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' }
+        }
       ],
       secondList: [
         { id: 1, name: '造月', img: require('@/assets/img/type_1.png') },
@@ -290,12 +496,37 @@ export default {
     onMounted(async () => {
       nextTick(() => {
         handleResize()
+        // autoSize()
         window.addEventListener('resize', handleResize)
         var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
         wow.init()
       })
-      // getPicList()
+      const watermarkDiv = document.querySelector('.fp-watermark')
+      if (watermarkDiv) {
+        watermarkDiv.remove()
+      }
     })
+    // getPicList()
+    const autoSize = () => {
+      var ww = window.innerWidth
+      var hh = window.innerHeight
+      var boxw = 1920
+      var boxh = hh
+      var zoom = ww / boxw
+      if (zoom < 0.64) zoom = 0.64
+      document.getElementById('app').style.zoom = zoom // 页面等比缩放
+      // if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
+      //     $('.fp-tableCell,.top,.right,.pop_box').css({
+      //         '-webkit-transform': 'scale(' + zoom + ')',
+      //         '-mod-transform': 'scale(' + zoom + ')',
+      //         'transform': 'scale(' + zoom + ')'
+      //     });
+      // } else {
+      //     $(".fp-tableCell,.top,.right,.pop_box").css({
+      //         zoom: zoom
+      //     });
+      // }
+    }
     const getPicList = () => {
       proxy.$api.picList('').then(res => {
         state.bannerList = res
@@ -319,11 +550,19 @@ export default {
       //   }
       //   swiperelement.scrollIntoView({ behavior: 'smooth' })
       // }
+      const watermarkDiv = document.querySelector('.fp-watermark')
+      if (watermarkDiv) {
+        watermarkDiv.remove()
+      }
     }, 500)
     const onSlideChange = e => {
       state.curentPage = e.realIndex + 1
-      // state.mousewheel = computed(() => (e.realIndex + 1 == 3 ? false : true))
-      // state.modules = computed(() => (e.realIndex + 1 == 3 ? null : [Mousewheel]))
+      console.log(e)
+    }
+    const transitionStart_s = e => {
+      // if (e.activeIndex == 1) {
+      //   state.swiper2.setTranslate(0) // 因为左边会空出一张图的距离，所以设置位移为0
+      // }
     }
     const onSlideVideoChange = e => {
       state.currentVideoIndex = e.realIndex
@@ -381,6 +620,7 @@ export default {
       onSlideChange,
       onSlideVideoChange,
       transitionStart,
+      transitionStart_s,
       transitionEnd,
       handleMouseWheel,
       sildeNext,
@@ -392,6 +632,27 @@ export default {
 </script>
 <style lang="less">
 .home {
+  #fullPage {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .section {
+    width: 100%;
+    height: 100%;
+    background: center top / cover no-repeat;
+    position: relative;
+    overflow: hidden;
+  }
+  .s_1 {
+    background: url(../../assets/img/home/bg_1.png) no-repeat 100% / cover;
+  }
+  .s_2 {
+    background: url(../../assets/img/home/bg_2.png) no-repeat 100% / cover;
+  }
+  .s_3 {
+    background: url(../../assets/img/home/bg_3.png) no-repeat 100% / cover;
+  }
   .s_btn {
     width: 13.75rem;
     height: 4.5rem;
@@ -439,14 +700,14 @@ export default {
       }
     }
   }
-  .pageSwiper {
-    width: 100%;
-    // height: 67.5rem;
-    height: 100vh;
-  }
-  .pageSwiper_slide {
-    height: 100%;
-  }
+  // .pageSwiper {
+  //   width: 100%;
+  //   // height: 67.5rem;
+  //   height: 100vh;
+  // }
+  // .pageSwiper_slide {
+  //   height: 100%;
+  // }
   .home_silde {
     .home_sildePre,
     .home_sildeNext {
@@ -463,7 +724,6 @@ export default {
 .h_first {
   // padding: 25rem 0 26.5rem;
   height: 100vh;
-  background: url(../../assets/img/home/bg_1.png) no-repeat 100% / cover;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -481,9 +741,9 @@ export default {
   }
 }
 .h_second {
-  padding: 10rem 6.25rem 6.25rem 8.75rem;
+  // padding: 10rem 6.25rem 6.25rem 8.75rem;
+  padding: 0 6.25rem 0 8.75rem;
   height: 100%;
-  background: url(../../assets/img/home/bg_2.png) no-repeat center / cover;
   color: #fff;
   overflow: hidden;
   .s_top {
@@ -557,12 +817,15 @@ export default {
     }
     .home_silde {
       margin-top: 1.875rem;
+      .home_sildeNext {
+        margin-left: 1.25rem;
+      }
     }
   }
 }
 .h_third {
   padding: 8.75rem 0 5rem;
-  background: url(../../assets/img/home/bg_3.png) no-repeat center / cover;
+  // background: url(../../assets/img/home/bg_3.png) no-repeat center / cover;
   height: 100%;
   .h_types {
     padding: 0 11.875em;
@@ -616,7 +879,7 @@ export default {
     width: 15rem;
     height: 4rem;
     &.active {
-      border-radius: 10px;
+      border-radius: 0.625rem;
       border: 0.1875rem solid #ffffff;
     }
   }

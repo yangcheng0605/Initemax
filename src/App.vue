@@ -8,21 +8,25 @@
         </div>
       </div>
     </main>
-    <Footer></Footer>
+    <Footer v-if="!hidden"></Footer>
     <Minors></Minors>
+    <Pop></Pop>
   </nav>
 </template>
 <script>
-import { defineComponent, getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
 import Header from '@/layout/Header.vue'
 import Footer from '@/layout/Footer.vue'
 import Minors from '@/layout/Minors.vue'
+import Pop from '@/components/pop.vue'
+import { useRoute } from 'vue-router'
 import '@/assets/style/home.less'
 export default defineComponent({
   components: {
     Header,
     Footer,
-    Minors
+    Minors,
+    Pop
   },
   props: {
     modalParam: {
@@ -33,9 +37,24 @@ export default defineComponent({
     }
   },
   setup() {
-    const { proxy } = getCurrentInstance()
-    const state = reactive({})
+    let route = useRoute()
+    const state = reactive({
+      hidden: false
+    })
     onMounted(async () => {})
+    watch(
+      route,
+      e => {
+        var name = e.name
+        if (['/', 'home'].indexOf(name) > -1) {
+          state.hidden = true
+        } else {
+          state.hidden = false
+        }
+        console.log(state.hidden)
+      },
+      { immediate: true }
+    )
     return {
       ...toRefs(state)
     }

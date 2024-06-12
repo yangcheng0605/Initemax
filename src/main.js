@@ -1,24 +1,68 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store'
 import wow from 'wowjs'
-import * as Api  from '@/api/apis.js'
+import * as Api from '@/api/apis.js'
 
 // 样式
 import '@/assets/style/index.less'
 import '@/assets/style/media.less'
-import 'animate.css';
-import 'swiper/css/bundle';
+import 'animate.css'
+import 'swiper/css/bundle'
 import 'wowjs/css/libs/animate.css'
-
+import 'vue-fullpage.js/dist/style.css'
+import VueFullPage from 'vue-fullpage.js'
 const app = createApp(App)
 
-import { Spin, Image, message, Popover, Steps, Drawer, Collapse, Dropdown, Timeline, Modal, Descriptions, ConfigProvider, 
-  Table, Menu, Layout, Input, Button, Popconfirm, Form, Checkbox, Radio, TimePicker, Select, Card, Row, Tooltip, 
-  Col, Tabs, DatePicker, Space, InputNumber, Slider, Upload, Badge, Tag, Avatar, Statistic, Divider, Empty, 
-  Switch, Result, Progress, Cascader, Breadcrumb, Transfer, Pagination } from 'ant-design-vue';
-
+import {
+  Spin,
+  Image,
+  message,
+  Popover,
+  Steps,
+  Drawer,
+  Collapse,
+  Dropdown,
+  Timeline,
+  Modal,
+  Descriptions,
+  ConfigProvider,
+  Table,
+  Menu,
+  Layout,
+  Input,
+  Button,
+  Popconfirm,
+  Form,
+  Checkbox,
+  Radio,
+  TimePicker,
+  Select,
+  Card,
+  Row,
+  Tooltip,
+  Col,
+  Tabs,
+  DatePicker,
+  Space,
+  InputNumber,
+  Slider,
+  Upload,
+  Badge,
+  Tag,
+  Avatar,
+  Statistic,
+  Divider,
+  Empty,
+  Switch,
+  Result,
+  Progress,
+  Cascader,
+  Breadcrumb,
+  Transfer,
+  Pagination
+} from 'ant-design-vue'
 
 app.config.globalProperties.$wow = wow
 app.config.globalProperties.$message = message
@@ -70,4 +114,5 @@ app.use(Progress)
 app.use(Breadcrumb)
 app.use(Transfer)
 app.use(Pagination)
-app.use(store).use(router).mount("#app");
+app.use(VueFullPage)
+app.use(store).use(router).mount('#app')

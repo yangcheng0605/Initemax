@@ -36,7 +36,18 @@ export default {
         state.isMobile = false
       }
     }
-    const showContact = () => {}
+    const showContact = () => {
+      const node = document.getElementById('shopify-section-footer')
+      if (node) {
+        const rect = node.getBoundingClientRect()
+        const offsetTop = rect.top + window.pageYOffset
+
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        })
+      }
+    }
     const toTop = () => {
       window.scrollTo({
         top: 0,
