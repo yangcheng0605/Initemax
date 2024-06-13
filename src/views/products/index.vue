@@ -320,9 +320,6 @@ export default {
         .swiper-slide {
           width: 9.375rem !important;
         }
-        .swiper-slide:last-of-type {
-          // margin-right: 1.25rem;
-        }
       }
     }
     .tag {

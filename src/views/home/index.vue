@@ -188,7 +188,7 @@
     </swiper>
 
     <full-page ref="fullpage" :options="options" id="fullpage" v-else>
-      <!-- <div class="section s_1">
+      <div class="section s_1">
         <div class="h_first wiper_1">
           <div class="title wow animate__fadeInUp" data-wow-offset="50">
             <p class="SmileFont title">Spark More</p>
@@ -198,7 +198,7 @@
             <img src="@/assets/img/down.png" alt="" />
           </div>
         </div>
-      </div> -->
+      </div>
       <div class="section s_2">
         <div class="h_second wiper_2">
           <div class="s_top">
@@ -218,7 +218,7 @@
               centeredSlides
               observer
               observeParents
-              grabCursor
+              :resistanceRatio="0"
               :loopedSlides="2"
               :slides-per-view="5"
               :space-between="0"
@@ -645,13 +645,13 @@ export default {
     overflow: hidden;
   }
   .s_1 {
-    background: url(../../assets/img/home/bg_1.png) no-repeat 100% / cover;
+    background: url(../../assets/img/home/bg_1.png) no-repeat center / cover;
   }
   .s_2 {
-    background: url(../../assets/img/home/bg_2.png) no-repeat 100% / cover;
+    background: url(../../assets/img/home/bg_2.png) no-repeat center / cover;
   }
   .s_3 {
-    background: url(../../assets/img/home/bg_3.png) no-repeat 100% / cover;
+    background: url(../../assets/img/home/bg_3.png) no-repeat center / cover;
   }
   .s_btn {
     width: 13.75rem;
@@ -742,12 +742,14 @@ export default {
 }
 .h_second {
   // padding: 10rem 6.25rem 6.25rem 8.75rem;
-  padding: 0 6.25rem 0 8.75rem;
+  padding: 0 4.25rem 0 8.75rem;
   height: 100%;
   color: #fff;
   overflow: hidden;
   .s_top {
-    margin-bottom: 4.125rem;
+    // margin-bottom: 4.125rem;
+    position: absolute;
+    top: 14.7%;
     .title {
       font-size: 5.625rem;
       line-height: 6.75rem;
@@ -764,7 +766,10 @@ export default {
   }
   .s_bottom {
     width: 64rem;
-    float: right;
+    // float: right;
+    position: absolute;
+    bottom: 5%;
+    right: 6.25rem;
     .type_box {
       text-align: center;
       // width: 12.5rem;
@@ -824,7 +829,8 @@ export default {
   }
 }
 .h_third {
-  padding: 8.75rem 0 5rem;
+  // padding: 8.75rem 0 5rem;
+  padding: 7.3% 0 4.2%;
   // background: url(../../assets/img/home/bg_3.png) no-repeat center / cover;
   height: 100%;
   .h_types {

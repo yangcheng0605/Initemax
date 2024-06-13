@@ -351,8 +351,6 @@ export default {
             }
           }
         }
-        .swiper-slide:last-of-type {
-        }
       }
     }
   }
@@ -471,8 +469,6 @@ export default {
               }
             }
           }
-        }
-        .swiper-slide:last-of-type {
         }
       }
     }
