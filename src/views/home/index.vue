@@ -359,14 +359,16 @@
       </div>
     </full-page>
   </div>
+  <PopHome :swiper1="swiper1" :isMobile="isMobile" :fullpage="fullpage"></PopHome>
 </template>
 <script>
-import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
+import { getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Mousewheel, FreeMode, EffectCoverflow } from 'swiper/modules'
 import { debounce } from 'lodash'
 import Footer from '@/layout/Footer.vue'
+import PopHome from '@/components/pop_home.vue'
 import 'swiper/css'
 
 export default {
@@ -374,11 +376,13 @@ export default {
   components: {
     Footer,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    PopHome
   },
   setup() {
     const router = useRouter()
     const { proxy } = getCurrentInstance()
+    const fullpage = ref()
     const state = reactive({
       modules: [FreeMode, Mousewheel, EffectCoverflow],
       bannerList: null,
@@ -615,6 +619,7 @@ export default {
     }
     return {
       ...toRefs(state),
+      fullpage,
       onSwiper,
       sildePre,
       onSlideChange,

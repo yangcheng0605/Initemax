@@ -16,7 +16,19 @@ import { useRouter } from 'vue-router'
 export default {
   name: 'IPop',
   components: {},
-  setup() {
+  props: {
+    swiper1: {
+      type: Object
+    },
+    fullpage: {
+      type: Object
+    },
+    isMobile: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup(props) {
     let router = useRouter()
     const state = reactive({
       isMobile: false
@@ -36,22 +48,27 @@ export default {
       }
     }
     const showContact = () => {
-      const node = document.getElementById('shopify-section-footer')
-      if (node) {
-        const rect = node.getBoundingClientRect()
-        const offsetTop = rect.top + window.pageYOffset
-
-        window.scrollTo({
-          top: offsetTop,
-          behavior: 'smooth'
-        })
+      if (props.isMobile) {
+        props.swiper1.slideTo(2)
+      } else {
+        props.fullpage.api.moveTo(4)
       }
+      // const node = document.getElementById('shopify-section-footer')
+      // if (node) {
+      //   const rect = node.getBoundingClientRect()
+      //   const offsetTop = rect.top + window.pageYOffset
+      //   window.scrollTo({
+      //     top: offsetTop,
+      //     behavior: 'smooth'
+      //   })
+      // }
     }
     const toTop = () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
+      if (props.isMobile) {
+        props.swiper1.slideTo(0)
+      } else {
+        props.fullpage.api.moveTo(1)
+      }
     }
     return {
       ...toRefs(state),

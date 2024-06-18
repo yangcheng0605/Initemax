@@ -1,11 +1,11 @@
-const { defineConfig } = require('@vue/cli-service')
-const CompressionPlugin = require('compression-webpack-plugin')
-
+const { defineConfig } = require("@vue/cli-service");
+const CompressionPlugin = require('compression-webpack-plugin');
+ 
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
-  publicPath: './',
-  outputDir: 'build',
+  publicPath: "./",
+  outputDir: "build",
   productionSourceMap: false,
   devServer: {
     hot: true
@@ -15,9 +15,9 @@ module.exports = defineConfig({
       less: {
         lessOptions: {
           // 在这里添加自定义的Less配置
-        }
-      }
-    }
+        },
+      },
+    },
   },
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
@@ -28,10 +28,10 @@ module.exports = defineConfig({
             algorithm: 'gzip',
             test: /\.js$|\.css$|\.html$/,
             threshold: 10240,
-            minRatio: 0.8
-          })
-        ]
-      }
+            minRatio: 0.8,
+          }),
+        ],
+      };
     }
-  }
-})
+  },
+});

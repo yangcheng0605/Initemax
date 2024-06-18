@@ -9,8 +9,8 @@
       </div>
     </main>
     <Footer v-if="!hidden"></Footer>
+    <Pop v-if="!hidden"></Pop>
     <Minors></Minors>
-    <Pop></Pop>
   </nav>
 </template>
 <script>
