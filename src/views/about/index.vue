@@ -72,7 +72,18 @@
       </div>
       <div class="year_box">
         <div>
-          <swiper class="swiper-no-swiping" :modules="modules" slides-per-view="auto" :space-between="0" centeredSlides loop @swiper="e => onSwiper(e, 4)" noSwiping>
+          <swiper
+            class="swiper-no-swiping"
+            :modules="modules"
+            slides-per-view="auto"
+            :space-between="0"
+            :resistanceRatio="0"
+            :loopedSlides="2"
+            centeredSlides
+            loop
+            @swiper="e => onSwiper(e, 4)"
+            noSwiping
+          >
             <swiper-slide v-for="item in courseList" :key="item.id">
               <div class="year">
                 <p class="SmileFont">{{ item.year }}</p>
@@ -87,7 +98,9 @@
       <div class="course_box">
         <swiper
           :modules="modules"
-          slides-per-view="auto"
+          :slides-per-view="3"
+          :resistanceRatio="0"
+          :loopedSlides="2"
           :space-between="0"
           centeredSlides
           loop

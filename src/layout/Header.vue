@@ -38,16 +38,16 @@
               <span>案例</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
             </a>
+            <a href="/#/about" class="Mnav" @click="show = false">
+              <span>关于我们</span>
+              <img src="@/assets/img/mb_arrow_b.png" alt="" />
+            </a>
             <a href="/#/news" class="Mnav" @click="show = false">
               <span>最新资讯</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
             </a>
             <a href="/#/contact" class="Mnav" @click="show = false">
               <span>联系我们 </span>
-              <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </a>
-            <a href="/#/about" class="Mnav" @click="show = false">
-              <span>关于我们</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
             </a>
             <!-- </a-collapse> -->
@@ -103,8 +103,8 @@ export default {
         { key: 0, name: '首页', path: '/', active: false },
         { key: 1, name: '案例', path: '/products', active: false },
         { key: 2, name: '关于我们', path: '/about', active: false },
-        { key: 3, name: '联系我们', path: '/contact', active: false },
-        { key: 4, name: '最新资讯', path: '/news', active: false }
+        { key: 3, name: '最新资讯', path: '/news', active: false },
+        { key: 4, name: '联系我们', path: '/contact', active: false }
       ]
     })
     onMounted(async () => {

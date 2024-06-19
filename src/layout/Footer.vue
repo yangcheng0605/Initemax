@@ -47,16 +47,16 @@
             <p @click="show = false">案例</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
           </a>
+          <a class="Fnav" href="/#/about">
+            <p @click="show = false">关于我们</p>
+            <img src="@/assets/img/mb_arrow_w.png" alt="" />
+          </a>
           <a class="Fnav" href="/#/news">
             <p @click="show = false">最新资讯</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
           </a>
           <a class="Fnav" href="/#/contact">
             <p @click="show = false">联系我们</p>
-            <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </a>
-          <a class="Fnav" href="/#/about">
-            <p @click="show = false">关于我们</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
           </a>
         </div>
