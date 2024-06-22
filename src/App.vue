@@ -10,14 +10,12 @@
     </main>
     <Footer v-if="!hidden"></Footer>
     <Pop v-if="!hidden"></Pop>
-    <Minors></Minors>
   </nav>
 </template>
 <script>
 import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
 import Header from '@/layout/Header.vue'
 import Footer from '@/layout/Footer.vue'
-import Minors from '@/layout/Minors.vue'
 import Pop from '@/components/pop.vue'
 import { useRoute } from 'vue-router'
 import '@/assets/style/home.less'
@@ -25,7 +23,6 @@ export default defineComponent({
   components: {
     Header,
     Footer,
-    Minors,
     Pop
   },
   props: {

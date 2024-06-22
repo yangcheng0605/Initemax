@@ -3,7 +3,7 @@
     <div class="top_banner">
       <img src="@/assets/img/contact/bg_top.png" alt="" />
       <div class="t_box">
-        <p class="title SmileFont">联系我们</p>
+        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">联系我们</p>
       </div>
     </div>
     <div class="bottom_contain">
@@ -12,7 +12,7 @@
           <a-tab-pane :key="1" tab="联系方式">
             <div class="a_content">
               <div class="a_content_left">
-                <p class="title SmileFont wow">联系我们</p>
+                <p class="title SmileFont">联系我们</p>
                 <div>
                   <ul>
                     <li><img src="@/assets/img/contact/img_1.png" alt="" /> <span>广东省深圳市宝安区1065号F518时尚创意园F7栋401 </span></li>
@@ -21,8 +21,8 @@
                   </ul>
                 </div>
               </div>
-              <div class="a_content_right">
-                <img src="@/assets/img/contact/address.png" alt="" />
+              <div class="a_content_right hoverBox">
+                <img class="hoverImg" src="@/assets/img/contact/address.png" alt="" />
               </div>
             </div>
           </a-tab-pane>
@@ -69,7 +69,7 @@
                     </a-col>
                     <a-col class="submit" :span="colSpan">
                       <a-form-item>
-                        <a-button type="link" class="subBtn" html-type="submit">立即提交</a-button>
+                        <a-button type="link" class="subBtn hoverBtn" html-type="submit">立即提交</a-button>
                       </a-form-item>
                     </a-col>
                   </a-row>
@@ -195,7 +195,7 @@ export default {
     }
     .a_content_right {
       img {
-        border-radius: 10px;
+        border-radius: 0.5rem;
       }
     }
   }
@@ -226,7 +226,6 @@ export default {
       .subBtn {
         width: 13.75rem;
         height: 4.5rem;
-        padding: 1.125rem 3.875rem;
         border-radius: 36px;
         color: #ff8a2c;
         border: 2px solid #ff8a2c;

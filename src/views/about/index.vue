@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about specialHeaderTop">
     <div class="about_banner">
       <div class="swiper_box">
         <swiper
@@ -22,16 +22,20 @@
             <div class="about_contain">
               <img :src="item.img" alt="" />
               <div class="content">
-                <p class="title SmileFont">{{ item.title }}</p>
-                <p class="text SmileFont">{{ item.text }}</p>
+                <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">{{ item.title }}</p>
+                <p class="text SmileFont wow animate__fadeInUp" data-wow-offset="50">{{ item.text }}</p>
               </div>
             </div>
           </swiper-slide>
         </swiper>
         <div class="home_silde">
-          <div class="home_sildePre blackborder" @click="sildePre(1)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
+          <div class="home_sildePre hoverSilde blackborder" @click="sildePre(1)">
+            <div class="arrow_yellow_l"></div>
+          </div>
           <p class="progress">{{ swiper1_active }}/{{ bannerList.length }}</p>
-          <div class="home_sildeNext blackborder" @click="sildeNext(1)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+          <div class="home_sildeNext hoverSilde blackborder" @click="sildeNext(1)">
+            <div class="arrow_yellow_r"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -42,7 +46,7 @@
       <div class="swiper_box">
         <swiper :slides-per-view="perView_introduce" grabCursor :navigation="true" @swiper="e => onSwiper(e, 2)" @slideChange="e => onSlideChange(e, 2)">
           <swiper-slide v-for="item in about_contain" :key="item.id">
-            <div class="about_contain">
+            <div class="about_contain wow animate__fadeInUp" data-wow-offset="50">
               <div>
                 <p v-for="items in item.contain" :key="items.id">{{ items.text }}</p>
               </div>
@@ -50,9 +54,13 @@
           </swiper-slide>
         </swiper>
         <div class="home_silde">
-          <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
+          <div class="home_sildePre hoverSilde" @click="sildePre(2)">
+            <div class="arrow_yellow_l"></div>
+          </div>
           <p class="progress">{{ swiper2_active }}/{{ about_contain.length }}</p>
-          <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+          <div class="home_sildeNext hoverSilde" @click="sildeNext(2)">
+            <div class="arrow_yellow_r"></div>
+          </div>
         </div>
       </div>
     </div>

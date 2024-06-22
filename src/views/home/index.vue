@@ -15,7 +15,7 @@
       v-if="isMobile"
     >
       <swiper-slide class="s_1">
-        <div class="h_first wiper_1">
+        <div class="h_first wiper_1 wow animate__fadeInUp">
           <div class="title wow animate__fadeInUp" data-wow-offset="50">
             <p class="SmileFont title">Spark More</p>
             <p class="SmileFont subtitle">去发现，无限可能</p>
@@ -35,24 +35,8 @@
               <span>出身于华为、迈瑞千万级的视频供应商团队</span>
               <span>华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验</span>
             </p>
-            <a-button type="link" class="s_btn" v-if="!isMobile">了解详情</a-button>
           </div>
-          <div class="s_bottom" v-if="!isMobile">
-            <swiper class="swiper-no-swiping" :modules="modules" observer observeParents loop grabCursor slides-per-view="5" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)">
-              <swiper-slide v-for="item in typeList" :key="item.id">
-                <div class="type_box">
-                  <img class="type_bg" :src="item.img" alt="" />
-                  <p class="SmileFont">{{ item.name }}</p>
-                  <div class="black"></div>
-                </div>
-              </swiper-slide>
-            </swiper>
-            <div class="home_silde">
-              <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
-              <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
-            </div>
-          </div>
-          <div class="s_bottom" v-else>
+          <div class="s_bottom">
             <swiper :modules="modules" loop observer observeParents slides-per-view="auto" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)">
               <swiper-slide v-for="item in typeList" :key="item.id">
                 <div class="type_box">
@@ -63,12 +47,16 @@
               </swiper-slide>
             </swiper>
             <div class="home_silde">
-              <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
-              <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+              <div class="home_sildePre hoverSilde" @click="sildePre(2)">
+                <div class="arrow_yellow_l"></div>
+              </div>
+              <div class="home_sildeNext hoverSilde" @click="sildeNext(2)">
+                <div class="arrow_yellow_r"></div>
+              </div>
             </div>
           </div>
           <div class="btn_box">
-            <a-button type="link" class="s_btn" v-if="isMobile">了解详情</a-button>
+            <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
           </div>
         </div>
       </swiper-slide>
@@ -86,8 +74,8 @@
         >
           <swiper-slide>
             <div class="h_third s_3">
-              <div class="h_types">
-                <div v-if="isMobile">
+              <div class="h_types wow animate__fadeInUp" data-wow-offset="50">
+                <div>
                   <p
                     :class="['type_box_mb', 'SmileFont', currentType == item.id ? 'active' : '', item.id == currentType - 1 || item.id == currentType + 1 ? 'subactive' : '']"
                     @click="chooseType(item.id)"
@@ -97,49 +85,16 @@
                     {{ item.name }}
                   </p>
                 </div>
-                <div v-else :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id)" v-for="item in secondList" :key="item.id">
-                  <img class="type_bg" :src="item.img" alt="" />
-                  <p class="SmileFont">{{ item.name }}</p>
-                  <div class="black" v-if="currentType !== item.id"></div>
-                </div>
               </div>
               <div class="h_tags">
                 <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
                   <swiper-slide v-for="item in tagList" :key="item.id">
-                    <p :class="['tag', tags.indexOf(item.id) > -1 ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
+                    <p :class="['tag', tags === item.id ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
                   </swiper-slide>
                 </swiper>
               </div>
               <div class="h_video">
-                <div class="swiper_box" v-if="!isMobile">
-                  <swiper
-                    :modules="modules"
-                    slides-per-view="auto"
-                    centeredSlides
-                    loop
-                    @swiper="e => onSwiper(e, 4)"
-                    :speed="1000"
-                    @slideChangeTransitionStart="transitionStart"
-                    @slideChangeTransitionEnd="transitionEnd"
-                  >
-                    <swiper-slide v-for="item in proList" :key="item.id">
-                      <div class="about_contain">
-                        <img :src="item.img" alt="" />
-                        <div class="play">
-                          <img src="@/assets/img/play.png" alt="" />
-                        </div>
-                        <div class="content">
-                          <p class="title SmileFont">{{ item.name }}</p>
-                        </div>
-                      </div>
-                    </swiper-slide>
-                    <div class="home_silde" v-if="showSilde">
-                      <div class="home_sildePre blackborder" @click="sildePre(4)"><img src="@/assets/img/arrow_white_l.png" alt="" /></div>
-                      <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
-                    </div>
-                  </swiper>
-                </div>
-                <div class="swiper_box" v-else>
+                <div class="swiper_box">
                   <swiper
                     :modules="modules"
                     :effect="'coverflow'"
@@ -158,8 +113,8 @@
                     @slideChange="e => onSlideVideoChange(e)"
                   >
                     <swiper-slide v-for="item in proList" :key="item.id">
-                      <div class="about_contain">
-                        <img :src="item.img" alt="" />
+                      <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
+                        <img class="hoverImg" :src="item.img" alt="" />
                         <div class="play">
                           <img src="@/assets/img/play.png" alt="" />
                         </div>
@@ -175,7 +130,7 @@
                   </div>
                 </div>
                 <div class="btn_box">
-                  <a-button type="link" class="s_btn">了解详情</a-button>
+                  <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
                 </div>
               </div>
             </div>
@@ -194,9 +149,6 @@
             <p class="SmileFont title">Spark More</p>
             <p class="SmileFont subtitle">去发现，无限可能</p>
           </div>
-          <div class="downLoad" v-if="isMobile">
-            <img src="@/assets/img/down.png" alt="" />
-          </div>
         </div>
       </div>
       <div class="section s_2">
@@ -209,9 +161,9 @@
               <span>出身于华为、迈瑞千万级的视频供应商团队</span>
               <span>华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验</span>
             </p>
-            <a-button type="link" class="s_btn" v-if="!isMobile">了解详情</a-button>
+            <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
           </div>
-          <div class="s_bottom" v-if="!isMobile">
+          <div class="s_bottom">
             <swiper
               class="swiper-no-swiping"
               loop
@@ -234,44 +186,20 @@
               </swiper-slide>
             </swiper>
             <div class="home_silde">
-              <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
-              <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+              <div class="home_sildePre hoverSilde" @click="sildePre(2)">
+                <div class="arrow_yellow_l"></div>
+              </div>
+              <div class="home_sildeNext hoverSilde" @click="sildeNext(2)">
+                <div class="arrow_yellow_r"></div>
+              </div>
             </div>
-          </div>
-          <div class="s_bottom" v-else>
-            <swiper :modules="modules" loop observer observeParents slides-per-view="auto" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)">
-              <swiper-slide v-for="item in typeList" :key="item.id">
-                <div class="type_box">
-                  <img class="type_bg" :src="item.img" alt="" />
-                  <p class="SmileFont">{{ item.name }}</p>
-                  <div class="black"></div>
-                </div>
-              </swiper-slide>
-            </swiper>
-            <div class="home_silde">
-              <div class="home_sildePre" @click="sildePre(2)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
-              <div class="home_sildeNext" @click="sildeNext(2)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
-            </div>
-          </div>
-          <div class="btn_box">
-            <a-button type="link" class="s_btn" v-if="isMobile">了解详情</a-button>
           </div>
         </div>
       </div>
       <div class="section s_3">
         <div class="h_third">
           <div class="h_types">
-            <div v-if="isMobile">
-              <p
-                :class="['type_box_mb', 'SmileFont', currentType == item.id ? 'active' : '', item.id == currentType - 1 || item.id == currentType + 1 ? 'subactive' : '']"
-                @click="chooseType(item.id)"
-                v-for="item in secondList"
-                :key="item.id"
-              >
-                {{ item.name }}
-              </p>
-            </div>
-            <div v-else :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id)" v-for="item in secondList" :key="item.id">
+            <div :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id)" v-for="item in secondList" :key="item.id">
               <img class="type_bg" :src="item.img" alt="" />
               <p class="SmileFont">{{ item.name }}</p>
               <div class="black" v-if="currentType !== item.id"></div>
@@ -280,12 +208,12 @@
           <div class="h_tags">
             <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
               <swiper-slide v-for="item in tagList" :key="item.id">
-                <p :class="['tag', tags.indexOf(item.id) > -1 ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
+                <p :class="['tag', tags === item.id ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
               </swiper-slide>
             </swiper>
           </div>
           <div class="h_video">
-            <div class="swiper_box" v-if="!isMobile">
+            <div class="swiper_box">
               <swiper
                 :modules="modules"
                 slides-per-view="auto"
@@ -295,15 +223,17 @@
                 :speed="1000"
                 @slideChangeTransitionStart="transitionStart"
                 @slideChangeTransitionEnd="transitionEnd"
+                @slideChange="e => onSlideVideoChange(e)"
               >
-                <swiper-slide v-for="item in proList" :key="item.id">
-                  <div class="about_contain">
-                    <img :src="item.img" alt="" />
+                <swiper-slide v-for="(item, index) in proList" :key="item.id">
+                  <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
+                    <img class="hoverImg" :src="item.img" alt="" />
                     <div class="play">
                       <img src="@/assets/img/play.png" alt="" />
                     </div>
+                    <div :class="['black_pop', currentVideoIndex == index ? 'show' : '']"></div>
                     <div class="content">
-                      <p class="title SmileFont">{{ item.name }}</p>
+                      <p class="title SmileFont">{{ item.name }} {{ currentVideoIndex }} {{ index }}</p>
                     </div>
                   </div>
                 </swiper-slide>
@@ -313,43 +243,8 @@
                 </div>
               </swiper>
             </div>
-            <div class="swiper_box" v-else>
-              <swiper
-                :modules="modules"
-                :effect="'coverflow'"
-                :coverflowEffect="{
-                  rotate: 0,
-                  stretch: 0,
-                  depth: 200,
-                  modifier: 1,
-                  slideShadows: false
-                }"
-                loop
-                slidesPerView="auto"
-                centeredSlides
-                :speed="1000"
-                @swiper="e => onSwiper(e, 4)"
-                @slideChange="e => onSlideVideoChange(e)"
-              >
-                <swiper-slide v-for="item in proList" :key="item.id">
-                  <div class="about_contain">
-                    <img :src="item.img" alt="" />
-                    <div class="play">
-                      <img src="@/assets/img/play.png" alt="" />
-                    </div>
-                  </div>
-                </swiper-slide>
-              </swiper>
-              <div class="home_silde" v-if="showSilde">
-                <div class="home_sildePre blackborder" @click="sildePre(4)"><img src="@/assets/img/arrow_white_l.png" alt="" /></div>
-                <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
-              </div>
-              <div class="content">
-                <p class="title">{{ proList[currentVideoIndex].name }}</p>
-              </div>
-            </div>
             <div class="btn_box">
-              <a-button type="link" class="s_btn">了解详情</a-button>
+              <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
             </div>
           </div>
         </div>
@@ -406,7 +301,7 @@ export default {
       perView: 8,
       between: '0.79%',
       currentType: 3,
-      tags: [0],
+      tags: 0,
       typeList: [
         {
           id: 1,
@@ -502,8 +397,18 @@ export default {
         handleResize()
         // autoSize()
         window.addEventListener('resize', handleResize)
-        var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
+        var wow = new proxy.$wow.WOW({
+          boxClass: 'wow',
+          animateClass: 'animated',
+          offset: 50,
+          mobile: true,
+          live: true,
+          callback: function (e) {},
+          scrollContainer: null,
+          resetAnimation: true
+        })
         wow.init()
+        console.log(wow.sync)
       })
       const watermarkDiv = document.querySelector('.fp-watermark')
       if (watermarkDiv) {
@@ -598,15 +503,16 @@ export default {
     }
     const chooseTags = e => {
       var id = e.id
-      var index = state.tags.indexOf(id)
-      if (index > -1) {
-        state.tags.splice(index, 1)
-        if (state.tags.length <= 0) {
-          state.tags = [0]
-        }
-      } else {
-        state.tags.push(id)
-      }
+      state.tags = id
+      // var index = state.tags.indexOf(id)
+      // if (index > -1) {
+      //   state.tags.splice(index, 1)
+      //   if (state.tags.length <= 0) {
+      //     state.tags = [0]
+      //   }
+      // } else {
+      //   state.tags.push(id)
+      // }
     }
     const onSwiper = (swiper, type) => {
       state[`swiper${type}`] = swiper
@@ -720,6 +626,10 @@ export default {
       height: 2.5rem;
       background: #fff;
       border-radius: 50%;
+      & > div {
+        width: 1.25rem !important;
+        height: 1.25rem !important;
+      }
       img {
         width: 1.25rem;
       }
@@ -767,6 +677,9 @@ export default {
       span {
         display: block;
       }
+    }
+    .s_btn {
+      margin: 0 !important;
     }
   }
   .s_bottom {
@@ -921,7 +834,7 @@ export default {
       }
     }
     .about_contain {
-      border-radius: 1.25rem;
+      border-radius: 0.5rem;
       position: relative;
       height: 100%;
       .content {
@@ -945,9 +858,22 @@ export default {
         transform: translate(-50%, -50%);
         padding: 1.25rem;
         cursor: pointer;
+        z-index: 2;
         img {
           width: 2.5rem;
           height: 2.5rem;
+        }
+      }
+      .black_pop {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+        height: 50%;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        opacity: 0;
+        transition: 0.3s;
+        &.show {
+          opacity: 1;
         }
       }
       & > img {
@@ -970,6 +896,10 @@ export default {
         height: 3.75rem;
         background: rgba(255, 138, 44, 0.8);
         border: none !important;
+        transition: 0.3s;
+        &:hover {
+          background: rgba(255, 138, 44, 1);
+        }
       }
       .home_sildePre {
         left: -36.5rem;

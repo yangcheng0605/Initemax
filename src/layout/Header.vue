@@ -65,7 +65,7 @@
         <div class="d_bottom">
           <a-input v-model:value="searchName" placeholder="请输入一个关键词" @keydown.enter="search">
             <template #suffix>
-              <img class="d_search_icon" src="@/assets/img/search_b.png" alt="" />
+              <img class="d_search_icon" src="@/assets/img/search_b.png" alt="" @click="search" />
             </template>
           </a-input>
         </div>

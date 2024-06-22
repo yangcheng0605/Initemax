@@ -28,8 +28,12 @@
           </swiper-slide>
         </swiper>
         <div class="home_silde">
-          <div class="home_sildePre" @click="sildePre"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
-          <div class="home_sildeNext" @click="sildeNext"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
+          <div class="home_sildePre hoverSilde" @click="sildePre">
+            <div class="arrow_yellow_l"></div>
+          </div>
+          <div class="home_sildeNext hoverSilde" @click="sildeNext">
+            <div class="arrow_yellow_r"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -46,10 +50,11 @@
             <p class="li_date">{{ item.date }}</p>
             <p class="li_name line_clamp_2" :title="item.name">{{ item.name }}</p>
             <p class="li_text line_clamp_2" v-if="!isMobile" :title="item.contain">{{ item.contain }}</p>
-            <a-button type="link" class="subBtn">查看全部</a-button>
+            <a-button type="link" class="subBtn hoverBtn">查看全部</a-button>
           </div>
         </li>
       </ul>
+      <a-button type="link" class="themeBtn hoverBtn wow animate__fadeInUp" data-wow-offset="50">查看全部</a-button>
     </div>
   </div>
 </template>
@@ -307,12 +312,14 @@ export default {
         height: 3.5rem;
         border-radius: 36px;
         border: 1px solid #ff8a2c;
-        padding: 1rem 3.625rem;
         font-size: 1rem;
         line-height: 1.5rem;
         color: #ff8a2c;
       }
     }
+  }
+  .themeBtn {
+    margin-top: 6.25rem;
   }
 }
 </style>

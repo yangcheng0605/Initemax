@@ -30,7 +30,7 @@
       <div class="pro_tags wow animate__fadeInUp" data-wow-offset="50">
         <swiper :slides-per-view="perView" :space-between="between" :navigation="true">
           <swiper-slide v-for="item in tagList" :key="item.id">
-            <p :class="['tag', tags.indexOf(item.id) > -1 ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
+            <p :class="['tag', tags === item.id ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
           </swiper-slide>
         </swiper>
       </div>
@@ -46,7 +46,7 @@
           </a-col>
         </a-row>
       </div>
-      <a-button type="link" class="subBtn wow animate__fadeInUp" data-wow-offset="50">查看全部</a-button>
+      <a-button type="link" class="themeBtn wow animate__fadeInUp" data-wow-offset="50">查看全部</a-button>
     </div>
     <div class="pro_industry">
       <div class="new_title">
@@ -148,7 +148,7 @@ export default {
       gutter: [20, 20],
       colSpan: 8,
       currentType: 3,
-      tags: [0],
+      tags: 0,
       perView: 8,
       between: '0.79%',
       typeList: [
@@ -225,15 +225,16 @@ export default {
     }
     const chooseTags = e => {
       var id = e.id
-      var index = state.tags.indexOf(id)
-      if (index > -1) {
-        state.tags.splice(index, 1)
-        if (state.tags.length <= 0) {
-          state.tags = [0]
-        }
-      } else {
-        state.tags.push(id)
-      }
+      state.tags = id
+      // var index = state.tags.indexOf(id)
+      // if (index > -1) {
+      //   state.tags.splice(index, 1)
+      //   if (state.tags.length <= 0) {
+      //     state.tags = [0]
+      //   }
+      // } else {
+      //   state.tags.push(id)
+      // }
       console.log(state.tags)
     }
     const onSwiper = swiper => {
@@ -387,21 +388,10 @@ export default {
       }
     }
   }
-  .subBtn {
-    width: 13.75rem;
-    height: 4.5rem;
-    display: block;
-    margin: 0 auto;
-    border-radius: 2.25rem;
-    border: 1px solid #ff8a2c;
-    font-size: 1.5rem;
-    line-height: 2.25rem;
-    color: #ff8a2c;
-  }
 }
 .pro_industry {
   padding: 7.5rem 18.75rem;
-  background: url(../../assets/img/product/text_bg.png) no-repeat 100% / 100%;
+  background: url(../../assets/img/product/text_bg.png) no-repeat center / cover;
   color: #fff;
   .new_title {
     margin-bottom: 2.25rem;

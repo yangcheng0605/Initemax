@@ -114,7 +114,10 @@ a:focus,
 a:active {
   outline: none;
 }
-
+a,
+p {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
 a,
 a:focus,
 a:hover {
@@ -702,6 +705,10 @@ textarea {
   }
 }
 /* ********************公共****************** */
+// 特殊头
+.specialHeaderTop {
+  margin-top: 5rem;
+}
 // 图片放大
 .hoverImg,
 .hoverBox {
@@ -716,7 +723,7 @@ textarea {
   //   z-index: 1;
   // }
   .hoverImg {
-    transform: scale(1.1);
+    transform: scale(1.1) !important;
   }
 }
 .home_silde {
@@ -734,6 +741,34 @@ textarea {
     cursor: pointer;
     position: relative;
     display: inline-block;
+    &.hoverSilde {
+      .arrow_yellow_l,
+      .arrow_yellow_r {
+        width: 1.5rem;
+        height: 1.5rem;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: 0.3s;
+      }
+      .arrow_yellow_l {
+        background: url(../../assets/img/arrow_yellow_l.png) no-repeat 100%/100%;
+      }
+      .arrow_yellow_r {
+        background: url(../../assets/img/arrow_yellow_r.png) no-repeat 100%/100%;
+      }
+    }
+    &.hoverSilde:hover {
+      background: #ff8a2c;
+      border-color: #ff8a2c !important;
+      .arrow_yellow_l {
+        background: url(../../assets/img/arrow_white_l.png) no-repeat 100%/100%;
+      }
+      .arrow_yellow_r {
+        background: url(../../assets/img/arrow_white_r.png) no-repeat center/cover;
+      }
+    }
     img {
       width: 1.5rem;
       position: absolute;
@@ -752,7 +787,31 @@ textarea {
     line-height: 3rem;
   }
 }
-
+.themeBtn {
+  width: 13.75rem;
+  height: 4.5rem;
+  display: block;
+  margin: 0 auto;
+  border-radius: 2.25rem;
+  border: 0.125rem solid #ff8a2c;
+  font-size: 1.5rem;
+  line-height: 2.25rem;
+  color: #ff8a2c;
+  &.ant-btn-link:not(:disabled):hover {
+    color: #ff8a2c;
+  }
+}
+// 按钮移入
+.themeBtn {
+  transition: 0.3s;
+  &:hover {
+    background: #ff8a2c;
+    border-color: #ff8a2c !important;
+    span {
+      color: #fff !important;
+    }
+  }
+}
 // 邮箱弹窗
 .contact_pop,
 .adult_pop {

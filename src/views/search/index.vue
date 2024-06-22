@@ -5,7 +5,7 @@
       <div class="search_input">
         <a-input v-model:value="searchName" placeholder="请输入一个关键词" @keydown.enter="search">
           <template #suffix>
-            <img class="d_search_icon" src="@/assets/img/search_b.png" alt="" />
+            <img @click="search" class="d_search_icon" src="@/assets/img/search_b.png" alt="" />
           </template>
         </a-input>
       </div>
@@ -59,6 +59,7 @@ export default {
       // search()
     })
     const search = () => {
+      console.log(state.searchName)
       // proxy.$api.productListByCate({searchName: state.searchName}).then(res => {
       //   state.dataList = res
       // })
@@ -104,6 +105,7 @@ export default {
       }
       .d_search_icon {
         width: 1.125rem;
+        cursor: pointer;
       }
     }
   }
