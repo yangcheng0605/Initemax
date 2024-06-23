@@ -25,7 +25,7 @@
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide class="s_2">
+      <swiper-slide class="s_bg" :style="`background: url(${typeList[currentSceondIndex].bgImg}) no-repeat center / cover;`">
         <div class="h_second wiper_2">
           <div class="s_top">
             <p class="SmileFont title">造光 IGNITEMAX</p>
@@ -37,7 +37,7 @@
             </p>
           </div>
           <div class="s_bottom">
-            <swiper :modules="modules" loop observer observeParents slides-per-view="auto" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)">
+            <swiper :modules="modules" loop observer observeParents slides-per-view="auto" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)" @slideChange="e => onSlideSecondChange(e)">
               <swiper-slide v-for="item in typeList" :key="item.id">
                 <div class="type_box">
                   <img class="type_bg" :src="item.img" alt="" />
@@ -73,13 +73,13 @@
           style="height: 100%"
         >
           <swiper-slide>
-            <div class="h_third s_3">
+            <div class="h_third s_bg" :style="`background: url(${secondList[currentTypeIndex].bgImg}) no-repeat center/cover;`">
               <div class="h_types wow animate__fadeInUp" data-wow-offset="50">
                 <div>
                   <p
                     :class="['type_box_mb', 'SmileFont', currentType == item.id ? 'active' : '', item.id == currentType - 1 || item.id == currentType + 1 ? 'subactive' : '']"
-                    @click="chooseType(item.id)"
-                    v-for="item in secondList"
+                    @click="chooseType(item.id, index)"
+                    v-for="(item, index) in secondList"
                     :key="item.id"
                   >
                     {{ item.name }}
@@ -151,7 +151,7 @@
           </div>
         </div>
       </div>
-      <div class="section s_2">
+      <div class="section s_bg" :style="`background: url(${typeList[currentSceondIndex].bgImg}) no-repeat center / cover;`">
         <div class="h_second wiper_2">
           <div class="s_top">
             <p class="SmileFont title">造光 IGNITEMAX</p>
@@ -175,7 +175,7 @@
               :slides-per-view="5"
               :space-between="0"
               @swiper="e => onSwiper(e, 2)"
-              @transitionStart="transitionStart_s"
+              @slideChange="e => onSlideSecondChange(e)"
             >
               <swiper-slide v-for="item in typeList" :key="item.id">
                 <div class="type_box">
@@ -196,10 +196,10 @@
           </div>
         </div>
       </div>
-      <div class="section s_3">
+      <div class="section s_bg" :style="`background: url(${secondList[currentTypeIndex].bgImg}) no-repeat center/cover;`">
         <div class="h_third">
           <div class="h_types">
-            <div :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id)" v-for="item in secondList" :key="item.id">
+            <div :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id, index)" v-for="(item, index) in secondList" :key="item.id">
               <img class="type_bg" :src="item.img" alt="" />
               <p class="SmileFont">{{ item.name }}</p>
               <div class="black" v-if="currentType !== item.id"></div>
@@ -292,6 +292,7 @@ export default {
       swiper3: null,
       swiper4: null,
       swiper5: null,
+      currentSceondIndex: 0,
       currentVideoIndex: 0,
       mousewheel: true,
       isMobile: false,
@@ -301,6 +302,7 @@ export default {
       perView: 8,
       between: '0.79%',
       currentType: 3,
+      currentTypeIndex: 2,
       tags: 0,
       typeList: [
         {
@@ -365,11 +367,11 @@ export default {
         }
       ],
       secondList: [
-        { id: 1, name: '造月', img: require('@/assets/img/type_1.png') },
-        { id: 2, name: '造暗', img: require('@/assets/img/type_2.png') },
-        { id: 3, name: '造光', img: require('@/assets/img/type_3.png') },
-        { id: 4, name: '造火', img: require('@/assets/img/type_4.png') },
-        { id: 5, name: '造天', img: require('@/assets/img/type_5.png') }
+        { id: 1, name: '造月', img: require('@/assets/img/type_1.png'), bgImg: require('@/assets/img/home/bg_1.png') },
+        { id: 2, name: '造暗', img: require('@/assets/img/type_2.png'), bgImg: require('@/assets/img/home/bg_2.png') },
+        { id: 3, name: '造光', img: require('@/assets/img/type_3.png'), bgImg: require('@/assets/img/home/bg_3.png') },
+        { id: 4, name: '造火', img: require('@/assets/img/type_4.png'), bgImg: require('@/assets/img/home/bg_1.png') },
+        { id: 5, name: '造天', img: require('@/assets/img/type_5.png'), bgImg: require('@/assets/img/home/bg_2.png') }
       ],
       tagList: [
         { id: 0, name: '全部' },
@@ -408,7 +410,6 @@ export default {
           resetAnimation: true
         })
         wow.init()
-        console.log(wow.sync)
       })
       const watermarkDiv = document.querySelector('.fp-watermark')
       if (watermarkDiv) {
@@ -468,10 +469,8 @@ export default {
       state.curentPage = e.realIndex + 1
       console.log(e)
     }
-    const transitionStart_s = e => {
-      // if (e.activeIndex == 1) {
-      //   state.swiper2.setTranslate(0) // 因为左边会空出一张图的距离，所以设置位移为0
-      // }
+    const onSlideSecondChange = e => {
+      state.currentSceondIndex = e.realIndex
     }
     const onSlideVideoChange = e => {
       state.currentVideoIndex = e.realIndex
@@ -498,8 +497,9 @@ export default {
         state.between = '0.79%'
       }
     }
-    const chooseType = e => {
+    const chooseType = (e, index) => {
       state.currentType = e
+      state.currentTypeIndex = index
     }
     const chooseTags = e => {
       var id = e.id
@@ -529,9 +529,9 @@ export default {
       onSwiper,
       sildePre,
       onSlideChange,
+      onSlideSecondChange,
       onSlideVideoChange,
       transitionStart,
-      transitionStart_s,
       transitionEnd,
       handleMouseWheel,
       sildeNext,
@@ -558,11 +558,8 @@ export default {
   .s_1 {
     background: url(../../assets/img/home/bg_1.png) no-repeat center / cover;
   }
-  .s_2 {
-    background: url(../../assets/img/home/bg_2.png) no-repeat center / cover;
-  }
-  .s_3 {
-    background: url(../../assets/img/home/bg_3.png) no-repeat center / cover;
+  .s_bg {
+    transition: 0.5s;
   }
   .s_btn {
     width: 13.75rem;

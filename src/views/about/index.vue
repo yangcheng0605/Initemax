@@ -44,7 +44,7 @@
         <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">公司介绍</p>
       </div>
       <div class="swiper_box">
-        <swiper :slides-per-view="perView_introduce" grabCursor :navigation="true" @swiper="e => onSwiper(e, 2)" @slideChange="e => onSlideChange(e, 2)">
+        <swiper :slides-per-view="perView_introduce" loop :navigation="true" @swiper="e => onSwiper(e, 2)" @slideChange="e => onSlideChange(e, 2)">
           <swiper-slide v-for="item in about_contain" :key="item.id">
             <div class="about_contain wow animate__fadeInUp" data-wow-offset="50">
               <div>
@@ -106,7 +106,7 @@
       <div class="course_box">
         <swiper
           :modules="modules"
-          :slides-per-view="3"
+          slides-per-view="auto"
           :resistanceRatio="0"
           :loopedSlides="2"
           :space-between="0"
@@ -297,11 +297,11 @@ export default {
       state[`swiper${type}_active`] = e.realIndex + 1
     }
     const sildePre = e => {
-      state[`swiper${e}`].slidePrev(1000, true)
+      state[`swiper${e}`].slidePrev(500, true)
       state[`swiper${e}_active`] = state[`swiper${e}`].realIndex + 1
     }
     const sildeNext = e => {
-      state[`swiper${e}`].slideNext(1000, true)
+      state[`swiper${e}`].slideNext(500, true)
       state[`swiper${e}_active`] = state[`swiper${e}`].realIndex + 1
     }
     return {
@@ -381,8 +381,10 @@ export default {
 }
 .about_introduce {
   padding: 8.75rem 0 10rem;
-  background: url(../../assets/img/about/text_bg.png) no-repeat 100%/100%;
+  height: 100vh;
+  background: url(../../assets/img/about/text_bg.png) no-repeat center/cover;
   color: #fff;
+  position: relative;
   .about_contain {
     padding: 0 27.5rem;
     text-align: center;
@@ -393,7 +395,11 @@ export default {
     }
   }
   .home_silde {
-    margin-top: 5.625rem;
+    // margin-top: 5.625rem;
+    position: absolute;
+    bottom: 10rem;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 .about_brand {

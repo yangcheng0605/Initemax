@@ -17,8 +17,11 @@
         padding: 1.5rem !important;
         flex-flow: column;
         .a_content_left {
-          padding: 3.75rem 0 4rem 1.875rem !important;
+          padding: 3.75rem 1.875rem 4rem 1.875rem !important;
           width: auto !important;
+          margin: 0;
+          margin-bottom: 1.5rem;
+          border-radius: 0.625rem;
           .title {
             font-size: 1.5rem;
             line-height: 2.25rem;
@@ -44,6 +47,7 @@
           img {
             height: 31.25rem;
             object-fit: cover;
+            border-radius: 0.625rem;
           }
         }
       }
@@ -58,6 +62,12 @@
         .ant-form-item-label > label {
           font-size: 1rem;
           line-height: 1.5rem;
+        }
+        .ant-input:not(textarea) {
+          height: 3rem;
+        }
+        textarea.ant-input {
+          height: 15rem;
         }
         .submit {
           .ant-form-item {
@@ -422,7 +432,8 @@
         }
       }
       .home_silde {
-        margin-top: 6.25rem;
+        // margin-top: 6.25rem;
+        bottom: 3.75rem;
       }
     }
     .about_brand {
@@ -592,6 +603,12 @@
       .home_sildeNext {
         width: 1.875rem;
         height: 1.875rem;
+        &.hoverSilde {
+          div {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
         img {
           width: 1rem;
         }
@@ -903,6 +920,7 @@
 @media (max-height: 667px) {
   .home {
     .h_second {
+      padding: 4rem 1.5rem 2.5rem;
       .s_top {
         margin-bottom: 6.25rem;
       }
@@ -911,9 +929,9 @@
       }
     }
     .h_third {
-      padding: 3.5rem 0 2.5rem;
+      padding: 4rem 0 2.5rem;
       .h_tags {
-        margin: 2.5rem 0 2.5rem;
+        margin: 1.5rem 0 2rem;
       }
       .h_video {
         .content .title {

@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <Header></Header>
+    <Header :isScrolled="isScrolled"></Header>
     <main class="wrapper">
       <div id="shopify-section-home" class="shopify-section">
         <div class="homepage">
@@ -13,7 +13,7 @@
   </nav>
 </template>
 <script>
-import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
+import { defineComponent, onBeforeUnmount, onMounted, reactive, toRefs, watch } from 'vue'
 import Header from '@/layout/Header.vue'
 import Footer from '@/layout/Footer.vue'
 import Pop from '@/components/pop.vue'
@@ -36,9 +36,22 @@ export default defineComponent({
   setup() {
     let route = useRoute()
     const state = reactive({
-      hidden: false
+      hidden: false,
+      isScrolled: false
     })
-    onMounted(async () => {})
+    onMounted(async () => {
+      window.addEventListener('scroll', handleScroll)
+    })
+    onBeforeUnmount(() => {
+      window.removeEventListener('scroll', handleScroll)
+    })
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        state.isScrolled = true
+      } else {
+        state.isScrolled = false
+      }
+    }
     watch(
       route,
       e => {
@@ -48,7 +61,6 @@ export default defineComponent({
         } else {
           state.hidden = false
         }
-        console.log(state.hidden)
       },
       { immediate: true }
     )

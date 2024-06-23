@@ -1,10 +1,10 @@
 <template>
   <div class="shopify-section-header">
-    <div :class="['header', transp ? '' : 'specialHeader']">
-      <div class="desktop-only">
-        <div :class="['main', transp ? 'transp' : 'main_white']">
+    <div :class="['header', transp && !isScrolled ? '' : 'specialHeader']">
+      <div class="desktop-only" @mouseenter="isHome ? hoverHeader() : ''" @mouseleave="isHome ? leaveHeader() : ''">
+        <div :class="['main', transp && !isScrolled ? 'transp' : 'main_white']">
           <div class="main_left">
-            <a href="/#/"><img :src="transp ? logo_white : logo_black" /></a>
+            <a href="/#/"><img :src="transp && !isScrolled ? logo_white : logo_black" /></a>
           </div>
           <div class="nav">
             <a-tabs v-model:activeKey="activeKey" @change="linkTo">
@@ -12,19 +12,19 @@
             </a-tabs>
             <!-- <span :href="item.path" :class="item.active ? 'nav_active' : ''" @click="linkTo(item)" @mouseover="hoverTo(index)">{{ item.name }}</span> -->
             <div class="search" @click="showSearch = true">
-              <img :src="transp ? search_white : search_black" alt="" />
+              <img :src="transp && !isScrolled ? search_white : search_black" alt="" />
             </div>
           </div>
         </div>
       </div>
       <div class="mobile-only">
-        <div :class="['main', transp ? 'transp' : 'main_white']">
+        <div :class="['main', transp && !isScrolled && !show ? 'transp' : 'main_white']">
           <div class="main_center">
-            <a href="/#/"><img :src="transp ? logo_white : logo_black" /></a>
+            <a href="/#/"><img :src="transp && !isScrolled && !show ? logo_white : logo_black" /></a>
           </div>
           <div class="main_Mright" @click="targetShowNav">
             <img class="close" v-if="show" src="@/assets/img/mb_nav_close.png" alt="" />
-            <img v-else :src="transp ? mb_nav_white : mb_nav_black" alt="" />
+            <img v-else :src="transp && !isScrolled && !show ? mb_nav_white : mb_nav_black" alt="" />
           </div>
         </div>
         <div :class="['Main_popup', show ? 'Main_popup_active' : '']">
@@ -82,6 +82,12 @@ import { Empty } from 'ant-design-vue'
 import '@/assets/style/header.less'
 export default {
   name: 'Header',
+  props: {
+    isScrolled: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup() {
     let router = useRouter()
     let route = useRoute()
@@ -89,6 +95,7 @@ export default {
     const state = reactive({
       show: false,
       transp: true,
+      isHome: false,
       activeKey: 1,
       searchName: '',
       logo_white: require('@/assets/img/logo_w.png'),
@@ -112,6 +119,12 @@ export default {
     })
     const getProductListByCate = id => {
       console.log(id)
+    }
+    const hoverHeader = () => {
+      state.transp = false
+    }
+    const leaveHeader = () => {
+      state.transp = true
     }
     const search = () => {
       state.showSearch = false
@@ -138,7 +151,11 @@ export default {
         var path = e.fullPath
         var meta = e.meta
         state.transp = meta?.transp == 1 ? false : true
+        state.isHome = false
         const current = state.navList.filter(item => path === item.path)
+        if (e.name == '/') {
+          state.isHome = true
+        }
         if (current && current.length > 0) {
           state.activeKey = current[0].key
           window.scrollTo({
@@ -155,6 +172,8 @@ export default {
       Empty,
       ...toRefs(state),
       targetShowNav,
+      hoverHeader,
+      leaveHeader,
       linkTo,
       hoverTo,
       search,

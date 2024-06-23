@@ -16,8 +16,8 @@
                 <div>
                   <ul>
                     <li><img src="@/assets/img/contact/img_1.png" alt="" /> <span>广东省深圳市宝安区1065号F518时尚创意园F7栋401 </span></li>
-                    <li><img src="@/assets/img/contact/img_2.png" alt="" /> <span>ignitemax@ignitemax.cn</span></li>
-                    <li><img src="@/assets/img/contact/img_3.png" alt="" /> <span>17722438807/4000-212-777</span></li>
+                    <li><img src="@/assets/img/contact/img_3.png" alt="" /> <span>ignitemax@ignitemax.cn</span></li>
+                    <li><img src="@/assets/img/contact/img_2.png" alt="" /> <span>17722438807/4000-212-777</span></li>
                   </ul>
                 </div>
               </div>
@@ -169,11 +169,14 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #fbfbfb;
     .a_content_left {
       width: 37.5rem;
       margin-right: 2.5rem;
       padding: 6.18rem 0 7rem 4.375rem;
       flex-shrink: 0;
+      background: #fff;
+      border-radius: 1.25rem;
       .title {
         font-size: 2.5rem;
         line-height: 3.75rem;
@@ -195,7 +198,7 @@ export default {
     }
     .a_content_right {
       img {
-        border-radius: 0.5rem;
+        border-radius: 1.25rem;
       }
     }
   }
