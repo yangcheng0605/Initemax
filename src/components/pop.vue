@@ -36,16 +36,17 @@ export default {
       }
     }
     const showContact = () => {
-      const node = document.getElementById('shopify-section-footer')
-      if (node) {
-        const rect = node.getBoundingClientRect()
-        const offsetTop = rect.top + window.pageYOffset
+      // const node = document.getElementById('shopify-section-footer')
+      // if (node) {
+      //   const rect = node.getBoundingClientRect()
+      //   const offsetTop = rect.top + window.pageYOffset
 
-        window.scrollTo({
-          top: offsetTop,
-          behavior: 'smooth'
-        })
-      }
+      //   window.scrollTo({
+      //     top: offsetTop,
+      //     behavior: 'smooth'
+      //   })
+      // }
+      router.replace('/contact?form=home')
     }
     const toTop = () => {
       window.scrollTo({
@@ -74,7 +75,7 @@ export default {
     width: 4.5rem;
     height: 4.5rem;
     border-radius: 0.25rem;
-    padding: 0.625rem 0.75rem;
+    padding: 0.625rem 0.625rem;
     margin-bottom: 0.625rem;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.5);

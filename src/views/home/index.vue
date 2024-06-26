@@ -1,5 +1,5 @@
 <template>
-  <div class="home" @wheel="handleMouseWheel">
+  <div class="home">
     <swiper
       class="pageSwiper"
       autoHeight
@@ -11,12 +11,12 @@
       :speed="700"
       :modules="modules"
       @swiper="e => onSwiper(e, 1)"
-      @slideChange="e => onSlideChange(e)"
+      @slideChange="e => onSlideHomeChange(e)"
       v-if="isMobile"
     >
       <swiper-slide class="s_1">
-        <div class="h_first wiper_1 wow animate__fadeInUp">
-          <div class="title wow animate__fadeInUp" data-wow-offset="50">
+        <div :class="['h_first wiper_1', homeIndex == 0 ? 'animateFadeInUp' : '']">
+          <div class="title">
             <p class="SmileFont title">Spark More</p>
             <p class="SmileFont subtitle">去发现，无限可能</p>
           </div>
@@ -27,7 +27,7 @@
       </swiper-slide>
       <swiper-slide class="s_bg" :style="`background: url(${typeList[currentSceondIndex].bgImg}) no-repeat center / cover;`">
         <div class="h_second wiper_2">
-          <div class="s_top">
+          <div :class="['s_top', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">造光 IGNITEMAX</p>
             <p class="s_text">
               <span>致力于艺术与科技的完美融合，利用影像让一切更有价值的企业</span>
@@ -36,7 +36,7 @@
               <span>华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验</span>
             </p>
           </div>
-          <div class="s_bottom">
+          <div :class="['s_bottom', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <swiper :modules="modules" loop observer observeParents slides-per-view="auto" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)" @slideChange="e => onSlideSecondChange(e)">
               <swiper-slide v-for="item in typeList" :key="item.id">
                 <div class="type_box">
@@ -55,7 +55,7 @@
               </div>
             </div>
           </div>
-          <div class="btn_box">
+          <div :class="['btn_box', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
           </div>
         </div>
@@ -74,7 +74,7 @@
         >
           <swiper-slide>
             <div class="h_third s_bg" :style="`background: url(${secondList[currentTypeIndex].bgImg}) no-repeat center/cover;`">
-              <div class="h_types wow animate__fadeInUp" data-wow-offset="50">
+              <div :class="['h_types', homeIndex == 2 ? 'animateFadeInUp' : '']">
                 <div>
                   <p
                     :class="['type_box_mb', 'SmileFont', currentType == item.id ? 'active' : '', item.id == currentType - 1 || item.id == currentType + 1 ? 'subactive' : '']"
@@ -86,14 +86,14 @@
                   </p>
                 </div>
               </div>
-              <div class="h_tags">
+              <div :class="['h_tags', homeIndex == 2 ? 'animateFadeInUp' : '']">
                 <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
                   <swiper-slide v-for="item in tagList" :key="item.id">
                     <p :class="['tag', tags === item.id ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
                   </swiper-slide>
                 </swiper>
               </div>
-              <div class="h_video">
+              <div :class="['h_video', homeIndex == 2 ? 'animateFadeInUp' : '']">
                 <div class="swiper_box">
                   <swiper
                     :modules="modules"
@@ -112,7 +112,7 @@
                     @swiper="e => onSwiper(e, 4)"
                     @slideChange="e => onSlideVideoChange(e)"
                   >
-                    <swiper-slide v-for="item in proList" :key="item.id">
+                    <swiper-slide v-for="(item, index) in proList" :key="item.id">
                       <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
                         <img class="hoverImg" :src="item.img" alt="" />
                         <div class="play">
@@ -144,8 +144,8 @@
 
     <full-page ref="fullpage" :options="options" id="fullpage" v-else>
       <div class="section s_1">
-        <div class="h_first wiper_1">
-          <div class="title wow animate__fadeInUp" data-wow-offset="50">
+        <div :class="['h_first wiper_1', homeIndex == 0 ? 'animateFadeInUp' : '']">
+          <div class="title">
             <p class="SmileFont title">Spark More</p>
             <p class="SmileFont subtitle">去发现，无限可能</p>
           </div>
@@ -153,7 +153,7 @@
       </div>
       <div class="section s_bg" :style="`background: url(${typeList[currentSceondIndex].bgImg}) no-repeat center / cover;`">
         <div class="h_second wiper_2">
-          <div class="s_top">
+          <div :class="['s_top', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">造光 IGNITEMAX</p>
             <p class="s_text">
               <span>致力于艺术与科技的完美融合，利用影像让一切更有价值的企业</span>
@@ -163,7 +163,7 @@
             </p>
             <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
           </div>
-          <div class="s_bottom">
+          <div :class="['s_bottom', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <swiper
               class="swiper-no-swiping"
               loop
@@ -198,21 +198,21 @@
       </div>
       <div class="section s_bg" :style="`background: url(${secondList[currentTypeIndex].bgImg}) no-repeat center/cover;`">
         <div class="h_third">
-          <div class="h_types">
+          <div :class="['h_types', homeIndex == 2 ? 'animateFadeInUp' : '']">
             <div :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id, index)" v-for="(item, index) in secondList" :key="item.id">
               <img class="type_bg" :src="item.img" alt="" />
               <p class="SmileFont">{{ item.name }}</p>
               <div class="black" v-if="currentType !== item.id"></div>
             </div>
           </div>
-          <div class="h_tags">
+          <div :class="['h_tags', homeIndex == 2 ? 'animateFadeInUp' : '']">
             <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
               <swiper-slide v-for="item in tagList" :key="item.id">
                 <p :class="['tag', tags === item.id ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
               </swiper-slide>
             </swiper>
           </div>
-          <div class="h_video">
+          <div :class="['h_video', homeIndex == 2 ? 'animateFadeInUp' : '']">
             <div class="swiper_box">
               <swiper
                 :modules="modules"
@@ -278,6 +278,10 @@ export default {
     const router = useRouter()
     const { proxy } = getCurrentInstance()
     const fullpage = ref()
+    const onfullpageChange = (m, n) => {
+      // console.log('<p>afterSlideLoad - section:' + section.index + ' origin:' + origin.index + ' destination:' + destination.index + ' direction:' + direction + '  trigger:' + trigger + '</p>')
+      state.homeIndex = n.index
+    }
     const state = reactive({
       modules: [FreeMode, Mousewheel, EffectCoverflow],
       bannerList: null,
@@ -285,13 +289,16 @@ export default {
         resize: true,
         scrollingSpeed: 700,
         touchSensitivity: 100,
-        loopHorizontal: false
+        loopHorizontal: false,
+        onLeave: onfullpageChange
       },
       swiper1: null,
       swiper2: null,
       swiper3: null,
       swiper4: null,
       swiper5: null,
+      showAnimate: false,
+      homeIndex: false,
       currentSceondIndex: 0,
       currentVideoIndex: 0,
       mousewheel: true,
@@ -397,19 +404,7 @@ export default {
     onMounted(async () => {
       nextTick(() => {
         handleResize()
-        // autoSize()
         window.addEventListener('resize', handleResize)
-        var wow = new proxy.$wow.WOW({
-          boxClass: 'wow',
-          animateClass: 'animated',
-          offset: 50,
-          mobile: true,
-          live: true,
-          callback: function (e) {},
-          scrollContainer: null,
-          resetAnimation: true
-        })
-        wow.init()
       })
       const watermarkDiv = document.querySelector('.fp-watermark')
       if (watermarkDiv) {
@@ -417,54 +412,14 @@ export default {
       }
     })
     // getPicList()
-    const autoSize = () => {
-      var ww = window.innerWidth
-      var hh = window.innerHeight
-      var boxw = 1920
-      var boxh = hh
-      var zoom = ww / boxw
-      if (zoom < 0.64) zoom = 0.64
-      document.getElementById('app').style.zoom = zoom // 页面等比缩放
-      // if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
-      //     $('.fp-tableCell,.top,.right,.pop_box').css({
-      //         '-webkit-transform': 'scale(' + zoom + ')',
-      //         '-mod-transform': 'scale(' + zoom + ')',
-      //         'transform': 'scale(' + zoom + ')'
-      //     });
-      // } else {
-      //     $(".fp-tableCell,.top,.right,.pop_box").css({
-      //         zoom: zoom
-      //     });
-      // }
-    }
     const getPicList = () => {
       proxy.$api.picList('').then(res => {
         state.bannerList = res
       })
     }
-    const handleMouseWheel = debounce(function (e) {
-      // const swiperelement = document.getElementsByClassName('swiper-no-swiping')[0]
-      // const element = document.getElementsByClassName('footer')[0]
-      // if (e.deltaY > 0) {
-      //   state.curentIndex += 1
-      //   if (state.curentPage == 3 && state.curentIndex > 2) {
-      //     element.scrollIntoView({ behavior: 'smooth' })
-      //   } else {
-      //     swiperelement.scrollIntoView({ behavior: 'smooth' })
-      //   }
-      // } else {
-      //   if (state.curentPage == 2) {
-      //     state.curentIndex = 1
-      //   } else {
-      //     state.curentIndex = state.curentIndex > 0 ? state.curentIndex - 1 : 0
-      //   }
-      //   swiperelement.scrollIntoView({ behavior: 'smooth' })
-      // }
-      const watermarkDiv = document.querySelector('.fp-watermark')
-      if (watermarkDiv) {
-        watermarkDiv.remove()
-      }
-    }, 500)
+    const onSlideHomeChange = e => {
+      state.homeIndex = e.realIndex
+    }
     const onSlideChange = e => {
       state.curentPage = e.realIndex + 1
       console.log(e)
@@ -528,12 +483,13 @@ export default {
       fullpage,
       onSwiper,
       sildePre,
+      onSlideHomeChange,
+      onfullpageChange,
       onSlideChange,
       onSlideSecondChange,
       onSlideVideoChange,
       transitionStart,
       transitionEnd,
-      handleMouseWheel,
       sildeNext,
       chooseType,
       chooseTags
@@ -633,8 +589,8 @@ export default {
     }
   }
 }
+
 .h_first {
-  // padding: 25rem 0 26.5rem;
   height: 100vh;
   text-align: center;
   display: flex;
@@ -911,6 +867,25 @@ export default {
   }
   .btn_box {
     text-align: center;
+  }
+}
+.animateFadeInUp {
+  animation-name: myfadeInUp;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@keyframes myfadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
   }
 }
 </style>

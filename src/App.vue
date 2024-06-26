@@ -41,6 +41,7 @@ export default defineComponent({
     })
     onMounted(async () => {
       window.addEventListener('scroll', handleScroll)
+      // window.onresize = resizeHeight
     })
     onBeforeUnmount(() => {
       window.removeEventListener('scroll', handleScroll)
@@ -52,6 +53,15 @@ export default defineComponent({
         state.isScrolled = false
       }
     }
+    // const resizeHeight = (e, delay = 200) => {
+    //   // delay = 200ms仅供参考，若还出现问题可增加时间延迟
+    //   let resizeTimeout
+    //   if (!resizeTimeout) {
+    //     resizeTimeout = setTimeout(function () {
+    //       resizeTimeout = null
+    //     }, delay)
+    //   }
+    // }
     watch(
       route,
       e => {

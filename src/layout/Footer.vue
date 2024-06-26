@@ -39,26 +39,26 @@
       </div>
       <div class="mobile-only">
         <div class="footer-top">
-          <a class="Fnav" href="/#/">
+          <span class="Fnav" @click="navlinkTo('/')">
             <p @click="show = false">首页</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </a>
-          <a class="Fnav" href="/#/products">
+          </span>
+          <span class="Fnav" @click="navlinkTo('/products')">
             <p @click="show = false">案例</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </a>
-          <a class="Fnav" href="/#/about">
+          </span>
+          <span class="Fnav" @click="navlinkTo('/about')">
             <p @click="show = false">关于我们</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </a>
-          <a class="Fnav" href="/#/news">
+          </span>
+          <span class="Fnav" @click="navlinkTo('/news')">
             <p @click="show = false">最新资讯</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </a>
-          <a class="Fnav" href="/#/contact">
+          </span>
+          <span class="Fnav" @click="navlinkTo('/contact')">
             <p @click="show = false">联系我们</p>
             <img src="@/assets/img/mb_arrow_w.png" alt="" />
-          </a>
+          </span>
         </div>
         <div class="footer-bottom">
           <img class="f_logo" src="@/assets/img/footer/f_logo.png" alt="" />
@@ -89,6 +89,7 @@ import { getCurrentInstance, onMounted, reactive, ref, toRefs, watch } from 'vue
 import { PlusOutlined } from '@ant-design/icons-vue'
 import { Empty } from 'ant-design-vue'
 import Storage from '@/utils/storage'
+import { useRouter } from 'vue-router'
 export default {
   name: 'Footer',
   components: {
@@ -96,6 +97,7 @@ export default {
   },
   setup() {
     const { proxy } = getCurrentInstance()
+    let router = useRouter()
     const state = reactive({
       navList: [
         {
@@ -159,6 +161,9 @@ export default {
       state.showIndex = null
       state.qrUrl = null
     }
+    const navlinkTo = e => {
+      router.replace(e)
+    }
     const clickshowQr = e => {
       if (e.target.className == 'icon') {
         const id = e.target.dataset.id
@@ -186,7 +191,8 @@ export default {
       Empty,
       ...toRefs(state),
       showQr,
-      leaveQr
+      leaveQr,
+      navlinkTo
     }
   }
 }

@@ -20,7 +20,7 @@
       <div class="mobile-only">
         <div :class="['main', transp && !isScrolled && !show ? 'transp' : 'main_white']">
           <div class="main_center">
-            <a href="/#/"><img :src="transp && !isScrolled && !show ? logo_white : logo_black" /></a>
+            <img :src="transp && !isScrolled && !show ? logo_white : logo_black" @click="navlinkTo('/')" />
           </div>
           <div class="main_Mright" @click="targetShowNav">
             <img class="close" v-if="show" src="@/assets/img/mb_nav_close.png" alt="" />
@@ -30,26 +30,26 @@
         <div :class="['Main_popup', show ? 'Main_popup_active' : '']">
           <div class="Main_item">
             <!-- <a-collapse ghost accordion :expand-icon-position="'end'"> -->
-            <a href="/#/" class="Mnav" @click="show = false">
+            <span class="Mnav" @click="navlinkTo('/')">
               <span>首页</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </a>
-            <a href="/#/products" class="Mnav" @click="show = false">
+            </span>
+            <span class="Mnav" @click="navlinkTo('/products')">
               <span>案例</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </a>
-            <a href="/#/about" class="Mnav" @click="show = false">
+            </span>
+            <span class="Mnav" @click="navlinkTo('/about')">
               <span>关于我们</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </a>
-            <a href="/#/news" class="Mnav" @click="show = false">
+            </span>
+            <span class="Mnav" @click="navlinkTo('/news')">
               <span>最新资讯</span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </a>
-            <a href="/#/contact" class="Mnav" @click="show = false">
+            </span>
+            <span class="Mnav" @click="navlinkTo('/contact')">
               <span>联系我们 </span>
               <img src="@/assets/img/mb_arrow_b.png" alt="" />
-            </a>
+            </span>
             <!-- </a-collapse> -->
           </div>
         </div>
@@ -128,7 +128,7 @@ export default {
     }
     const search = () => {
       state.showSearch = false
-      router.push('/search?search=' + state.searchName)
+      router.replace('/search?search=' + state.searchName)
     }
     const targetShowNav = () => {
       state.show = !state.show
@@ -138,6 +138,11 @@ export default {
         path: state.navList[e].path
       })
     }
+    const navlinkTo = e => {
+      router.replace(e)
+      state.show = false
+    }
+
     const hoverTo = e => {
       state.popIndex = e
       getProductListByCate(1)
@@ -175,6 +180,7 @@ export default {
       hoverHeader,
       leaveHeader,
       linkTo,
+      navlinkTo,
       hoverTo,
       search,
       leaveTo

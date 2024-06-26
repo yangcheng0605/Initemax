@@ -6,7 +6,7 @@
         <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">联系我们</p>
       </div>
     </div>
-    <div class="bottom_contain">
+    <div id="content" class="bottom_contain">
       <div class="contact_nav nav">
         <a-tabs v-model:activeKey="activeKey" :centered="mobile ? true : false">
           <a-tab-pane :key="1" tab="联系方式">
@@ -91,17 +91,20 @@
   </div>
 </template>
 <script>
-import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
+import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, watch } from 'vue'
+import { useRoute } from 'vue-router'
 export default {
   name: 'IContact',
   components: {},
   setup() {
+    let route = useRoute()
     const { proxy } = getCurrentInstance()
     const state = reactive({
       activeKey: 1,
       contactModal: false,
       colSpan: 8,
       mobile: false,
+      query: null,
       gutter: [30, 30],
       contactModalOp: {
         title: '',
@@ -125,6 +128,18 @@ export default {
         window.addEventListener('resize', handleResize)
         var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
         wow.init()
+        if (state.query && state.query.form == 'home') {
+          const node = document.getElementById('content')
+          if (node) {
+            const rect = node.getBoundingClientRect()
+            const offsetTop = rect.top + window.pageYOffset
+            console.log(offsetTop)
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            })
+          }
+        }
       })
     })
 
@@ -143,6 +158,13 @@ export default {
         state.mobile = false
       }
     }
+    watch(
+      route,
+      e => {
+        state.query = e.query
+      },
+      { immediate: true }
+    )
     return {
       ...toRefs(state),
       handleFinish

@@ -48,20 +48,12 @@ export default {
       }
     }
     const showContact = () => {
-      if (props.isMobile) {
-        props.swiper1.slideTo(2)
-      } else {
-        props.fullpage.api.moveTo(4)
-      }
-      // const node = document.getElementById('shopify-section-footer')
-      // if (node) {
-      //   const rect = node.getBoundingClientRect()
-      //   const offsetTop = rect.top + window.pageYOffset
-      //   window.scrollTo({
-      //     top: offsetTop,
-      //     behavior: 'smooth'
-      //   })
+      // if (props.isMobile) {
+      //   props.swiper1.slideTo(2)
+      // } else {
+      //   props.fullpage.api.moveTo(4)
       // }
+      router.replace('/contact?form=home')
     }
     const toTop = () => {
       if (props.isMobile) {
