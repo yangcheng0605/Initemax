@@ -100,9 +100,9 @@
                     :effect="'coverflow'"
                     :coverflowEffect="{
                       rotate: 0,
-                      stretch: 0,
-                      depth: 200,
-                      modifier: 1,
+                      stretch: stretch,
+                      depth: 60,
+                      modifier: 2,
                       slideShadows: false
                     }"
                     loop
@@ -115,7 +115,7 @@
                     <swiper-slide v-for="(item, index) in proList" :key="item.id">
                       <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
                         <img class="hoverImg" :src="item.img" alt="" />
-                        <div class="play">
+                        <div class="play" v-if="currentVideoIndex === index">
                           <img src="@/assets/img/play.png" alt="" />
                         </div>
                       </div>
@@ -297,6 +297,7 @@ export default {
       swiper3: null,
       swiper4: null,
       swiper5: null,
+      stretch: 88,
       showAnimate: false,
       homeIndex: false,
       currentSceondIndex: 0,
@@ -438,6 +439,7 @@ export default {
     }
     const handleResize = () => {
       const windowWidth = window.innerWidth
+
       if (windowWidth < 750) {
         state.colSpan = 8
         state.gutter = [40, 40]
@@ -451,6 +453,17 @@ export default {
         state.perView = 'auto'
         state.between = '0.79%'
       }
+
+      if (windowWidth > 413 && windowWidth < 550) {
+        state.stretch = 100
+      } else if (windowWidth > 375 && windowWidth < 413) {
+        state.stretch = 98
+      } else if (windowWidth > 360 && windowWidth <= 375) {
+        state.stretch = 88
+      } else {
+        state.stretch = 87
+      }
+      console.log(state.stretch)
     }
     const chooseType = (e, index) => {
       state.currentType = e
@@ -784,11 +797,17 @@ export default {
               }
             }
           }
+          &.swiper-slide-next,
+          &.swiper-slide-prev {
+            .about_contain img {
+              border-radius: 1.25rem;
+            }
+          }
         }
       }
     }
     .about_contain {
-      border-radius: 0.5rem;
+      border-radius: 1.25rem;
       position: relative;
       height: 100%;
       .content {
@@ -798,6 +817,7 @@ export default {
         transform: translateX(-50%);
         text-align: center;
         color: #fff;
+        z-index: 10;
       }
       .title {
         opacity: 0;
@@ -812,7 +832,7 @@ export default {
         transform: translate(-50%, -50%);
         padding: 1.25rem;
         cursor: pointer;
-        z-index: 2;
+        z-index: 11;
         img {
           width: 2.5rem;
           height: 2.5rem;
@@ -886,6 +906,14 @@ export default {
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes opacityAni {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 </style>

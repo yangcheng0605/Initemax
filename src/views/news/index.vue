@@ -14,8 +14,8 @@
         <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="onSwiper">
           <swiper-slide v-for="item in hotList" :key="item.id">
             <div class="hot_contain">
-              <div class="hoverBox">
-                <img class="hoverImg" :src="item.img" alt="" />
+              <div :class="['hoverBox', hoverImgStatus ? 'hoverImgBox' : '']" @mouseenter="hoverImgStatus = true" @mouseleave="hoverImgStatus = false">
+                <img :class="['hoverImg', hoverImgStatus ? 'hoverImgs' : '']" :src="item.img" alt="" />
               </div>
               <div>
                 <p class="hot_name line_clamp_2" :title="item.name">{{ item.name }}</p>
@@ -75,6 +75,7 @@ export default {
     const state = reactive({
       isMobile: false,
       swiper: null,
+      hoverImgStatus: false,
       perView: 4,
       between: 40,
       hotList: [
@@ -178,6 +179,9 @@ export default {
         state.isMobile = false
       }
     }
+    // const hoverImg = swiper => {
+    //   state.hoverImgStatus = swiper
+    // }
     const onSwiper = swiper => {
       state.swiper = swiper
     }
@@ -282,10 +286,7 @@ export default {
     &:not(:last-of-type) {
       margin-bottom: 2.5rem;
     }
-    .hoverBox {
-      flex-shrink: 0;
-      border-radius: 0.5rem;
-    }
+
     img {
       width: 28.75rem;
       height: 14.375rem;
@@ -319,5 +320,9 @@ export default {
   .themeBtn {
     margin-top: 6.25rem;
   }
+}
+.hoverBox {
+  flex-shrink: 0;
+  border-radius: 0.625rem;
 }
 </style>

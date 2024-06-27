@@ -1,5 +1,5 @@
 <template>
-  <div class="search">
+  <div class="search specialHeaderTop">
     <div class="search_top wow animate__fadeInUp" data-wow-offset="50">
       <p class="title SmileFont">搜索结果</p>
       <div class="search_input">

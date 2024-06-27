@@ -160,7 +160,7 @@
               <img class="width_560 height_360 mr_20" src="@/assets/img/about/JYSP_4.png" alt="" />
               <img class="width_560 height_360" src="@/assets/img/about/JYSP_5.png" alt="" />
             </div>
-            <img class="width_max height_240" src="@/assets/img/about/JYSP_6.png" alt="" />
+            <img class="width_1140 height_240" src="@/assets/img/about/JYSP_6.png" alt="" />
           </div>
         </div>
         <div class="img_box scroll-content2">
@@ -176,7 +176,7 @@
               <img class="width_560 height_360 mr_20" src="@/assets/img/about/JYSP_4.png" alt="" />
               <img class="width_560 height_360" src="@/assets/img/about/JYSP_5.png" alt="" />
             </div>
-            <img class="width_max height_240" src="@/assets/img/about/JYSP_6.png" alt="" />
+            <img class="width_1140 height_240" src="@/assets/img/about/JYSP_6.png" alt="" />
           </div>
         </div>
       </div>

@@ -180,6 +180,7 @@ export default {
       .ant-tabs-nav {
         padding: 0 15rem 0;
         box-shadow: 0px 8px 18px 0px rgba(35, 35, 35, 0.1);
+        z-index: 2;
         .ant-tabs-tab {
           margin-left: 5rem !important;
         }
