@@ -715,6 +715,8 @@ textarea {
   cursor: pointer;
   transition: all 0.5s;
   overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
 }
 .hoverBox:hover {
   border-radius: 25px !important;
@@ -810,6 +812,21 @@ textarea {
     span {
       color: #fff !important;
     }
+  }
+}
+// 标题底部横线
+.bottom_border {
+  position: relative;
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 5.75rem;
+    height: 0.5rem;
+    background: #ff8a2c;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 // 邮箱弹窗

@@ -18,12 +18,12 @@
             <p class="title">{{ item.title }}</p>
             <p class="subtitle">类目-{{ item.type }}</p>
           </div>
-          <a-button type="link" class="subBtn" @click="linkTo(item)">查看全部</a-button>
+          <a-button type="link" class="subBtn themeBtn hoverBtn" @click="linkTo(item)">查看全部</a-button>
         </li>
       </ul>
     </div>
     <div class="moreBtn">
-      <a-button type="link" class="btn" @click="more()">查看更多</a-button>
+      <a-button type="link" class="btn themeBtn hoverBtn" @click="more()">查看更多</a-button>
     </div>
   </div>
 </template>
@@ -91,14 +91,19 @@ export default {
       font-size: 2.5rem;
     }
     .search_input {
-      font-size: 1.125rem;
       width: 30rem;
       height: 3.125rem;
       line-height: 3.125rem;
+      input {
+        font-size: 1.125rem;
+        line-height: 1.125rem;
+        text-indent: 0.75rem;
+      }
       .ant-input-affix-wrapper {
         border: 1px solid #999 !important;
         border-radius: 25px;
         box-shadow: none;
+        height: 100%;
         &:focus {
           box-shadow: none;
         }
@@ -151,6 +156,7 @@ export default {
         font-size: 1rem;
         line-height: 1.5rem;
         color: #ff8a2c;
+        margin: 0;
       }
     }
   }

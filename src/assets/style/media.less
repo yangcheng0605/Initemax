@@ -110,6 +110,7 @@
       p {
         font-size: 1.5rem;
         line-height: 2.25rem;
+        padding-bottom: 1rem;
       }
     }
     .news_hot {
@@ -227,12 +228,14 @@
       & > p {
         font-size: 1.5rem;
         line-height: 2.25rem;
+        padding-bottom: 1rem;
       }
     }
     .pro_hot {
       padding: 3.75rem 0;
       .pro_tags {
         margin: 2.5rem 0;
+        height: 2.25rem;
         .swiper {
           padding-right: 0.625rem;
           .swiper-wrapper {
@@ -272,25 +275,27 @@
         font-size: 1.25rem;
         line-height: 1.875rem;
       }
-    }
-    .pro_types {
-      height: 2.125rem;
-      .type_box_mb {
-        font-size: 1.25rem;
-        color: rgba(35, 35, 35, 0.4);
-        line-height: 2.525rem;
-        display: inline-block;
-        transition: all 0.5s;
-        &:not(:last-of-type) {
-          margin-right: 1.875rem;
-        }
-        &.active {
-          font-size: 1.75rem;
-          color: #ff8a2c;
-          line-height: 2.125rem;
-        }
-        &.subactive {
-          color: rgba(35, 35, 35, 0.6);
+      .pro_types {
+        height: 2.125rem;
+        .type_box_mb {
+          font-size: 1.25rem;
+          color: rgba(35, 35, 35, 0.4);
+          line-height: 2.525rem;
+          display: inline-block;
+          transition: all 0.3s;
+          // -webkit-backface-visibility: hidden;
+          // -webkit-transform-style: preserve-3d;
+          &:not(:last-of-type) {
+            margin-right: 1.875rem;
+          }
+          &.active {
+            font-size: 1.75rem;
+            color: #ff8a2c;
+            line-height: 2.125rem;
+          }
+          &.subactive {
+            color: rgba(35, 35, 35, 0.6);
+          }
         }
       }
     }
@@ -312,7 +317,7 @@
             height: 5.46rem;
             font-size: 0.75rem;
             line-height: 1.125rem;
-            padding: 0.875rem 0.75rem 0.75rem;
+            padding: 0.875rem 0 0.75rem;
             img {
               width: 2.125rem;
               height: 2.125rem;
@@ -373,7 +378,7 @@
       & > p {
         font-size: 1.5rem;
         line-height: 2.25rem;
-        border-bottom: 0.25rem solid #ff8a2c;
+        padding-bottom: 1rem;
       }
     }
     .about_banner {
@@ -603,12 +608,6 @@
       .home_sildeNext {
         width: 1.875rem;
         height: 1.875rem;
-        &.hoverSilde {
-          div {
-            width: 1rem;
-            height: 1rem;
-          }
-        }
         img {
           width: 1rem;
         }
@@ -743,7 +742,7 @@
       }
     }
     .h_third {
-      padding: 3.75rem 0 2.5rem;
+      padding: 3.85rem 0 2.5rem;
       .h_types {
         padding: 0 2.5em;
         text-align: center;
@@ -754,7 +753,7 @@
         color: rgba(35, 35, 35, 0.4);
         line-height: 2.525rem;
         display: inline-block;
-        transition: all 0.5s;
+        transition: all 0.3s;
         &:not(:last-of-type) {
           margin-right: 1.875rem;
         }
@@ -780,7 +779,7 @@
         }
       }
       .h_tags {
-        margin: 3.125rem 0 2.5rem;
+        margin: 3.025rem 0 2.5rem;
         padding: 0;
         height: 2.25rem;
         .swiper {
@@ -875,7 +874,7 @@
         }
         .btn_box {
           text-align: center;
-          margin-top: 4.625rem;
+          margin-top: 4.525rem;
           .s_btn {
             width: 11.25rem !important;
             height: 3.5rem;
@@ -918,6 +917,24 @@
     border: 1px solid #ff8a2c;
     font-size: 1.25rem;
     line-height: 1.875rem;
+  }
+  .home_silde {
+    .home_sildePre,
+    .home_sildeNext {
+      &.hoverSilde {
+        div {
+          width: 1rem !important;
+          height: 1rem !important;
+        }
+      }
+    }
+  }
+  // 标题底部横线
+  .bottom_border {
+    &::after {
+      width: 2.5rem;
+      height: 4px;
+    }
   }
 }
 @media (max-height: 667px) {

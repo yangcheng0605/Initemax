@@ -8,7 +8,7 @@
     </div>
     <div class="news_hot">
       <div class="new_title">
-        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">热门资讯</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">热门资讯</p>
       </div>
       <div class="swiper_box wow animate__fadeInUp" data-wow-offset="50" v-if="hotList && hotList.length > 0">
         <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="onSwiper">
@@ -39,7 +39,7 @@
     </div>
     <div class="news_industry">
       <div class="new_title">
-        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">行业资讯</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">行业资讯</p>
       </div>
       <ul>
         <li v-for="item in newsList" :key="item.id" class="wow animate__fadeInUp" data-wow-offset="50">
@@ -50,7 +50,7 @@
             <p class="li_date">{{ item.date }}</p>
             <p class="li_name line_clamp_2" :title="item.name">{{ item.name }}</p>
             <p class="li_text line_clamp_2" v-if="!isMobile" :title="item.contain">{{ item.contain }}</p>
-            <a-button type="link" class="subBtn hoverBtn">查看全部</a-button>
+            <a-button type="link" class="subBtn themeBtn hoverBtn">查看全部</a-button>
           </div>
         </li>
       </ul>
@@ -201,11 +201,11 @@ export default {
   text-align: center;
   margin-bottom: 5rem;
   p {
-    padding-bottom: 1.25rem;
+    padding-bottom: 1.75rem;
     font-size: 2.5rem;
     line-height: 3.75rem;
     display: inline-block;
-    border-bottom: 0.5rem solid #ff8a2c;
+    // border-bottom: 0.5rem solid #ff8a2c;
   }
 }
 .news_hot {
@@ -284,11 +284,11 @@ export default {
     }
     .hoverBox {
       flex-shrink: 0;
+      border-radius: 0.5rem;
     }
     img {
       width: 28.75rem;
       height: 14.375rem;
-      border-radius: 0.5rem;
     }
     .li_box {
       margin-left: 2.5rem;
@@ -310,11 +310,9 @@ export default {
       .subBtn {
         width: 11.25rem;
         height: 3.5rem;
-        border-radius: 36px;
-        border: 1px solid #ff8a2c;
         font-size: 1rem;
         line-height: 1.5rem;
-        color: #ff8a2c;
+        margin: 0;
       }
     }
   }

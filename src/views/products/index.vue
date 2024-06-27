@@ -8,7 +8,7 @@
     </div>
     <div class="pro_hot">
       <div class="new_title">
-        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">作品精选</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">作品精选</p>
       </div>
       <div class="pro_types wow animate__fadeInUp" data-wow-offset="50" v-if="!isMobile">
         <div class="type_box hoverBox" @click="chooseType(item.id)" v-for="item in typeList" :key="item.id">
@@ -50,7 +50,7 @@
     </div>
     <div class="pro_industry">
       <div class="new_title">
-        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">作品精选</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">作品精选</p>
       </div>
       <div class="pro_service">
         <div class="ser_text wow animate__fadeInUp" data-wow-offset="50">
@@ -260,11 +260,10 @@ export default {
   text-align: center;
   margin-bottom: 3.75rem;
   & > p {
-    padding-bottom: 1.25rem;
+    padding-bottom: 1.75rem;
     font-size: 2.5rem;
     line-height: 3.75rem;
     display: inline-block;
-    border-bottom: 0.5rem solid #ff8a2c;
   }
 }
 .pro_hot {
@@ -414,7 +413,7 @@ export default {
         width: 7.5rem;
         height: 8.75rem;
         text-align: center;
-        padding: 1.5rem 1.25rem 1.25rem;
+        padding: 1.5rem 0 1.25rem;
         background: rgba(255, 255, 255, 0.5);
         box-shadow: 0px 0px 4px 0px rgba(255, 255, 255, 0.9), inset 0px -2px 4px 0px rgba(24, 90, 108, 0.5), inset 0px 2px 4px 0px rgba(255, 255, 255, 0.5);
         border-radius: 0.625rem;

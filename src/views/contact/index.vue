@@ -69,7 +69,7 @@
                     </a-col>
                     <a-col class="submit" :span="colSpan">
                       <a-form-item>
-                        <a-button type="link" class="subBtn hoverBtn" html-type="submit">立即提交</a-button>
+                        <a-button type="link" class="themeBtn hoverBtn" html-type="submit">立即提交</a-button>
                       </a-form-item>
                     </a-col>
                   </a-row>
@@ -247,15 +247,6 @@ export default {
         position: absolute;
         right: 40px;
         bottom: 0;
-      }
-      .subBtn {
-        width: 13.75rem;
-        height: 4.5rem;
-        border-radius: 36px;
-        color: #ff8a2c;
-        border: 2px solid #ff8a2c;
-        font-size: 1.5rem;
-        line-height: 2.25rem;
       }
     }
   }

@@ -15,12 +15,12 @@
       v-if="isMobile"
     >
       <swiper-slide class="s_1">
-        <div :class="['h_first wiper_1', homeIndex == 0 ? 'animateFadeInUp' : '']">
-          <div class="title">
+        <div class="h_first wiper_1">
+          <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">Spark More</p>
             <p class="SmileFont subtitle">去发现，无限可能</p>
           </div>
-          <div class="downLoad" v-if="isMobile">
+          <div class="downLoad" v-if="isMobile" @click="sildeNext(1)">
             <img src="@/assets/img/down.png" alt="" />
           </div>
         </div>
@@ -144,8 +144,8 @@
 
     <full-page ref="fullpage" :options="options" id="fullpage" v-else>
       <div class="section s_1">
-        <div :class="['h_first wiper_1', homeIndex == 0 ? 'animateFadeInUp' : '']">
-          <div class="title">
+        <div class="h_first wiper_1">
+          <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">Spark More</p>
             <p class="SmileFont subtitle">去发现，无限可能</p>
           </div>
@@ -675,9 +675,10 @@ export default {
           &.swiper-slide-active {
             margin: 0 1.25rem;
             border-radius: 1rem;
-            border: 0.375rem solid #fff;
             .type_box {
               transform: scale(1);
+              border: 0.375rem solid #fff;
+              transition: border 0.3s;
               // border: 0.375rem solid #ffffff;
               p {
                 line-height: 4.5rem;
@@ -830,7 +831,6 @@ export default {
         }
       }
       & > img {
-        border-radius: 1.25rem;
         width: 100%;
         height: 100%;
         transform: scale(0.9);

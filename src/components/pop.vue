@@ -75,7 +75,7 @@ export default {
     width: 4.5rem;
     height: 4.5rem;
     border-radius: 0.25rem;
-    padding: 0.625rem 0.625rem;
+    padding: 0.625rem 0;
     margin-bottom: 0.625rem;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.5);

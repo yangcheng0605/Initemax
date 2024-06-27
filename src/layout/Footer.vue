@@ -68,7 +68,7 @@
             <a class="icon_meida"><img class="icon" data-id="2" src="@/assets/img/footer/icon_3.png" alt="" /></a>
             <a class="icon_meida"><img class="icon" data-id="3" src="@/assets/img/footer/icon_4.png" alt="" /></a>
             <a class="icon_meida"><img class="icon" data-id="4" src="@/assets/img/footer/icon_5.png" alt="" /></a>
-            <div class="qr" :style="`left: calc(-0.10rem + ${showIndex * 3.75}rem)`" v-if="showQr"><img :src="qrUrl" alt="" /></div>
+            <div class="qr" :style="`left: calc(-0.10rem + ${showIndex * 3.75}rem)`" v-if="showQr && qrUrl"><img :src="qrUrl" alt="" /></div>
           </div>
           <div class="d_bottom">
             <p class="explain">版权说明<span>|</span>法律公告<span>|</span>隐私政策</p>

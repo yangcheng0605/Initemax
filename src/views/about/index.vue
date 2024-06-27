@@ -22,8 +22,8 @@
             <div class="about_contain">
               <img :src="item.img" alt="" />
               <div class="content">
-                <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">{{ item.title }}</p>
-                <p class="text SmileFont wow animate__fadeInUp" data-wow-offset="50">{{ item.text }}</p>
+                <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50" data-wow-delay="0.5s">{{ item.title }}</p>
+                <p class="text SmileFont wow animate__fadeInUp" data-wow-offset="50" data-wow-delay="0.5s">{{ item.text }}</p>
               </div>
             </div>
           </swiper-slide>
@@ -41,7 +41,7 @@
     </div>
     <div class="about_introduce">
       <div class="new_title">
-        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">公司介绍</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">公司介绍</p>
       </div>
       <div class="swiper_box">
         <swiper :slides-per-view="perView_introduce" loop :navigation="true" @swiper="e => onSwiper(e, 2)" @slideChange="e => onSlideChange(e, 2)">
@@ -66,7 +66,7 @@
     </div>
     <div class="about_brand">
       <div class="new_title">
-        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">合作品牌</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">合作品牌</p>
       </div>
       <a-row :gutter="gutter">
         <a-col :span="colSpan" class="pro_col hoverBox wow animate__fadeInUp" data-wow-offset="50" v-for="item in brandList" :key="item.id">
@@ -76,7 +76,7 @@
     </div>
     <div class="about_course">
       <div class="new_title">
-        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">发展历程</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">发展历程</p>
       </div>
       <div class="year_box">
         <div>
@@ -129,14 +129,22 @@
           </swiper-slide>
         </swiper>
         <div class="home_silde">
+          <div class="home_sildePre hoverSilde" @click="sildePre(3)">
+            <div class="arrow_yellow_l"></div>
+          </div>
+          <div class="home_sildeNext hoverSilde" @click="sildeNext(3)">
+            <div class="arrow_yellow_r"></div>
+          </div>
+        </div>
+        <!-- <div class="home_silde">
           <div class="home_sildePre" @click="sildePre(3)"><img src="@/assets/img/arrow_yellow_l.png" alt="" /></div>
           <div class="home_sildeNext" @click="sildeNext(3)"><img src="@/assets/img/arrow_yellow_r.png" alt="" /></div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="about_debris">
       <div class="new_title">
-        <p class="SmileFont wow animate__fadeInUp" data-wow-offset="50">记忆碎片</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">记忆碎片</p>
       </div>
       <div class="scroll-container">
         <div class="img_box scroll-content">
@@ -319,11 +327,10 @@ export default {
   text-align: center;
   margin-bottom: 5rem;
   & > p {
-    padding-bottom: 1.25rem;
+    padding-bottom: 1.75rem;
     font-size: 2.5rem;
     line-height: 3.75rem;
     display: inline-block;
-    border-bottom: 0.5rem solid #ff8a2c;
   }
 }
 .about_banner {
