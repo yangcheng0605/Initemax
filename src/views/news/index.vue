@@ -314,6 +314,7 @@ export default {
         font-size: 1rem;
         line-height: 1.5rem;
         margin: 0;
+        transition: 0.5s;
       }
     }
   }

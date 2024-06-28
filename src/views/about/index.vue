@@ -121,7 +121,7 @@
           <swiper-slide v-for="item in courseList" :key="item.id">
             <div class="about_contain">
               <div class="contain_top">
-                <img :src="item.img" alt="" />
+                <img class="hoverImg" :src="item.img" alt="" />
                 <div class="shadow"></div>
               </div>
               <div class="name">{{ item.name }}</div>

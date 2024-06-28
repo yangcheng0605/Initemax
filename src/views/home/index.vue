@@ -114,10 +114,10 @@
                   >
                     <swiper-slide v-for="(item, index) in proList" :key="item.id">
                       <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
-                        <img class="hoverImg" :src="item.img" alt="" />
-                        <div class="play" v-if="currentVideoIndex === index">
-                          <img src="@/assets/img/play.png" alt="" />
-                        </div>
+                        <img class="cover hoverImg" :src="item.img" alt="" />
+                        <!-- <div class="mb_play" > -->
+                        <img class="play" src="@/assets/img/play.png" alt="" v-if="currentVideoIndex === index" />
+                        <!-- </div> -->
                       </div>
                     </swiper-slide>
                   </swiper>
@@ -212,28 +212,35 @@
               </swiper-slide>
             </swiper>
           </div>
-          <div :class="['h_video', homeIndex == 2 ? 'animateFadeInUp' : '']">
+          <div :class="['h_video', homeIndex == 2 ? 'animateFadeIn' : '']">
             <div class="swiper_box">
               <swiper
                 :modules="modules"
-                slides-per-view="auto"
-                centeredSlides
+                :effect="'coverflow'"
+                :coverflowEffect="{
+                  rotate: 0,
+                  stretch: pcstretch,
+                  depth: 0,
+                  modifier: 1,
+                  slideShadows: false
+                }"
                 loop
-                @swiper="e => onSwiper(e, 4)"
+                slidesPerView="auto"
+                centeredSlides
                 :speed="1000"
+                @swiper="e => onSwiper(e, 4)"
                 @slideChangeTransitionStart="transitionStart"
                 @slideChangeTransitionEnd="transitionEnd"
                 @slideChange="e => onSlideVideoChange(e)"
               >
                 <swiper-slide v-for="(item, index) in proList" :key="item.id">
-                  <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
-                    <img class="hoverImg" :src="item.img" alt="" />
-                    <div class="play">
-                      <img src="@/assets/img/play.png" alt="" />
-                    </div>
-                    <div :class="['black_pop', currentVideoIndex == index ? 'show' : '']"></div>
-                    <div class="content">
-                      <p class="title SmileFont">{{ item.name }} {{ currentVideoIndex }} {{ index }}</p>
+                  <div :class="['about_contain']">
+                    <img :class="['cover', currentVideoIndex == index ? 'hover' : '']" :src="item.img" alt="" />
+                    <img :class="['play', currentVideoIndex == index ? 'animateFadeIn' : '']" src="@/assets/img/play.png" alt="" />
+                    <div :class="['black_pop', currentVideoIndex == index ? 'animateFadeInUp' : '']">
+                      <div class="content">
+                        <p class="title SmileFont">{{ item.name }} {{ currentVideoIndex }} {{ index }}</p>
+                      </div>
                     </div>
                   </div>
                 </swiper-slide>
@@ -298,6 +305,7 @@ export default {
       swiper4: null,
       swiper5: null,
       stretch: 88,
+      pcstretch: -70,
       showAnimate: false,
       homeIndex: false,
       currentSceondIndex: 0,
@@ -452,6 +460,7 @@ export default {
         state.isMobile = false
         state.perView = 'auto'
         state.between = '0.79%'
+        state.pcstretch = -(windowWidth / 27.43)
       }
 
       if (windowWidth > 413 && windowWidth < 550) {
@@ -463,7 +472,7 @@ export default {
       } else {
         state.stretch = 87
       }
-      console.log(state.stretch)
+      console.log(state.pcstretch)
     }
     const chooseType = (e, index) => {
       state.currentType = e
@@ -539,6 +548,9 @@ export default {
     font-size: 1.5rem;
     line-height: 2.25rem;
     color: #fff;
+    &.ant-btn-link:not(:disabled):hover {
+      color: #fff;
+    }
   }
   .type_box {
     border-radius: 0.625rem;
@@ -784,10 +796,10 @@ export default {
         .swiper-slide {
           width: 62.5rem !important;
           height: 31.25rem !important;
-          margin-right: 5.625rem;
+          // margin-right: 5.625rem;
           &.swiper-slide-active {
             .about_contain {
-              img {
+              .cover {
                 transform: scale(1);
               }
               .title {
@@ -799,8 +811,13 @@ export default {
           }
           &.swiper-slide-next,
           &.swiper-slide-prev {
-            .about_contain img {
-              border-radius: 1.25rem;
+            .about_contain {
+              .black_pop {
+                opacity: 0;
+              }
+              .cover {
+                border-radius: 1.25rem;
+              }
             }
           }
         }
@@ -810,18 +827,15 @@ export default {
       border-radius: 1.25rem;
       position: relative;
       height: 100%;
-      .content {
-        position: absolute;
-        bottom: 3.125rem;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        color: #fff;
-        z-index: 10;
+      overflow: hidden;
+      &:hover .hover {
+        transform: scale(1.1) !important;
       }
-      .title {
-        opacity: 0;
-        transition: 0.5s;
+      .mb_play {
+        img {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
       }
       .play {
         background: #fff;
@@ -832,11 +846,9 @@ export default {
         transform: translate(-50%, -50%);
         padding: 1.25rem;
         cursor: pointer;
-        z-index: 11;
-        img {
-          width: 2.5rem;
-          height: 2.5rem;
-        }
+        z-index: 2;
+        width: 2.5rem;
+        height: 2.5rem;
       }
       .black_pop {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
@@ -844,17 +856,29 @@ export default {
         width: 100%;
         position: absolute;
         bottom: 0;
-        opacity: 0;
-        transition: 0.3s;
-        &.show {
-          opacity: 1;
+        z-index: 2;
+        // &.show {
+        //   transition: 0.3s;
+        //   opacity: 1;
+        // }
+        .content {
+          position: absolute;
+          bottom: 3.125rem;
+          left: 50%;
+          transform: translateX(-50%);
+          text-align: center;
+          color: #fff;
         }
       }
-      & > img {
+      & > .cover {
         width: 100%;
         height: 100%;
         transform: scale(0.9);
         transition: 0.5s;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
       }
     }
     .home_silde {
@@ -875,10 +899,10 @@ export default {
         }
       }
       .home_sildePre {
-        left: -36.5rem;
+        left: -33.2rem;
       }
       .home_sildeNext {
-        right: -31rem;
+        right: -33.2rem;
       }
     }
     .btn_box {
@@ -896,6 +920,13 @@ export default {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
+.animateFadeIn {
+  animation-name: fadeIn;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
 @keyframes myfadeInUp {
   from {
     opacity: 0;
@@ -906,6 +937,24 @@ export default {
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
+  }
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 @keyframes opacityAni {

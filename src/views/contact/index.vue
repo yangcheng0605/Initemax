@@ -21,7 +21,7 @@
                   </ul>
                 </div>
               </div>
-              <div class="a_content_right hoverBox">
+              <div class="a_content_right">
                 <img class="hoverImg" src="@/assets/img/contact/address.png" alt="" />
               </div>
             </div>
@@ -220,8 +220,9 @@ export default {
       }
     }
     .a_content_right {
+      overflow: hidden;
+      border-radius: 1.25rem;
       img {
-        border-radius: 1.25rem;
       }
     }
   }
