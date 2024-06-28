@@ -115,9 +115,7 @@
                     <swiper-slide v-for="(item, index) in proList" :key="item.id">
                       <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
                         <img class="cover hoverImg" :src="item.img" alt="" />
-                        <!-- <div class="mb_play" > -->
                         <img class="play" src="@/assets/img/play.png" alt="" v-if="currentVideoIndex === index" />
-                        <!-- </div> -->
                       </div>
                     </swiper-slide>
                   </swiper>
@@ -236,7 +234,9 @@
                 <swiper-slide v-for="(item, index) in proList" :key="item.id">
                   <div :class="['about_contain']">
                     <img :class="['cover', currentVideoIndex == index ? 'hover' : '']" :src="item.img" alt="" />
-                    <img :class="['play', currentVideoIndex == index ? 'animateFadeIn' : '']" src="@/assets/img/play.png" alt="" />
+                    <div :class="['play_box', currentVideoIndex == index ? 'animateFadeIn' : '']">
+                      <img src="@/assets/img/play.png" alt="" />
+                    </div>
                     <div :class="['black_pop', currentVideoIndex == index ? 'animateFadeInUp' : '']">
                       <div class="content">
                         <p class="title SmileFont">{{ item.name }} {{ currentVideoIndex }} {{ index }}</p>
@@ -472,7 +472,6 @@ export default {
       } else {
         state.stretch = 87
       }
-      console.log(state.pcstretch)
     }
     const chooseType = (e, index) => {
       state.currentType = e
@@ -815,9 +814,6 @@ export default {
               .black_pop {
                 opacity: 0;
               }
-              .cover {
-                border-radius: 1.25rem;
-              }
             }
           }
         }
@@ -828,16 +824,24 @@ export default {
       position: relative;
       height: 100%;
       overflow: hidden;
+      transform-style: preserve-3d;
       &:hover .hover {
         transform: scale(1.1) !important;
       }
-      .mb_play {
-        img {
-          width: 2.5rem;
-          height: 2.5rem;
-        }
+      & > .cover {
+        border-radius: 1.25rem;
+        width: 100%;
+        height: 100%;
+        transform: scale(0.9);
+        transition: 0.5s;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -2;
       }
       .play {
+        width: 2.5rem;
+        height: 2.5rem;
         background: #fff;
         border-radius: 50%;
         position: absolute;
@@ -846,9 +850,27 @@ export default {
         transform: translate(-50%, -50%);
         padding: 1.25rem;
         cursor: pointer;
+        z-index: 1;
+      }
+      .play_box {
+        z-index: 999;
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        text-align: center;
+        line-height: 35rem;
         z-index: 2;
-        width: 2.5rem;
-        height: 2.5rem;
+        img {
+          cursor: pointer;
+          width: 2.5rem;
+          height: 2.5rem;
+          padding: 1.25rem;
+          background: #fff;
+          border-radius: 50%;
+          display: inline-block;
+        }
       }
       .black_pop {
         background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
@@ -856,11 +878,7 @@ export default {
         width: 100%;
         position: absolute;
         bottom: 0;
-        z-index: 2;
-        // &.show {
-        //   transition: 0.3s;
-        //   opacity: 1;
-        // }
+        z-index: -1;
         .content {
           position: absolute;
           bottom: 3.125rem;
@@ -869,16 +887,6 @@ export default {
           text-align: center;
           color: #fff;
         }
-      }
-      & > .cover {
-        width: 100%;
-        height: 100%;
-        transform: scale(0.9);
-        transition: 0.5s;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
       }
     }
     .home_silde {

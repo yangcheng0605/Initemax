@@ -120,7 +120,7 @@
         >
           <swiper-slide v-for="item in courseList" :key="item.id">
             <div class="about_contain">
-              <div class="contain_top">
+              <div class="contain_top hoverBoxNoBorder">
                 <img class="hoverImg" :src="item.img" alt="" />
                 <div class="shadow"></div>
               </div>
@@ -515,6 +515,7 @@ export default {
     .contain_top {
       position: relative;
       height: 18.75rem;
+      border-radius: 1.25rem;
       .shadow {
         width: 100%;
         height: 100%;
@@ -618,7 +619,6 @@ export default {
   .scroll-content2 {
     animation: scroll-left 30s linear infinite;
   }
-
   @keyframes scroll-left {
     0% {
       transform: translateX(0);

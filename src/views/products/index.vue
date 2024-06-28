@@ -12,7 +12,7 @@
       </div>
       <div class="pro_types wow animate__fadeInUp" data-wow-offset="50" v-if="!isMobile">
         <div class="type_box hoverBox" @click="chooseType(item.id)" v-for="item in typeList" :key="item.id">
-          <img class="type_bg hoverImg" :src="item.img" alt="" />
+          <img class="type_bg" :src="item.img" alt="" />
           <p class="SmileFont">{{ item.name }}</p>
           <div class="black" v-if="currentType !== item.id"></div>
         </div>
@@ -36,8 +36,8 @@
       </div>
       <div class="pro_list">
         <a-row :gutter="gutter">
-          <a-col :span="colSpan" class="pro_col hoverBox wow animate__fadeInUp" data-wow-offset="50" v-for="item in proList" :key="item.id">
-            <div class="bgImg hoverBox">
+          <a-col :span="colSpan" class="pro_col wow animate__fadeInUp" data-wow-offset="50" v-for="item in proList" :key="item.id">
+            <div class="bgImg hoverBoxNoBorder">
               <img class="hoverImg" :src="item.img" alt="" />
             </div>
             <div class="pro_box">
@@ -355,13 +355,12 @@ export default {
       width: 31.25rem;
       height: 17.5rem;
       position: relative;
-      border-radius: 1.25rem;
       overflow: hidden;
     }
     .bgImg {
-      // width: 31.25rem;
       border-radius: 1.25rem;
       img {
+        border-radius: 1.25rem;
         height: 100%;
       }
     }

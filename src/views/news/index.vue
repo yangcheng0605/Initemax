@@ -217,11 +217,12 @@ export default {
   .hot_contain {
     font-size: 1.5rem;
     color: #666;
+
     img {
       width: 100%;
       height: 18.75rem;
       overflow: hidden;
-      border-radius: 0.5rem;
+      border-radius: 0.625rem;
     }
     .hot_name {
       height: 4.5rem;
@@ -325,5 +326,8 @@ export default {
 .hoverBox {
   flex-shrink: 0;
   border-radius: 0.625rem;
+  img {
+    border-radius: 0.625rem;
+  }
 }
 </style>
