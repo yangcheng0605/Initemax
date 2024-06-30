@@ -73,7 +73,14 @@
           style="height: 100%"
         >
           <swiper-slide>
-            <div class="h_third s_bg" :style="`background: url(${secondList[currentTypeIndex].bgImg}) no-repeat center/cover;`">
+            <div class="h_third s_bg">
+              <div class="bg_img">
+                <swiper @swiper="e => onSwiper(e, 6)" :effect="'fade'" :modules="modules">
+                  <swiper-slide v-for="item in secondList" :key="item.id">
+                    <img :src="item.bgImg" alt="" />
+                  </swiper-slide>
+                </swiper>
+              </div>
               <div :class="['h_types', homeIndex == 2 ? 'animateFadeInUp' : '']">
                 <div>
                   <p
@@ -147,6 +154,9 @@
             <p class="SmileFont title">Spark More</p>
             <p class="SmileFont subtitle">去发现，无限可能</p>
           </div>
+          <div class="downLoad" @click="fullpageMove(2)">
+            <img src="@/assets/img/pc_down.png" alt="" />
+          </div>
         </div>
       </div>
       <div class="section s_bg" :style="`background: url(${typeList[currentSceondIndex].bgImg}) no-repeat center / cover;`">
@@ -166,12 +176,21 @@
               class="swiper-no-swiping"
               loop
               centeredSlides
+              :modules="modules"
+              :effect="'coverflow'"
+              :coverflowEffect="{
+                rotate: 0,
+                stretch: 0,
+                depth: 0,
+                modifier: 1,
+                slideShadows: false
+              }"
               observer
               observeParents
-              :resistanceRatio="0"
-              :loopedSlides="2"
-              :slides-per-view="5"
               :space-between="0"
+              :loopedSlides="3"
+              :resistanceRatio="0"
+              slides-per-view="auto"
               @swiper="e => onSwiper(e, 2)"
               @slideChange="e => onSlideSecondChange(e)"
             >
@@ -194,7 +213,14 @@
           </div>
         </div>
       </div>
-      <div class="section s_bg" :style="`background: url(${secondList[currentTypeIndex].bgImg}) no-repeat center/cover;`">
+      <div class="section s_bg">
+        <div class="bg_img">
+          <swiper @swiper="e => onSwiper(e, 6)" :effect="'fade'" :modules="modules">
+            <swiper-slide v-for="item in secondList" :key="item.id">
+              <img :src="item.bgImg" alt="" />
+            </swiper-slide>
+          </swiper>
+        </div>
         <div class="h_third">
           <div :class="['h_types', homeIndex == 2 ? 'animateFadeInUp' : '']">
             <div :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id, index)" v-for="(item, index) in secondList" :key="item.id">
@@ -236,10 +262,10 @@
                     <img :class="['cover', currentVideoIndex == index ? 'hover' : '']" :src="item.img" alt="" />
                     <div :class="['play_box', currentVideoIndex == index ? 'animateFadeIn' : '']">
                       <img src="@/assets/img/play.png" alt="" />
-                    </div>
-                    <div :class="['black_pop', currentVideoIndex == index ? 'animateFadeInUp' : '']">
-                      <div class="content">
-                        <p class="title SmileFont">{{ item.name }} {{ currentVideoIndex }} {{ index }}</p>
+                      <div class="black_pop">
+                        <div class="content">
+                          <p class="title">{{ item.name }} {{ currentVideoIndex }} {{ index }}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -267,7 +293,7 @@
 import { getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Mousewheel, FreeMode, EffectCoverflow } from 'swiper/modules'
+import { Mousewheel, EffectFade, FreeMode, EffectCoverflow } from 'swiper/modules'
 import { debounce } from 'lodash'
 import Footer from '@/layout/Footer.vue'
 import PopHome from '@/components/pop_home.vue'
@@ -290,7 +316,7 @@ export default {
       state.homeIndex = n.index
     }
     const state = reactive({
-      modules: [FreeMode, Mousewheel, EffectCoverflow],
+      modules: [FreeMode, EffectFade, Mousewheel, EffectCoverflow],
       bannerList: null,
       options: {
         resize: true,
@@ -304,6 +330,7 @@ export default {
       swiper3: null,
       swiper4: null,
       swiper5: null,
+      swiper6: null,
       stretch: 88,
       pcstretch: -70,
       showAnimate: false,
@@ -325,22 +352,22 @@ export default {
           id: 1,
           name: '造光',
           img: require('@/assets/img/type_h_3.png'),
-          bgImg: require('@/assets/img/home/bg_3.png'),
+          bgImg: require('@/assets/img/home/bg_2.webp'),
           title: '利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
         {
           id: 2,
           name: '造火',
           img: require('@/assets/img/type_h_4.png'),
-          bgImg: require('@/assets/img/home/bg_1.png'),
+          bgImg: require('@/assets/img/home/bg_3.webp'),
           title: '出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
-        { id: 3, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.png'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
+        { id: 3, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.webp'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
         {
           id: 4,
           name: '造月',
           img: require('@/assets/img/type_h_1.png'),
-          bgImg: require('@/assets/img/home/bg_1.png'),
+          bgImg: require('@/assets/img/home/bg_2.webp'),
           title:
             '致力于艺术与科技的完美融合，利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
@@ -348,29 +375,29 @@ export default {
           id: 5,
           name: '造暗',
           img: require('@/assets/img/type_h_2.png'),
-          bgImg: require('@/assets/img/home/bg_2.png'),
+          bgImg: require('@/assets/img/home/bg_1.webp'),
           title: '造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
         {
           id: 1,
           name: '造光',
           img: require('@/assets/img/type_h_3.png'),
-          bgImg: require('@/assets/img/home/bg_3.png'),
+          bgImg: require('@/assets/img/home/bg_2.webp'),
           title: '利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
         {
           id: 2,
           name: '造火',
           img: require('@/assets/img/type_h_4.png'),
-          bgImg: require('@/assets/img/home/bg_1.png'),
+          bgImg: require('@/assets/img/home/bg_3.webp'),
           title: '出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
-        { id: 3, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.png'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
+        { id: 3, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.webp'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
         {
           id: 4,
           name: '造月',
           img: require('@/assets/img/type_h_1.png'),
-          bgImg: require('@/assets/img/home/bg_1.png'),
+          bgImg: require('@/assets/img/home/bg_2.webp'),
           title:
             '致力于艺术与科技的完美融合，利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         },
@@ -378,16 +405,16 @@ export default {
           id: 5,
           name: '造暗',
           img: require('@/assets/img/type_h_2.png'),
-          bgImg: require('@/assets/img/home/bg_2.png'),
+          bgImg: require('@/assets/img/home/bg_1.webp'),
           title: '造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
         }
       ],
       secondList: [
-        { id: 1, name: '造月', img: require('@/assets/img/type_1.png'), bgImg: require('@/assets/img/home/bg_1.png') },
-        { id: 2, name: '造暗', img: require('@/assets/img/type_2.png'), bgImg: require('@/assets/img/home/bg_2.png') },
-        { id: 3, name: '造光', img: require('@/assets/img/type_3.png'), bgImg: require('@/assets/img/home/bg_3.png') },
-        { id: 4, name: '造火', img: require('@/assets/img/type_4.png'), bgImg: require('@/assets/img/home/bg_1.png') },
-        { id: 5, name: '造天', img: require('@/assets/img/type_5.png'), bgImg: require('@/assets/img/home/bg_2.png') }
+        { id: 1, name: '造月', img: require('@/assets/img/type_1.png'), bgImg: require('@/assets/img/home/bg_2.webp') },
+        { id: 2, name: '造暗', img: require('@/assets/img/type_2.png'), bgImg: require('@/assets/img/home/bg_1.webp') },
+        { id: 3, name: '造光', img: require('@/assets/img/type_3.png'), bgImg: require('@/assets/img/home/bg_2.webp') },
+        { id: 4, name: '造火', img: require('@/assets/img/type_4.png'), bgImg: require('@/assets/img/home/bg_3.webp') },
+        { id: 5, name: '造天', img: require('@/assets/img/type_5.png'), bgImg: require('@/assets/img/home/bg_1.webp') }
       ],
       tagList: [
         { id: 0, name: '全部' },
@@ -420,6 +447,20 @@ export default {
         watermarkDiv.remove()
       }
     })
+    const preloadImage = src => {
+      const preloadImage = src => {
+        const img = new Image()
+        img.src = src
+        img.onload = () => {
+          console.log(img.src)
+        }
+      }
+
+      // 预加载图片的路径
+      const imageUrls = [require('@/assets/img/home/bg_1.webp'), require('@/assets/img/home/bg_2.webp'), require('@/assets/img/home/bg_3.webp')]
+
+      imageUrls.forEach(preloadImage)
+    }
     // getPicList()
     const getPicList = () => {
       proxy.$api.picList('').then(res => {
@@ -447,7 +488,6 @@ export default {
     }
     const handleResize = () => {
       const windowWidth = window.innerWidth
-
       if (windowWidth < 750) {
         state.colSpan = 8
         state.gutter = [40, 40]
@@ -473,9 +513,10 @@ export default {
         state.stretch = 87
       }
     }
-    const chooseType = (e, index) => {
+    const chooseType = async (e, index) => {
       state.currentType = e
       state.currentTypeIndex = index
+      state.swiper6.slideTo(index)
     }
     const chooseTags = e => {
       var id = e.id
@@ -499,6 +540,9 @@ export default {
     const sildeNext = e => {
       state[`swiper${e}`].slideNext(1000, true)
     }
+    const fullpageMove = e => {
+      fullpage.value.api.moveTo(e)
+    }
     return {
       ...toRefs(state),
       fullpage,
@@ -512,6 +556,7 @@ export default {
       transitionStart,
       transitionEnd,
       sildeNext,
+      fullpageMove,
       chooseType,
       chooseTags
     }
@@ -533,10 +578,27 @@ export default {
     overflow: hidden;
   }
   .s_1 {
-    background: url(../../assets/img/home/bg_1.png) no-repeat center / cover;
+    background: url(../../assets/img/home/bg_1.webp) no-repeat center / cover;
   }
   .s_bg {
-    transition: 0.5s;
+    transition: background 0.5s ease-out;
+    .bg_img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      // object-fit: cover;
+      // transition: 0.5s;
+      z-index: -1;
+      .swiper {
+        height: 100%;
+        img {
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
   }
   .s_btn {
     width: 13.75rem;
@@ -631,6 +693,14 @@ export default {
     font-size: 4rem;
     line-height: 6rem;
   }
+  .downLoad {
+    position: absolute;
+    bottom: 5rem;
+    width: 5rem;
+    height: 5rem;
+    animation: flash 2s infinite;
+    cursor: pointer;
+  }
 }
 .h_second {
   // padding: 10rem 6.25rem 6.25rem 8.75rem;
@@ -697,7 +767,7 @@ export default {
           width: 12.5rem !important;
           height: 17.5rem !important;
           &.swiper-slide-active {
-            margin: 0 1.25rem;
+            // margin: 0 1.25rem;
             border-radius: 1rem;
             .type_box {
               transform: scale(1);
@@ -727,7 +797,7 @@ export default {
 .h_third {
   // padding: 8.75rem 0 5rem;
   padding: 7.3% 0 4.2%;
-  // background: url(../../assets/img/home/bg_3.png) no-repeat center / cover;
+  // background: url(../../assets/img/home/bg_3.webp) no-repeat center / cover;
   height: 100%;
   .h_types {
     padding: 0 11.875em;
@@ -801,17 +871,12 @@ export default {
               .cover {
                 transform: scale(1);
               }
-              .title {
-                font-size: 2rem;
-                line-height: 3rem;
-                opacity: 1;
-              }
             }
           }
           &.swiper-slide-next,
           &.swiper-slide-prev {
             .about_contain {
-              .black_pop {
+              .play_box {
                 opacity: 0;
               }
             }
@@ -861,7 +926,13 @@ export default {
         cursor: pointer;
         text-align: center;
         line-height: 35rem;
-        z-index: 2;
+        position: relative;
+        transform-style: preserve-3d;
+        .title {
+          font-size: 2rem;
+          line-height: 3rem;
+          opacity: 1;
+        }
         img {
           cursor: pointer;
           width: 2.5rem;
@@ -878,7 +949,6 @@ export default {
         width: 100%;
         position: absolute;
         bottom: 0;
-        z-index: -1;
         .content {
           position: absolute;
           bottom: 3.125rem;

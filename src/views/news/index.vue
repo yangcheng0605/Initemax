@@ -299,7 +299,7 @@ export default {
         line-height: 2.5rem;
       }
       .li_name {
-        font-size: 3rem;
+        font-size: 2rem;
         line-height: 3rem;
         font-weight: 500;
       }

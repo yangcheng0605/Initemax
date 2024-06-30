@@ -334,7 +334,7 @@ export default {
   }
 }
 .about_banner {
-  padding: 3.75rem 0;
+  padding: 2.5rem 0 3.75rem;
   .about_contain {
     border-radius: 1.25rem;
     position: relative;
@@ -346,13 +346,13 @@ export default {
       text-align: center;
       color: #fff;
       .title {
-        font-size: 6.25rem;
-        line-height: 9.375rem;
-        letter-spacing: 1.25rem;
+        font-size: 5rem;
+        line-height: 7.5rem;
+        letter-spacing: 1rem;
       }
       .text {
-        font-size: 4rem;
-        line-height: 6rem;
+        font-size: 3.125rem;
+        line-height: 4.6875rem;
         margin-top: 0.625rem;
       }
     }
@@ -371,8 +371,8 @@ export default {
         // margin-left: 1.25rem;
         align-items: center;
         .swiper-slide {
-          width: 93.75rem !important;
-          height: 50rem !important;
+          width: 75rem !important;
+          height: 37.5rem !important;
           &.swiper-slide-active {
             img {
               transform: scale(1);

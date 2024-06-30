@@ -30,40 +30,40 @@
             <div class="message">
               <p class="title SmileFont wow animate__fadeInLeft">请填写留言</p>
               <div>
-                <a-form layout="vertical" :model="formState" @finish="handleFinish">
+                <a-form ref="formRef" layout="vertical" :rules="rules" :model="formState" @finish="handleFinish">
                   <a-row :gutter="gutter">
                     <a-col :span="colSpan">
-                      <a-form-item label="姓名">
+                      <a-form-item label="姓名" name="name">
                         <a-input v-model:value="formState.name" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="城市/地区">
+                      <a-form-item label="城市/地区" name="country">
                         <a-input v-model:value="formState.country" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="电话">
+                      <a-form-item label="电话" name="phone">
                         <a-input v-model:value="formState.phone" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="公司">
+                      <a-form-item label="公司" name="company">
                         <a-input v-model:value="formState.company" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="职位">
+                      <a-form-item label="职位" name="job">
                         <a-input v-model:value="formState.job" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="邮箱">
+                      <a-form-item label="邮箱" name="email">
                         <a-input v-model:value="formState.email" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="mobile ? colSpan : 16">
-                      <a-form-item label="您的留言">
+                      <a-form-item label="您的留言" name="remark">
                         <a-textarea :rows="4" v-model:value="formState.remark" placeholder="说点什么好呢说" />
                       </a-form-item>
                     </a-col>
@@ -91,13 +91,14 @@
   </div>
 </template>
 <script>
-import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, watch } from 'vue'
+import { getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { useRoute } from 'vue-router'
 export default {
   name: 'IContact',
   components: {},
   setup() {
     let route = useRoute()
+    let formRef = ref()
     const { proxy } = getCurrentInstance()
     const state = reactive({
       activeKey: 1,
@@ -110,6 +111,14 @@ export default {
         title: '',
         content: '',
         btn_text: ''
+      },
+      rules: {
+        name: [{ required: true, message: '请输入姓名', trigger: 'change' }],
+        country: [{ required: true, message: '请输入城市/地区', trigger: 'change' }],
+        phone: [{ required: true, message: '请输入电话', trigger: 'change' }],
+        company: [{ required: true, message: '请输入公司', trigger: 'change' }],
+        job: [{ required: true, message: '请输入职位', trigger: 'change' }],
+        email: [{ required: true, message: '请输入邮箱', trigger: 'change' }]
       },
       formState: {
         name: '',
@@ -145,6 +154,14 @@ export default {
 
     const handleFinish = () => {
       console.log(state.formState)
+      formRef.value
+        .validate()
+        .then(() => {
+          console.log('values', state.formState)
+        })
+        .catch(error => {
+          console.log('error', error)
+        })
     }
     const handleResize = () => {
       const windowWidth = window.innerWidth
@@ -167,6 +184,7 @@ export default {
     )
     return {
       ...toRefs(state),
+      formRef,
       handleFinish
     }
   }
@@ -239,8 +257,14 @@ export default {
       font-weight: 400;
       line-height: 1.875rem;
     }
+    textarea {
+      height: 11.25rem !important;
+    }
     .ant-input {
       border-radius: 0;
+      height: 3.5rem;
+      font-size: 1.25rem;
+      line-height: 1.875rem;
       border: 1px solid #cfcfcf;
     }
     .submit {
