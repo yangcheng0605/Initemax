@@ -350,7 +350,7 @@ export default {
       typeList: [],
       bannerTypeList: [],
       tagList: [
-        { id: 0, name: '全部' },
+        { id: -1, name: '全部' },
         { id: 1, name: '宣传片' },
         { id: 2, name: 'TVC' },
         { id: 3, name: '短视频' },

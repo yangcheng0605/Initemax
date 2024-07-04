@@ -7,14 +7,13 @@ function proCategoryList(data) {
   return get('/zgkj/ccgj/api/category/list', data)
 }
 function proListByCate(data) {
-  let query = ''
-  if (data.cId) {
-    query = query + '/' + data.cId
-  }
-  if (data.proType) {
-    query = query + '/' + data.proType
-  }
-  console.log(query)
-  return get('/zgkj/ccgj/product/api/listByCate' + query)
+  // let query = ''
+  // if (data.cId) {
+  //   query = query + '/' + data.cId
+  // }
+  // if (data.proType) {
+  //   query = query + '/' + data.proType
+  // }
+  return get('/zgkj/ccgj/product/api/listByCate/' + data.cId + '/' + data.proType)
 }
 export { bannerList, proCategoryList, proListByCate }
