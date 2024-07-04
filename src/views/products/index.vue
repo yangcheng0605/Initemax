@@ -152,11 +152,11 @@ export default {
       perView: 8,
       between: '0.79%',
       typeList: [
-        { id: 1, name: '造月', img: require('@/assets/img/type_1.png') },
-        { id: 2, name: '造暗', img: require('@/assets/img/type_2.png') },
-        { id: 3, name: '造光', img: require('@/assets/img/type_3.png') },
-        { id: 4, name: '造火', img: require('@/assets/img/type_4.png') },
-        { id: 5, name: '造天', img: require('@/assets/img/type_5.png') }
+        { id: 1, name: '造月', img: require('@/assets/img/type_h_1.png') },
+        { id: 2, name: '造暗', img: require('@/assets/img/type_h_2.png') },
+        { id: 3, name: '造光', img: require('@/assets/img/type_h_3.png') },
+        { id: 4, name: '造火', img: require('@/assets/img/type_h_4.png') },
+        { id: 5, name: '造天', img: require('@/assets/img/type_h_5.png') }
       ],
       tagList: [
         { id: 0, name: '全部' },
@@ -293,6 +293,8 @@ export default {
         border-radius: 0.625rem;
         width: 100%;
         height: 100%;
+        object-fit: cover;
+        object-position: center;
       }
       .black {
         position: absolute;

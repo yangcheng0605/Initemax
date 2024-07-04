@@ -25,7 +25,7 @@
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide class="s_bg" :style="`background: url(${typeList[currentSceondIndex].bgImg}) no-repeat center / cover;`">
+      <swiper-slide class="s_bg" :style="`background: url(${bannerTypeList[currentSceondIndex]?.pBanerPath}) no-repeat center / cover;`" v-if="bannerTypeList[currentSceondIndex]">
         <div class="h_second wiper_2">
           <div :class="['s_top', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">造光 IGNITEMAX</p>
@@ -38,7 +38,7 @@
           </div>
           <div :class="['s_bottom', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <swiper :modules="modules" loop observer observeParents slides-per-view="auto" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)" @slideChange="e => onSlideSecondChange(e)">
-              <swiper-slide v-for="item in typeList" :key="item.id">
+              <swiper-slide v-for="(item, index) in bannerTypeList" :key="index">
                 <div class="type_box">
                   <img class="type_bg" :src="item.img" alt="" />
                   <p class="SmileFont">{{ item.name }}</p>
@@ -76,7 +76,7 @@
             <div class="h_third s_bg">
               <div class="bg_img">
                 <swiper @swiper="e => onSwiper(e, 6)" :effect="'fade'" :modules="modules">
-                  <swiper-slide v-for="item in secondList" :key="item.id">
+                  <swiper-slide v-for="(item, index) in typeList" :key="index">
                     <img :src="item.bgImg" alt="" />
                   </swiper-slide>
                 </swiper>
@@ -84,12 +84,12 @@
               <div :class="['h_types', homeIndex == 2 ? 'animateFadeInUp' : '']">
                 <div>
                   <p
-                    :class="['type_box_mb', 'SmileFont', currentType == item.id ? 'active' : '', item.id == currentType - 1 || item.id == currentType + 1 ? 'subactive' : '']"
-                    @click="chooseType(item.id, index)"
-                    v-for="(item, index) in secondList"
-                    :key="item.id"
+                    :class="['type_box_mb', 'SmileFont', currentType == item.cateId ? 'active' : '', index == currentTypeIndex - 1 || index == currentTypeIndex + 1 ? 'subactive' : '']"
+                    @click="chooseType(item.cateId, index)"
+                    v-for="(item, index) in typeList"
+                    :key="index"
                   >
-                    {{ item.name }}
+                    {{ item.cateName }}
                   </p>
                 </div>
               </div>
@@ -159,7 +159,7 @@
           </div>
         </div>
       </div>
-      <div class="section s_bg" :style="`background: url(${typeList[currentSceondIndex].bgImg}) no-repeat center / cover;`">
+      <div class="section s_bg" :style="`background: url(${bannerTypeList[currentSceondIndex].pBanerPath}) no-repeat center / cover;`" v-if="bannerTypeList[currentSceondIndex]">
         <div class="h_second wiper_2">
           <div :class="['s_top', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">造光 IGNITEMAX</p>
@@ -194,10 +194,10 @@
               @swiper="e => onSwiper(e, 2)"
               @slideChange="e => onSlideSecondChange(e)"
             >
-              <swiper-slide v-for="item in typeList" :key="item.id">
+              <swiper-slide v-for="(item, index) in bannerTypeList" :key="index">
                 <div class="type_box">
-                  <img class="type_bg" :src="item.img" alt="" />
-                  <p class="SmileFont">{{ item.name }}</p>
+                  <img class="type_bg" :src="item.pPath" alt="" />
+                  <p class="SmileFont">{{ item.cateName }}</p>
                   <div class="black"></div>
                 </div>
               </swiper-slide>
@@ -216,17 +216,17 @@
       <div class="section s_bg">
         <div class="bg_img">
           <swiper @swiper="e => onSwiper(e, 6)" :effect="'fade'" :modules="modules">
-            <swiper-slide v-for="item in secondList" :key="item.id">
-              <img :src="item.bgImg" alt="" />
+            <swiper-slide v-for="(item, index) in typeList" :key="index">
+              <img v-if="item" :src="item.pBanerPath" alt="" />
             </swiper-slide>
           </swiper>
         </div>
         <div class="h_third">
           <div :class="['h_types', homeIndex == 2 ? 'animateFadeInUp' : '']">
-            <div :class="['type_box', currentType == item.id ? 'active' : '']" @click="chooseType(item.id, index)" v-for="(item, index) in secondList" :key="item.id">
-              <img class="type_bg" :src="item.img" alt="" />
-              <p class="SmileFont">{{ item.name }}</p>
-              <div class="black" v-if="currentType !== item.id"></div>
+            <div :class="['type_box', currentType == item.cateId ? 'active' : '']" @click="chooseType(item.cateId, index)" v-for="(item, index) in typeList" :key="index">
+              <img class="type_bg" :src="item.pPath" alt="" />
+              <p class="SmileFont">{{ item.cateName }}</p>
+              <div class="black" v-if="currentType !== item.cateId"></div>
             </div>
           </div>
           <div :class="['h_tags', homeIndex == 2 ? 'animateFadeInUp' : '']">
@@ -344,78 +344,11 @@ export default {
       curentIndex: 0,
       perView: 8,
       between: '0.79%',
-      currentType: 3,
-      currentTypeIndex: 2,
+      currentType: 1,
+      currentTypeIndex: 0,
       tags: 0,
-      typeList: [
-        {
-          id: 1,
-          name: '造光',
-          img: require('@/assets/img/type_h_3.png'),
-          bgImg: require('@/assets/img/home/bg_2.webp'),
-          title: '利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        {
-          id: 2,
-          name: '造火',
-          img: require('@/assets/img/type_h_4.png'),
-          bgImg: require('@/assets/img/home/bg_3.webp'),
-          title: '出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        { id: 3, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.webp'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
-        {
-          id: 4,
-          name: '造月',
-          img: require('@/assets/img/type_h_1.png'),
-          bgImg: require('@/assets/img/home/bg_2.webp'),
-          title:
-            '致力于艺术与科技的完美融合，利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        {
-          id: 5,
-          name: '造暗',
-          img: require('@/assets/img/type_h_2.png'),
-          bgImg: require('@/assets/img/home/bg_1.webp'),
-          title: '造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        {
-          id: 1,
-          name: '造光',
-          img: require('@/assets/img/type_h_3.png'),
-          bgImg: require('@/assets/img/home/bg_2.webp'),
-          title: '利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        {
-          id: 2,
-          name: '造火',
-          img: require('@/assets/img/type_h_4.png'),
-          bgImg: require('@/assets/img/home/bg_3.webp'),
-          title: '出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        { id: 3, name: '造天', img: require('@/assets/img/type_h_5.png'), bgImg: require('@/assets/img/home/bg_2.webp'), title: '华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 ' },
-        {
-          id: 4,
-          name: '造月',
-          img: require('@/assets/img/type_h_1.png'),
-          bgImg: require('@/assets/img/home/bg_2.webp'),
-          title:
-            '致力于艺术与科技的完美融合，利用影像让一切更有价值的企业  造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        },
-        {
-          id: 5,
-          name: '造暗',
-          img: require('@/assets/img/type_h_2.png'),
-          bgImg: require('@/assets/img/home/bg_1.webp'),
-          title: '造光核心团队成员拥有多年创作经验与丰富执行资源  出身于华为、迈瑞千万级的视频供应商团队  华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验 '
-        }
-      ],
-      secondList: [
-        { id: 1, name: '造月', img: require('@/assets/img/type_1.png'), bgImg: require('@/assets/img/home/bg_2.webp') },
-        { id: 2, name: '造暗', img: require('@/assets/img/type_2.png'), bgImg: require('@/assets/img/home/bg_1.webp') },
-        { id: 3, name: '造光', img: require('@/assets/img/type_3.png'), bgImg: require('@/assets/img/home/bg_2.webp') },
-        { id: 4, name: '造火', img: require('@/assets/img/type_4.png'), bgImg: require('@/assets/img/home/bg_3.webp') },
-        { id: 5, name: '造天', img: require('@/assets/img/type_5.png'), bgImg: require('@/assets/img/home/bg_1.webp') }
-      ],
+      typeList: [],
+      bannerTypeList: [],
       tagList: [
         { id: 0, name: '全部' },
         { id: 1, name: '宣传片' },
@@ -438,6 +371,8 @@ export default {
       ]
     })
     onMounted(async () => {
+      getBannerList()
+      getProCategoryList()
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
@@ -448,23 +383,37 @@ export default {
       }
     })
     const preloadImage = src => {
-      const preloadImage = src => {
-        const img = new Image()
-        img.src = src
-        img.onload = () => {
-          console.log(img.src)
-        }
+      const img = new Image()
+      img.src = src
+      img.onload = () => {
+        console.log(img.src)
       }
-
       // 预加载图片的路径
       const imageUrls = [require('@/assets/img/home/bg_1.webp'), require('@/assets/img/home/bg_2.webp'), require('@/assets/img/home/bg_3.webp')]
-
       imageUrls.forEach(preloadImage)
     }
     // getPicList()
-    const getPicList = () => {
-      proxy.$api.picList('').then(res => {
-        state.bannerList = res
+    const getBannerList = () => {
+      proxy.$api.bannerList({ pType: 1 }).then(res => {
+        console.log(res)
+      })
+    }
+    const getProCategoryList = () => {
+      proxy.$api.proCategoryList().then(res => {
+        state.typeList = []
+        state.bannerTypeList = []
+        if (res && res.length > 0) {
+          state.typeList = res
+          state.currentType = res[0].cateId
+          state.bannerTypeList = state.typeList.concat(res)
+          console.log(state.typeList)
+          getProListByCate()
+        }
+      })
+    }
+    const getProListByCate = () => {
+      proxy.$api.proListByCate({ cId: state.currentType, proType: state.tags }).then(res => {
+        console.log(res)
       })
     }
     const onSlideHomeChange = e => {
@@ -472,7 +421,6 @@ export default {
     }
     const onSlideChange = e => {
       state.curentPage = e.realIndex + 1
-      console.log(e)
     }
     const onSlideSecondChange = e => {
       state.currentSceondIndex = e.realIndex
@@ -517,10 +465,12 @@ export default {
       state.currentType = e
       state.currentTypeIndex = index
       state.swiper6.slideTo(index)
+      getProListByCate()
     }
     const chooseTags = e => {
       var id = e.id
       state.tags = id
+      getProListByCate()
       // var index = state.tags.indexOf(id)
       // if (index > -1) {
       //   state.tags.splice(index, 1)
@@ -634,6 +584,8 @@ export default {
       border-radius: 0.625rem;
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
     .black {
       position: absolute;
