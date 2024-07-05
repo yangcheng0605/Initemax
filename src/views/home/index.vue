@@ -119,9 +119,9 @@
                     @swiper="e => onSwiper(e, 4)"
                     @slideChange="e => onSlideVideoChange(e)"
                   >
-                    <swiper-slide v-for="(item, index) in proList" :key="item.id">
+                    <swiper-slide v-for="(item, index) in proList" :key="index">
                       <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
-                        <img class="cover hoverImg" :src="item.img" alt="" />
+                        <img class="cover hoverImg" :src="item.proPath" alt="" />
                         <img class="play" src="@/assets/img/play.png" alt="" v-if="currentVideoIndex === index" />
                       </div>
                     </swiper-slide>
@@ -131,7 +131,7 @@
                     <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
                   </div>
                   <div class="content">
-                    <p class="title">{{ proList[currentVideoIndex].name }}</p>
+                    <p class="title">{{ proList[currentVideoIndex].proName }}</p>
                   </div>
                 </div>
                 <div class="btn_box">
@@ -256,15 +256,16 @@
                 @slideChangeTransitionStart="transitionStart"
                 @slideChangeTransitionEnd="transitionEnd"
                 @slideChange="e => onSlideVideoChange(e)"
+                v-if="proList && proList.length > 0"
               >
-                <swiper-slide v-for="(item, index) in proList" :key="item.id">
+                <swiper-slide v-for="(item, index) in proList" :key="index">
                   <div :class="['about_contain']">
-                    <img :class="['cover', currentVideoIndex == index ? 'hover' : '']" :src="item.img" alt="" />
+                    <img :class="['cover', currentVideoIndex == index ? 'hover' : '']" :src="item.proPath" alt="" />
                     <div :class="['play_box', currentVideoIndex == index ? 'animateFadeIn' : '']">
                       <img src="@/assets/img/play.png" alt="" />
                       <div class="black_pop">
                         <div class="content">
-                          <p class="title">{{ item.name }} {{ currentVideoIndex }} {{ index }}</p>
+                          <p class="title">{{ item.proName }}</p>
                         </div>
                       </div>
                     </div>
@@ -275,6 +276,9 @@
                   <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
                 </div>
               </swiper>
+              <div class="swiper_empty" v-else>
+                <FrownOutlined />
+              </div>
             </div>
             <div class="btn_box">
               <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
@@ -297,6 +301,7 @@ import { Mousewheel, EffectFade, FreeMode, EffectCoverflow } from 'swiper/module
 import { debounce } from 'lodash'
 import Footer from '@/layout/Footer.vue'
 import PopHome from '@/components/pop_home.vue'
+import { FrownOutlined } from '@ant-design/icons-vue'
 import 'swiper/css'
 
 export default {
@@ -305,7 +310,8 @@ export default {
     Footer,
     Swiper,
     SwiperSlide,
-    PopHome
+    PopHome,
+    FrownOutlined
   },
   setup() {
     const router = useRouter()
@@ -317,7 +323,7 @@ export default {
     }
     const state = reactive({
       modules: [FreeMode, EffectFade, Mousewheel, EffectCoverflow],
-      bannerList: null,
+      bannerImg: null,
       options: {
         resize: true,
         scrollingSpeed: 700,
@@ -346,7 +352,7 @@ export default {
       between: '0.79%',
       currentType: 1,
       currentTypeIndex: 0,
-      tags: 0,
+      tags: -1,
       typeList: [],
       bannerTypeList: [],
       tagList: [
@@ -359,16 +365,7 @@ export default {
         { id: 6, name: '直播/发布会' },
         { id: 7, name: '其他' }
       ],
-      proList: [
-        { id: 1, name: '传音KeeKid 品牌宣传片', img: require('@/assets/img/product/SP_1.png') },
-        { id: 2, name: '雅士电业 企业宣传片', img: require('@/assets/img/product/SP_2.png') },
-        { id: 3, name: '创想40w 产品三维动画', img: require('@/assets/img/product/SP_3.png') },
-        { id: 4, name: '绿联户外电源 产品宣传片', img: require('@/assets/img/product/SP_4.png') },
-        { id: 5, name: '四季椰林 广告宣传片', img: require('@/assets/img/product/SP_5.png') },
-        { id: 6, name: 'Aqara 造就数字地球 CG动画', img: require('@/assets/img/product/SP_6.png') },
-        { id: 7, name: '传音KeeKid 品牌宣传片', img: require('@/assets/img/product/SP_1.png') },
-        { id: 8, name: '雅士电业 企业宣传片', img: require('@/assets/img/product/SP_2.png') }
-      ]
+      proList: []
     })
     onMounted(async () => {
       getBannerList()
@@ -392,10 +389,9 @@ export default {
       const imageUrls = [require('@/assets/img/home/bg_1.webp'), require('@/assets/img/home/bg_2.webp'), require('@/assets/img/home/bg_3.webp')]
       imageUrls.forEach(preloadImage)
     }
-    // getPicList()
     const getBannerList = () => {
       proxy.$api.bannerList({ pType: 1 }).then(res => {
-        console.log(res)
+        state.bannerImg = res
       })
     }
     const getProCategoryList = () => {
@@ -406,14 +402,19 @@ export default {
           state.typeList = res
           state.currentType = res[0].cateId
           state.bannerTypeList = state.typeList.concat(res)
-          console.log(state.typeList)
           getProListByCate()
         }
       })
     }
     const getProListByCate = () => {
       proxy.$api.proListByCate({ cId: state.currentType, proType: state.tags }).then(res => {
-        console.log(res)
+        if (res.rows?.length > 0) {
+          state.proList = res.rows
+          // state.proList = state.proList.concat(res.rows)
+          console.log(state.proList)
+        } else {
+          state.proList = []
+        }
       })
     }
     const onSlideHomeChange = e => {
@@ -464,6 +465,7 @@ export default {
     const chooseType = async (e, index) => {
       state.currentType = e
       state.currentTypeIndex = index
+      state.tags = -1
       state.swiper6.slideTo(index)
       getProListByCate()
     }
@@ -597,9 +599,6 @@ export default {
       background: rgba(0, 0, 0, 0.5);
       transition: opacity 0.5s;
       border-radius: 0.8125rem;
-      &:hover {
-        opacity: 0;
-      }
     }
   }
   // .pageSwiper {
@@ -810,6 +809,9 @@ export default {
   .h_video {
     padding: 0 0 3.75rem;
     position: relative;
+    .swiper_box {
+      height: 31.25rem !important;
+    }
     .swiper {
       .swiper-wrapper {
         align-items: center;
@@ -835,6 +837,12 @@ export default {
           }
         }
       }
+    }
+    .swiper_empty {
+      line-height: 31.25rem !important;
+      font-size: 80px;
+      text-align: center;
+      color: #ddd;
     }
     .about_contain {
       border-radius: 1.25rem;

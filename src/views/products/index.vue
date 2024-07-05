@@ -11,20 +11,20 @@
         <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">作品精选</p>
       </div>
       <div class="pro_types wow animate__fadeInUp" data-wow-offset="50" v-if="!isMobile">
-        <div class="type_box hoverBox" @click="chooseType(item.id)" v-for="item in typeList" :key="item.id">
-          <img class="type_bg" :src="item.img" alt="" />
-          <p class="SmileFont">{{ item.name }}</p>
-          <div class="black" v-if="currentType !== item.id"></div>
+        <div class="type_box hoverBox" @click="chooseType(item.cateId, index)" v-for="(item, index) in typeList" :key="index">
+          <img class="type_bg" :src="item.pPath" alt="" />
+          <p class="SmileFont">{{ item.cateName }}</p>
+          <div class="black" v-if="currentType !== item.cateId"></div>
         </div>
       </div>
       <div class="pro_types wow animate__fadeInUp" data-wow-offset="50" v-else>
         <p
-          :class="['type_box_mb', 'SmileFont', currentType == item.id ? 'active' : '', item.id == currentType - 1 || item.id == currentType + 1 ? 'subactive' : '']"
-          @click="chooseType(item.id)"
-          v-for="item in typeList"
-          :key="item.id"
+          :class="['type_box_mb', 'SmileFont', currentType == item.cateId ? 'active' : '', index == currentTypeIndex - 1 || index == currentTypeIndex + 1 ? 'subactive' : '']"
+          @click="chooseType(item.cateId, index)"
+          v-for="(item, index) in typeList"
+          :key="index"
         >
-          {{ item.name }}
+          {{ item.cateName }}
         </p>
       </div>
       <div class="pro_tags wow animate__fadeInUp" data-wow-offset="50">
@@ -35,16 +35,19 @@
         </swiper>
       </div>
       <div class="pro_list">
-        <a-row :gutter="gutter">
-          <a-col :span="colSpan" class="pro_col wow animate__fadeInUp" data-wow-offset="50" v-for="item in proList" :key="item.id">
+        <a-row :gutter="gutter" v-if="proList && proList.length > 0">
+          <a-col :span="colSpan" class="pro_col wow animate__fadeInUp" data-wow-offset="50" v-for="item in proList" :key="item.cId">
             <div class="bgImg hoverBoxNoBorder">
-              <img class="hoverImg" :src="item.img" alt="" />
+              <img class="hoverImg" :src="item.proPath" alt="" />
             </div>
             <div class="pro_box">
-              <p>{{ item.name }}</p>
+              <p>{{ item.proName }}</p>
             </div>
           </a-col>
         </a-row>
+        <div class="swiper_empty" v-else>
+          <FrownOutlined />
+        </div>
       </div>
       <a-button type="link" class="themeBtn wow animate__fadeInUp" data-wow-offset="50">查看全部</a-button>
     </div>
@@ -131,6 +134,7 @@
 <script>
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
+import { FrownOutlined } from '@ant-design/icons-vue'
 import 'swiper/css/navigation'
 import 'swiper/css'
 
@@ -138,17 +142,20 @@ export default {
   name: 'IProducts',
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    FrownOutlined
   },
   setup() {
     const { proxy } = getCurrentInstance()
     const state = reactive({
       isMobile: false,
       swiper: null,
+      bannerImg: null,
       gutter: [20, 20],
       colSpan: 8,
-      currentType: 3,
-      tags: 0,
+      currentType: 1,
+      currentTypeIndex: 0,
+      tags: -1,
       perView: 8,
       between: '0.79%',
       typeList: [
@@ -159,7 +166,7 @@ export default {
         { id: 5, name: '造天', img: require('@/assets/img/type_h_5.png') }
       ],
       tagList: [
-        { id: 0, name: '全部' },
+        { id: -1, name: '全部' },
         { id: 1, name: '宣传片' },
         { id: 2, name: 'TVC' },
         { id: 3, name: '短视频' },
@@ -168,16 +175,7 @@ export default {
         { id: 6, name: '直播/发布会' },
         { id: 7, name: '其他' }
       ],
-      proList: [
-        { id: 1, name: '传音KeeKid 品牌宣传片', img: require('@/assets/img/product/SP_1.png') },
-        { id: 2, name: '雅士电业 企业宣传片', img: require('@/assets/img/product/SP_2.png') },
-        { id: 3, name: '创想40w 产品三维动画', img: require('@/assets/img/product/SP_3.png') },
-        { id: 4, name: '绿联户外电源 产品宣传片', img: require('@/assets/img/product/SP_4.png') },
-        { id: 5, name: '四季椰林 广告宣传片', img: require('@/assets/img/product/SP_5.png') },
-        { id: 6, name: 'Aqara 造就数字地球 CG动画', img: require('@/assets/img/product/SP_6.png') },
-        { id: 7, name: '传音KeeKid 品牌宣传片', img: require('@/assets/img/product/SP_1.png') },
-        { id: 8, name: '雅士电业 企业宣传片', img: require('@/assets/img/product/SP_2.png') }
-      ],
+      proList: [],
       serverList: [
         { id: 1, name: '需求沟通', img: require('@/assets/img/product/s_1.png') },
         { id: 2, name: '确认合作', img: require('@/assets/img/product/s_2.png') },
@@ -197,6 +195,8 @@ export default {
     })
 
     onMounted(async () => {
+      getBannerList()
+      getProCategoryList()
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
@@ -204,6 +204,32 @@ export default {
         wow.init()
       })
     })
+    const getBannerList = () => {
+      proxy.$api.bannerList({ pType: 2 }).then(res => {
+        state.bannerImg = res
+      })
+    }
+    const getProCategoryList = () => {
+      proxy.$api.proCategoryList().then(res => {
+        state.typeList = []
+        if (res && res.length > 0) {
+          state.typeList = res
+          state.currentType = res[0].cateId
+          getProListByCate()
+        }
+      })
+    }
+    const getProListByCate = () => {
+      proxy.$api.proListByCate({ cId: state.currentType, proType: state.tags }).then(res => {
+        if (res.rows?.length > 0) {
+          state.proList = res.rows
+          // state.proList = state.proList.concat(res.rows)
+          console.log(state.proList)
+        } else {
+          state.proList = []
+        }
+      })
+    }
     const handleResize = () => {
       const windowWidth = window.innerWidth
       if (windowWidth < 750) {
@@ -220,32 +246,20 @@ export default {
         state.between = '0.79%'
       }
     }
-    const chooseType = e => {
+    const chooseType = (e, index) => {
       state.currentType = e
+      state.currentTypeIndex = index
+      state.tags = -1
+      getProListByCate()
     }
     const chooseTags = e => {
       var id = e.id
       state.tags = id
-      // var index = state.tags.indexOf(id)
-      // if (index > -1) {
-      //   state.tags.splice(index, 1)
-      //   if (state.tags.length <= 0) {
-      //     state.tags = [0]
-      //   }
-      // } else {
-      //   state.tags.push(id)
-      // }
-      console.log(state.tags)
+      getProListByCate()
     }
     const onSwiper = swiper => {
       state.swiper = swiper
     }
-    // const sildePre = e => {
-    //   state.swiper.slidePrev(500, res => {})
-    // }
-    // const sildeNext = e => {
-    //   state.swiper.slideNext(500, res => {})
-    // }
     return {
       ...toRefs(state),
       onSwiper,
