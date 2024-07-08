@@ -1,7 +1,7 @@
 <template>
   <div class="contact">
     <div class="top_banner">
-      <img src="@/assets/img/contact/bg_top.png" alt="" />
+      <img :src="bannerImg" alt="" />
       <div class="t_box">
         <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">联系我们</p>
       </div>
@@ -33,38 +33,38 @@
                 <a-form ref="formRef" layout="vertical" :rules="rules" :model="formState" @finish="handleFinish">
                   <a-row :gutter="gutter">
                     <a-col :span="colSpan">
-                      <a-form-item label="姓名" name="name">
-                        <a-input v-model:value="formState.name" placeholder="" />
+                      <a-form-item label="姓名" name="gnName">
+                        <a-input :maxlength="50" v-model:value="formState.gnName" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="城市/地区" name="country">
-                        <a-input v-model:value="formState.country" placeholder="" />
+                      <a-form-item label="城市/地区" name="gnArea">
+                        <a-input :maxlength="50" v-model:value="formState.gnArea" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="电话" name="phone">
-                        <a-input v-model:value="formState.phone" placeholder="" />
+                      <a-form-item label="电话" name="gnPhone">
+                        <a-input type="number" :maxlength="15" v-model:value="formState.gnPhone" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="公司" name="company">
-                        <a-input v-model:value="formState.company" placeholder="" />
+                      <a-form-item label="公司" name="gnCompany">
+                        <a-input :maxlength="50" v-model:value="formState.gnCompany" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="职位" name="job">
-                        <a-input v-model:value="formState.job" placeholder="" />
+                      <a-form-item label="职位" name="gnDept">
+                        <a-input :maxlength="50" v-model:value="formState.gnDept" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="colSpan">
-                      <a-form-item label="邮箱" name="email">
-                        <a-input v-model:value="formState.email" placeholder="" />
+                      <a-form-item label="邮箱" name="gnMail">
+                        <a-input type="email" v-model:value="formState.gnMail" placeholder="" />
                       </a-form-item>
                     </a-col>
                     <a-col :span="mobile ? colSpan : 16">
                       <a-form-item label="您的留言" name="remark">
-                        <a-textarea :rows="4" v-model:value="formState.remark" placeholder="说点什么好呢说" />
+                        <a-textarea :maxlength="250" :rows="4" v-model:value="formState.remark" placeholder="说点什么好呢说" />
                       </a-form-item>
                     </a-col>
                     <a-col class="submit" :span="colSpan">
@@ -85,7 +85,7 @@
         <span class="title SmileFont">{{ contactModalOp.title }}</span>
         <img :src="contactModalOp.url" alt="" />
       </div>
-      <p class="email">{{ contactModalOp.content }}</p>
+      <p class="gnMail">{{ contactModalOp.content }}</p>
       <a-button class="copyBtn" shape="round" :data-text="contactModalOp.content" @click="handleCopy">{{ contactModalOp.btn_text }}</a-button>
     </a-modal> -->
   </div>
@@ -103,6 +103,7 @@ export default {
     const state = reactive({
       activeKey: 1,
       contactModal: false,
+      bannerImg: null,
       colSpan: 8,
       mobile: false,
       query: null,
@@ -113,25 +114,26 @@ export default {
         btn_text: ''
       },
       rules: {
-        name: [{ required: true, message: '请输入姓名', trigger: 'change' }],
-        country: [{ required: true, message: '请输入城市/地区', trigger: 'change' }],
-        phone: [{ required: true, message: '请输入电话', trigger: 'change' }],
-        company: [{ required: true, message: '请输入公司', trigger: 'change' }],
-        job: [{ required: true, message: '请输入职位', trigger: 'change' }],
-        email: [{ required: true, message: '请输入邮箱', trigger: 'change' }]
+        gnName: [{ required: true, message: '请输入姓名', trigger: 'change' }],
+        gnArea: [{ required: true, message: '请输入城市/地区', trigger: 'change' }],
+        gnPhone: [{ required: true, message: '请输入电话', trigger: 'change' }],
+        gnCompany: [{ required: true, message: '请输入公司', trigger: 'change' }],
+        gnDept: [{ required: true, message: '请输入职位', trigger: 'change' }],
+        gnMail: [{ required: true, message: '请输入邮箱', trigger: 'change' }]
       },
       formState: {
-        name: '',
-        country: '',
-        phone: '',
-        company: '',
-        job: '',
-        email: '',
+        gnName: '',
+        gnArea: '',
+        gnPhone: '',
+        gnCompany: '',
+        gnDept: '',
+        gnMail: '',
         remark: ''
       }
     })
 
     onMounted(async () => {
+      getBannerList()
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
@@ -151,18 +153,6 @@ export default {
         }
       })
     })
-
-    const handleFinish = () => {
-      console.log(state.formState)
-      formRef.value
-        .validate()
-        .then(() => {
-          console.log('values', state.formState)
-        })
-        .catch(error => {
-          console.log('error', error)
-        })
-    }
     const handleResize = () => {
       const windowWidth = window.innerWidth
       if (windowWidth < 750) {
@@ -174,6 +164,29 @@ export default {
         state.gutter = [80, 20]
         state.mobile = false
       }
+    }
+    const getBannerList = () => {
+      proxy.$api.bannerList({ pType: 5 }).then(res => {
+        if (res && res.length > 0) {
+          state.bannerImg = res[0].pPath
+        }
+      })
+    }
+    const handleFinish = () => {
+      formRef.value
+        .validate()
+        .then(() => {
+          proxy.$api.addGuestNeed(state.formState).then(res => {
+            if (res.code === 0) {
+              proxy.$message.success('Success')
+            } else {
+              proxy.$message.error('res.msg')
+            }
+          })
+        })
+        .catch(error => {
+          console.log('error', error)
+        })
     }
     watch(
       route,

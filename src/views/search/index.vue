@@ -5,49 +5,53 @@
       <div class="search_input">
         <a-input v-model:value="searchName" placeholder="请输入一个关键词" @keydown.enter="search">
           <template #suffix>
-            <img @click="search" class="d_search_icon" src="@/assets/img/search_b.png" alt="" />
+            <img @click="searchData" class="d_search_icon" src="@/assets/img/search_b.png" alt="" />
           </template>
         </a-input>
       </div>
     </div>
     <div class="search_bottom">
       <p class="resultNum">共 {{ total }} 条搜索结果</p>
-      <ul>
-        <li v-for="item in dataList" :key="item.id" class="wow animate__fadeInUp" data-wow-offset="50">
+      <ul v-if="dataList && dataList.length > 0">
+        <li v-for="item in dataList" :key="item.id" class="wow animate__bounceIn" data-wow-offset="50">
           <div class="r_text">
-            <p class="title">{{ item.title }}</p>
-            <p class="subtitle">类目-{{ item.type }}</p>
+            <p class="title">{{ item.sName }}</p>
+            <p class="subtitle">类目-{{ types[item.sType - 1] }}</p>
           </div>
           <a-button type="link" class="subBtn themeBtn hoverBtn" @click="linkTo(item)">查看全部</a-button>
         </li>
       </ul>
+      <div class="swiper_empty" v-else>
+        <FrownOutlined />
+        <p>暂无数据</p>
+      </div>
     </div>
-    <div class="moreBtn">
-      <a-button type="link" class="btn themeBtn hoverBtn" @click="more()">查看更多</a-button>
+    <div class="moreBtn" v-if="showButton && dataList && dataList.length > 0">
+      <a-button type="link" class="btn themeBtn hoverBtn" @click="search">加载更多</a-button>
     </div>
   </div>
 </template>
 <script>
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { FrownOutlined } from '@ant-design/icons-vue'
 export default {
   name: 'contact',
-  components: {},
+  components: {
+    FrownOutlined
+  },
   setup() {
     let router = useRouter()
     let route = useRoute()
     const { proxy } = getCurrentInstance()
     const state = reactive({
       searchName: '',
-      total: 3,
-      dataList: [
-        { id: 1, title: '搜索结果相关标题标题标题标题标题', type: '案例' },
-        { id: 2, title: '搜索结果相关标题标', type: '案例' },
-        { id: 3, title: '搜索结果相关标题标题标题标题标题', type: '案例' },
-        { id: 4, title: '搜索结题标题', type: '案例' },
-        { id: 5, title: '搜索结果相关标题标题标题标题标题', type: '案例' },
-        { id: 6, title: '搜索结果相关标题标题标题标题标题', type: '案例' }
-      ]
+      total: 0,
+      showButton: true,
+      dataList: [],
+      pageNum: 1,
+      pageSize: 5,
+      types: ['案例', '资讯']
     })
 
     onMounted(async () => {
@@ -56,21 +60,37 @@ export default {
         wow.init()
       })
       state.searchName = route.query.search || ''
-      // search()
+      search()
     })
+    const searchData = function (e) {
+      state.pageNum = 1
+      state.dataList = []
+      search()
+    }
     const search = () => {
-      console.log(state.searchName)
-      // proxy.$api.productListByCate({searchName: state.searchName}).then(res => {
-      //   state.dataList = res
-      // })
+      router.replace('/search?search=' + state.searchName)
+      proxy.$api.searchList({ pageNum: state.pageNum, pageSize: state.pageSize, word: state.searchName }).then(res => {
+        state.total = res.total
+        if (res.rows && res.rows.length > 0) {
+          state.dataList = state.dataList.concat(res.rows)
+          state.pageNum += 1
+          if (state.dataList.length === res.total) {
+            state.showButton = false
+          } else {
+            state.showButton = true
+          }
+        }
+      })
     }
     const linkTo = function (e) {
-      console.log(e)
+      if (e && e.link) {
+        window.open(e.link, '_blank')
+      }
     }
-
     return {
       ...toRefs(state),
       linkTo,
+      searchData,
       search
     }
   }

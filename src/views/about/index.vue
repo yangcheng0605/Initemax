@@ -1,7 +1,7 @@
 <template>
   <div class="about specialHeaderTop">
     <div class="about_banner">
-      <div class="swiper_box">
+      <div class="swiper_box" v-if="bannerImg && bannerImg.length > 0">
         <swiper
           :modules="modules"
           slides-per-view="auto"
@@ -18,12 +18,12 @@
             delay: 5000,
             disableOnInteraction: false
           }" -->
-          <swiper-slide v-for="item in bannerList" :key="item.id">
+          <swiper-slide v-for="(item, index) in bannerImg" :key="index">
             <div class="about_contain">
-              <img :src="item.img" alt="" />
+              <img :src="item.pPath" alt="" />
               <div class="content">
-                <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50" data-wow-delay="0.5s">{{ item.title }}</p>
-                <p class="text SmileFont wow animate__fadeInUp" data-wow-offset="50" data-wow-delay="0.5s">{{ item.text }}</p>
+                <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50" data-wow-delay="0.5s">{{ item.pName }}</p>
+                <p class="text SmileFont wow animate__fadeInUp" data-wow-offset="50" data-wow-delay="0.5s">{{ item.pTitle }}</p>
               </div>
             </div>
           </swiper-slide>
@@ -32,23 +32,23 @@
           <div class="home_sildePre hoverSilde blackborder" @click="sildePre(1)">
             <div class="arrow_yellow_l"></div>
           </div>
-          <p class="progress">{{ swiper1_active }}/{{ bannerList.length }}</p>
+          <p class="progress">{{ swiper1_active }}/{{ bannerImg.length }}</p>
           <div class="home_sildeNext hoverSilde blackborder" @click="sildeNext(1)">
             <div class="arrow_yellow_r"></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="about_introduce">
+    <div class="about_introduce" :style="`background: url(${introduceImg}) no-repeat center / cover;`">
       <div class="new_title">
         <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">公司介绍</p>
       </div>
-      <div class="swiper_box">
+      <div class="swiper_box" v-if="about_contain && about_contain.length > 0">
         <swiper :slides-per-view="perView_introduce" loop :navigation="true" @swiper="e => onSwiper(e, 2)" @slideChange="e => onSlideChange(e, 2)">
-          <swiper-slide v-for="item in about_contain" :key="item.id">
+          <swiper-slide v-for="(item, index) in about_contain" :key="index">
             <div class="about_contain wow animate__fadeInUp" data-wow-offset="50">
               <div>
-                <p v-for="items in item.contain" :key="items.id">{{ items.text }}</p>
+                <p v-html="item"></p>
               </div>
             </div>
           </swiper-slide>
@@ -63,6 +63,10 @@
           </div>
         </div>
       </div>
+      <div class="swiper_empty" v-else>
+        <FrownOutlined />
+        <p>暂无数据</p>
+      </div>
     </div>
     <div class="about_brand">
       <div class="new_title">
@@ -74,7 +78,7 @@
         </a-col>
       </a-row>
     </div>
-    <div class="about_course">
+    <div class="about_course" :style="`background: url(${developsImg}) no-repeat center / cover;`">
       <div class="new_title">
         <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">发展历程</p>
       </div>
@@ -90,11 +94,11 @@
             centeredSlides
             loop
             @swiper="e => onSwiper(e, 4)"
-            noSwiping
+            v-if="courseList && courseList.length > 0"
           >
-            <swiper-slide v-for="item in courseList" :key="item.id">
+            <swiper-slide v-for="(item, index) in courseList" :key="index">
               <div class="year">
-                <p class="SmileFont">{{ item.year }}</p>
+                <p class="SmileFont">{{ item.dIndex }}</p>
                 <div class="circle"></div>
               </div>
             </swiper-slide>
@@ -107,9 +111,9 @@
         <swiper
           :modules="modules"
           slides-per-view="auto"
+          :space-between="0"
           :resistanceRatio="0"
           :loopedSlides="2"
-          :space-between="0"
           centeredSlides
           loop
           grabCursor
@@ -117,14 +121,15 @@
           @swiper="e => onSwiper(e, 3)"
           @slideChange="e => onSlideChange(e, 3)"
           :controller="{ control: swiper4 }"
+          v-if="courseList && courseList.length > 0"
         >
-          <swiper-slide v-for="item in courseList" :key="item.id">
+          <swiper-slide v-for="(item, index) in courseList" :key="index">
             <div class="about_contain">
               <div class="contain_top hoverBoxNoBorder">
-                <img class="hoverImg" :src="item.img" alt="" />
+                <img class="hoverImg" :src="item.dPath" alt="" />
                 <div class="shadow"></div>
               </div>
-              <div class="name">{{ item.name }}</div>
+              <div class="name">{{ item.dDesc }}</div>
             </div>
           </swiper-slide>
         </swiper>
@@ -148,35 +153,35 @@
       </div>
       <div class="scroll-container">
         <div class="img_box scroll-content">
-          <div class="top_down width_600">
-            <img class="height_300 mb_20" src="@/assets/img/about/JYSP_1.png" alt="" />
-            <img class="height_300" src="@/assets/img/about/JYSP_2.png" alt="" />
+          <div class="top_down width_600" v-if="footerBannerList[0].pPath && footerBannerList[1].pPath">
+            <img class="height_300 mb_20" :src="footerBannerList[0].pPath" alt="" />
+            <img class="height_300" :src="footerBannerList[1].pPath" alt="" />
           </div>
-          <div class="single width_560">
-            <img class="heighth_max" src="@/assets/img/about/JYSP_3.png" alt="" />
+          <div class="single width_560" v-if="footerBannerList[2].pPath">
+            <img class="heighth_max" :src="footerBannerList[2].pPath" alt="" />
           </div>
-          <div class="top_down">
+          <div class="top_down" v-if="footerBannerList[3].pPath && footerBannerList[4].pPath && footerBannerList[5].pPath">
             <div class="left_right mb_20">
-              <img class="width_560 height_360 mr_20" src="@/assets/img/about/JYSP_4.png" alt="" />
-              <img class="width_560 height_360" src="@/assets/img/about/JYSP_5.png" alt="" />
+              <img class="width_560 height_360 mr_20" :src="footerBannerList[3].pPath" alt="" />
+              <img class="width_560 height_360" :src="footerBannerList[4].pPath" alt="" />
             </div>
-            <img class="width_1140 height_240" src="@/assets/img/about/JYSP_6.png" alt="" />
+            <img class="width_1140 height_240" :src="footerBannerList[5].pPath" alt="" />
           </div>
         </div>
         <div class="img_box scroll-content2">
-          <div class="top_down width_600">
-            <img class="height_300 mb_20" src="@/assets/img/about/JYSP_1.png" alt="" />
-            <img class="height_300" src="@/assets/img/about/JYSP_2.png" alt="" />
+          <div class="top_down width_600" v-if="footerBannerList[0].pPath && footerBannerList[1].pPath">
+            <img class="height_300 mb_20" :src="footerBannerList[0].pPath" alt="" />
+            <img class="height_300" :src="footerBannerList[1].pPath" alt="" />
           </div>
-          <div class="single width_560">
-            <img class="heighth_max" src="@/assets/img/about/JYSP_3.png" alt="" />
+          <div class="single width_560" v-if="footerBannerList[2].pPath">
+            <img class="heighth_max" :src="footerBannerList[2].pPath" alt="" />
           </div>
           <div class="top_down">
-            <div class="left_right mb_20">
-              <img class="width_560 height_360 mr_20" src="@/assets/img/about/JYSP_4.png" alt="" />
-              <img class="width_560 height_360" src="@/assets/img/about/JYSP_5.png" alt="" />
+            <div class="left_right mb_20" v-if="footerBannerList[3].pPath && footerBannerList[4].pPath && footerBannerList[5].pPath">
+              <img class="width_560 height_360 mr_20" :src="footerBannerList[3].pPath" alt="" />
+              <img class="width_560 height_360" :src="footerBannerList[4].pPath" alt="" />
             </div>
-            <img class="width_1140 height_240" src="@/assets/img/about/JYSP_6.png" alt="" />
+            <img class="width_1140 height_240" :src="footerBannerList[5].pPath" alt="" />
           </div>
         </div>
       </div>
@@ -187,6 +192,7 @@
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Navigation, Controller } from 'swiper/modules'
+import { FrownOutlined } from '@ant-design/icons-vue'
 import 'swiper/css/navigation'
 import 'swiper/css'
 
@@ -194,13 +200,17 @@ export default {
   name: 'IAbout',
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    FrownOutlined
   },
   setup() {
     const { proxy } = getCurrentInstance()
     const state = reactive({
       modules: [Autoplay, Navigation, Controller],
       isMobile: false,
+      bannerImg: [],
+      introduceImg: null,
+      developsImg: null,
       swiper1: null,
       swiper2: null,
       swiper3: null,
@@ -214,38 +224,9 @@ export default {
       tags: [0],
       perView_introduce: 1,
       between: '0.79%',
-      bannerList: [
-        { id: 1, title: 'Spark More', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_1.png') },
-        { id: 2, title: 'Spark More', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_2.png') },
-        { id: 3, title: 'Spark More', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_1.png') },
-        { id: 3, title: 'Spark More', text: '去发现，无限可能', img: require('@/assets/img/about/swiper_2.png') }
-      ],
-      about_contain: [
-        {
-          id: 1,
-          contain: [
-            { id: 1, text: '自第一道光照耀在世界中，世界被日月星辰之光照亮' },
-            { id: 2, text: '在古代，世界被先辈们造的焰光照亮' },
-            { id: 3, text: '我们造光像起初一样，像我们先辈一样，造光去更新这个世界，如我们所造的影像之光与数字之光' },
-            { id: 4, text: '相信未来不远的一天，我们所造的光将照耀在更新后的世界，如第一道光照耀在更新前的世界' }
-          ]
-        },
-        {
-          id: 2,
-          contain: [
-            { id: 1, text: '在古代，世界被先辈们造的焰光照亮' },
-            { id: 2, text: '在这个世代，世界被我们造在芯片中的数字之光照亮' },
-            { id: 3, text: '相信未来不远的一天，我们所造的光将照耀在更新后的世界，如第一道光照耀在更新前的世界' },
-            { id: 4, text: '寻求渴望通过造光去更新世界的伙伴' }
-          ]
-        }
-      ],
-      courseList: [
-        { id: 1, year: '2021', name: '为万科、融侨城、金辉集团等企业机构制作数条企业宣传片/产品TVC', img: require('@/assets/img/news/new_3.png') },
-        { id: 2, year: '2022', name: '2022为万科、融侨城、金辉集团等企业机构制', img: require('@/assets/img/news/new_3.png') },
-        { id: 3, year: '2023', name: '2023为万科、融侨城、金辉集团等企业机构制作数产品TVC', img: require('@/assets/img/news/new_3.png') },
-        { id: 4, year: '2024', name: '2024团等企业机构制作数条企业宣传片/产品TVC', img: require('@/assets/img/news/new_3.png') }
-      ],
+      bannerList: [],
+      about_contain: [],
+      courseList: [],
       brandList: [
         { id: 1, img: require('@/assets/img/about/brand_1.png') },
         { id: 2, img: require('@/assets/img/about/brand_2.png') },
@@ -275,6 +256,11 @@ export default {
     })
 
     onMounted(async () => {
+      ;[4, 6, 7, 8].forEach(ele => {
+        getBannerList(ele)
+      })
+      getCompanyDeteil()
+      getCompanyDevelops()
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
@@ -297,6 +283,39 @@ export default {
         state.perView_introduce = 1
         state.between = '0.79%'
       }
+    }
+    const getBannerList = pType => {
+      proxy.$api.bannerList({ pType }).then(res => {
+        if (res && res.length > 0) {
+          switch (pType) {
+            case 4:
+              state.bannerImg = res
+            case 6:
+              state.introduceImg = res[0].pPath
+              break
+            case 7:
+              state.developsImg = res[0].pPath
+              break
+            case 8:
+              state.footerBannerList = res
+              break
+          }
+        }
+      })
+    }
+    const getCompanyDeteil = () => {
+      proxy.$api.companyDeteil().then(res => {
+        if (res.details && res.details.length > 0) {
+          state.about_contain = res.details
+        }
+      })
+    }
+    const getCompanyDevelops = () => {
+      proxy.$api.companyDevelops().then(res => {
+        if (res && res.length > 0) {
+          state.courseList = res
+        }
+      })
     }
     const onSwiper = (swiper, type) => {
       state[`swiper${type}`] = swiper
@@ -388,8 +407,9 @@ export default {
 }
 .about_introduce {
   padding: 8.75rem 0 10rem;
-  height: 100vh;
-  background: url(../../assets/img/about/text_bg.png) no-repeat center/cover;
+  // height: 100vh;
+  height: 67.5rem;
+  // background: url(../../assets/img/about/text_bg.png) no-repeat center/cover;
   color: #fff;
   position: relative;
   .about_contain {
@@ -418,7 +438,7 @@ export default {
 }
 .about_course {
   padding: 6.25rem 0;
-  background: url(../../assets/img/product/text_bg.png) no-repeat 100% / 100%;
+  // background: url(../../assets/img/product/text_bg.png) no-repeat 100% / 100%;
   color: #fff;
   .new_title {
     margin-bottom: 1.25rem;
@@ -529,6 +549,7 @@ export default {
         border-radius: 1.25rem;
         width: 100%;
         height: 100%;
+        object-fit: cover;
       }
     }
     .name {

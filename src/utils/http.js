@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 import store from '@/store'
 import Storage from '@/utils/storage'
 import { resetRouter } from '@/router'
@@ -15,77 +15,31 @@ axios.defaults.timeout = 10000
 // }]
 
 axios.interceptors.request.use(
-  (config) => {
-    // if (store.getters.token) {
-    //   config.headers['Authorization'] = `Bearer ${getToken()}`
-    // }
-    return config;
+  config => {
+    if (config.type == 'form') {
+      config.headers['Content-Type'] = 'multipart/form-data'
+    }
+    return config
   },
-  (error) => {
-    console.log(error);
-    return Promise.reject(error);
+  error => {
+    console.log(error)
+    return Promise.reject(error)
   }
 )
 
 axios.interceptors.response.use(
-  (response) => {
+  response => {
     // console.log(response.status)
     if (response.status == 200 || response.status == 201) {
       const res = response.data
       if (res.status_code != '200') {
-        switch (res.status_code) {
-          case '401':
-            // MessageBox({
-            //   title: '提示',
-            //   showClose: false,
-            //   closeOnClickModal: false,
-            //   closeOnPressEscape: false,
-            //   message: '当前用户登入信息已失效，请重新登入再操作',
-            //   beforeClose: (action, instance, done) => {
-            //     removeToken()
-            //     resetRouter()
-            //     window.location.href = '/login'
-            //     console.log(action, instance, done)
-            //   }
-            // })
-            break
-          case '403':
-            // MessageBox({
-            //   title: '提示',
-            //   showClose: false,
-            //   closeOnClickModal: false,
-            //   closeOnPressEscape: false,
-            //   message: '当前用户登入信息已失效，请重新登入再操作',
-            //   beforeClose: (action, instance, done) => {
-            //     removeToken()
-            //     resetRouter()
-            //     window.location.href = '/login'
-            //     console.log(action, instance, done)
-            //   }
-            // })
-            break
-          case '404':
-            // Message({
-            //   message: res.status || 'Error',
-            //   type: 'error',
-            //   duration: 5 * 1000
-            // })
-            break
-          default:
-            // Message({
-            //   message: res.status || 'Error',
-            //   type: 'error',
-            //   duration: 5 * 1000
-            // })
-            break
-        }
         return Promise.resolve(response)
       } else {
         return Promise.resolve(response)
       }
     } else if (response.status == 204) {
       console.log(response.status)
-      return Promise.resolve({ 'status': 'success', 'status_code': 200 })
+      return Promise.resolve({ status: 'success', status_code: 200 })
     } else {
       // MessageBox.confirm('您已经登出，您可以取消以继续停留在此页面，或重新登录', '注销', {
       //   confirmButtonText: '去登录',
@@ -107,11 +61,13 @@ axios.interceptors.response.use(
 
 export async function get(url, params) {
   return new Promise((resolve, reject) => {
-    axios.get(url, { params: params })
+    axios
+      .get(url, { params: params })
       .then(res => {
         // ...
         resolve(res.data)
-      }).catch(err => {
+      })
+      .catch(err => {
         if (err.status == 403) {
           reject(err)
         } else {
@@ -121,9 +77,10 @@ export async function get(url, params) {
   })
 }
 
-export function post(url, params) {
+export function post(url, params, config) {
   return new Promise((resolve, reject) => {
-    axios.post(url, params)
+    axios
+      .post(url, params, config)
       .then(res => {
         // ...
         resolve(res.data)
@@ -135,7 +92,8 @@ export function post(url, params) {
 }
 export function patch(url, params) {
   return new Promise((resolve, reject) => {
-    axios.patch(url, params)
+    axios
+      .patch(url, params)
       .then(res => {
         // ...
         resolve(res.data)
@@ -147,7 +105,8 @@ export function patch(url, params) {
 }
 export function DELETE(url, params) {
   return new Promise((resolve, reject) => {
-    axios.delete(url, { params: params })
+    axios
+      .delete(url, { params: params })
       .then(res => {
         // ...
         resolve(res)

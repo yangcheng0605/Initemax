@@ -153,7 +153,7 @@ export default {
     watch(
       route,
       e => {
-        var path = e.fullPath
+        var path = e.fullPath.split('?')[0]
         var meta = e.meta
         state.transp = meta?.transp == 1 ? false : true
         state.isHome = false

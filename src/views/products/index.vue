@@ -1,7 +1,7 @@
 <template>
   <div class="products">
     <div class="top_banner new_banner">
-      <img src="@/assets/img/product/bg_top.png" alt="" />
+      <img :src="bannerImg" alt="" />
       <div class="t_box">
         <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50"><span>创意之光</span> <span>璀璨影像</span></p>
       </div>
@@ -36,7 +36,7 @@
       </div>
       <div class="pro_list">
         <a-row :gutter="gutter" v-if="proList && proList.length > 0">
-          <a-col :span="colSpan" class="pro_col wow animate__fadeInUp" data-wow-offset="50" v-for="item in proList" :key="item.cId">
+          <a-col :span="colSpan" class="pro_col wow animate__bounceIn" data-wow-offset="50" v-for="item in proList" :key="item.cId" @click="linkTo(item)">
             <div class="bgImg hoverBoxNoBorder">
               <img class="hoverImg" :src="item.proPath" alt="" />
             </div>
@@ -47,9 +47,10 @@
         </a-row>
         <div class="swiper_empty" v-else>
           <FrownOutlined />
+          <p>暂无数据</p>
         </div>
       </div>
-      <a-button type="link" class="themeBtn wow animate__fadeInUp" data-wow-offset="50">查看全部</a-button>
+      <a-button type="link" class="themeBtn wow animate__fadeInUp" data-wow-offset="50" v-if="showButton && proList && proList.length > 0" @click="getProListByCate()">查看更多</a-button>
     </div>
     <div class="pro_industry">
       <div class="new_title">
@@ -132,11 +133,12 @@
   </div>
 </template>
 <script>
-import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
+import { computed, getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { FrownOutlined } from '@ant-design/icons-vue'
 import 'swiper/css/navigation'
 import 'swiper/css'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'IProducts',
@@ -146,6 +148,7 @@ export default {
     FrownOutlined
   },
   setup() {
+    let route = useRoute()
     const { proxy } = getCurrentInstance()
     const state = reactive({
       isMobile: false,
@@ -153,18 +156,15 @@ export default {
       bannerImg: null,
       gutter: [20, 20],
       colSpan: 8,
-      currentType: 1,
+      currentType: null,
       currentTypeIndex: 0,
+      pageNum: 1,
+      pageSize: 5,
+      showButton: true,
       tags: -1,
       perView: 8,
       between: '0.79%',
-      typeList: [
-        { id: 1, name: '造月', img: require('@/assets/img/type_h_1.png') },
-        { id: 2, name: '造暗', img: require('@/assets/img/type_h_2.png') },
-        { id: 3, name: '造光', img: require('@/assets/img/type_h_3.png') },
-        { id: 4, name: '造火', img: require('@/assets/img/type_h_4.png') },
-        { id: 5, name: '造天', img: require('@/assets/img/type_h_5.png') }
-      ],
+      typeList: [],
       tagList: [
         { id: -1, name: '全部' },
         { id: 1, name: '宣传片' },
@@ -196,7 +196,15 @@ export default {
 
     onMounted(async () => {
       getBannerList()
-      getProCategoryList()
+      getProCategoryList(res => {
+        if (route.query.cateId) {
+          state.currentType = parseInt(route.query.cateId) || ''
+          getProListByCate(state.currentType)
+        } else {
+          getProListByCate()
+        }
+      })
+
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
@@ -206,27 +214,31 @@ export default {
     })
     const getBannerList = () => {
       proxy.$api.bannerList({ pType: 2 }).then(res => {
-        state.bannerImg = res
+        if (res && res.length > 0) {
+          state.bannerImg = res[0].pPath
+        }
       })
     }
-    const getProCategoryList = () => {
+    const getProCategoryList = callback => {
       proxy.$api.proCategoryList().then(res => {
         state.typeList = []
         if (res && res.length > 0) {
           state.typeList = res
           state.currentType = res[0].cateId
-          getProListByCate()
+          typeof callback == 'function' && callback()
         }
       })
     }
-    const getProListByCate = () => {
-      proxy.$api.proListByCate({ cId: state.currentType, proType: state.tags }).then(res => {
-        if (res.rows?.length > 0) {
-          state.proList = res.rows
-          // state.proList = state.proList.concat(res.rows)
-          console.log(state.proList)
-        } else {
-          state.proList = []
+    const getProListByCate = currentType => {
+      proxy.$api.proListByCate({ cId: currentType || state.currentType, proType: state.tags }, { pageNum: state.pageNum, pageSize: state.pageSize }).then(res => {
+        if (res.rows && res.rows.length > 0) {
+          state.proList = state.proList.concat(res.rows)
+          state.pageNum += 1
+          if (state.proList.length === res.total) {
+            state.showButton = false
+          } else {
+            state.showButton = true
+          }
         }
       })
     }
@@ -247,12 +259,16 @@ export default {
       }
     }
     const chooseType = (e, index) => {
+      state.proList = []
+      state.pageNum = 1
       state.currentType = e
       state.currentTypeIndex = index
       state.tags = -1
       getProListByCate()
     }
     const chooseTags = e => {
+      state.proList = []
+      state.pageNum = 1
       var id = e.id
       state.tags = id
       getProListByCate()
@@ -260,11 +276,18 @@ export default {
     const onSwiper = swiper => {
       state.swiper = swiper
     }
+    const linkTo = function (e) {
+      if (e && e.imageUrls) {
+        window.open(e.imageUrls, '_blank')
+      }
+    }
     return {
       ...toRefs(state),
       onSwiper,
       chooseType,
-      chooseTags
+      chooseTags,
+      getProListByCate,
+      linkTo
     }
   }
 }

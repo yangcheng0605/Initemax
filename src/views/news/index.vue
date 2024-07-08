@@ -12,16 +12,16 @@
       </div>
       <div class="swiper_box wow animate__fadeInUp" data-wow-offset="50" v-if="hotList && hotList.length > 0">
         <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="onSwiper">
-          <swiper-slide v-for="item in hotList" :key="item.id">
+          <swiper-slide v-for="item in hotList" :key="item.nId" @click="linkTo(item)">
             <div class="hot_contain">
               <div :class="['hoverBox', hoverImgStatus ? 'hoverImgBox' : '']" @mouseenter="hoverImgStatus = true" @mouseleave="hoverImgStatus = false">
-                <img :class="['hoverImg', hoverImgStatus ? 'hoverImgs' : '']" :src="item.img" alt="" />
+                <img :class="['hoverImg', hoverImgStatus ? 'hoverImgs' : '']" :src="item.imageUrl" alt="" />
               </div>
               <div>
-                <p class="hot_name line_clamp_2" :title="item.name">{{ item.name }}</p>
-                <p class="hot_date">{{ item.date }}</p>
+                <p class="hot_name line_clamp_2" :title="item.nDesc">{{ item.nDesc }}</p>
+                <p class="hot_date">{{ handleTime(item.aTime) }}</p>
                 <div class="hot_tags">
-                  <span v-for="item2 in item.tags" :key="item2.id">{{ item2.name }}</span>
+                  <span v-for="item2 in item.tags" :key="item2.tId">{{ item2.tName }}</span>
                 </div>
               </div>
             </div>
@@ -36,31 +36,40 @@
           </div>
         </div>
       </div>
+      <div class="swiper_empty" v-else>
+        <FrownOutlined />
+        <p>暂无数据</p>
+      </div>
     </div>
     <div class="news_industry">
       <div class="new_title">
         <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">行业资讯</p>
       </div>
-      <ul>
-        <li v-for="item in newsList" :key="item.id" class="wow animate__fadeInUp" data-wow-offset="50">
+      <ul v-if="newsList && newsList.length > 0">
+        <li v-for="item in newsList" :key="item.nId" class="wow animate__bounceIn" data-wow-offset="50">
           <div class="hoverBox">
-            <img class="hoverImg" :src="item.img" alt="" />
+            <img class="hoverImg" :src="item.imageUrl" alt="" />
           </div>
           <div class="li_box">
-            <p class="li_date">{{ item.date }}</p>
-            <p class="li_name line_clamp_2" :title="item.name">{{ item.name }}</p>
-            <p class="li_text line_clamp_2" v-if="!isMobile" :title="item.contain">{{ item.contain }}</p>
-            <a-button type="link" class="subBtn themeBtn hoverBtn">查看全部</a-button>
+            <p class="li_date">{{ handleTime(item.aTime) }}</p>
+            <p class="li_name line_clamp_2" :title="item.nDesc">{{ item.nDesc }}</p>
+            <p class="li_text line_clamp_2" v-if="!isMobile" :title="item.nDetail">{{ item.nDetail }}</p>
+            <a-button type="link" class="subBtn themeBtn hoverBtn" @click="linkTo(item)">查看全部</a-button>
           </div>
         </li>
       </ul>
-      <a-button type="link" class="themeBtn hoverBtn wow animate__fadeInUp" data-wow-offset="50">查看全部</a-button>
+      <div class="swiper_empty" v-else>
+        <FrownOutlined />
+        <p>暂无数据</p>
+      </div>
+      <a-button type="link" class="themeBtn hoverBtn wow animate__fadeInUp" data-wow-offset="50" v-if="showButton && newsList && newsList.length > 0" @click="getNewsList()">查看全部</a-button>
     </div>
   </div>
 </template>
 <script>
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
+import { FrownOutlined } from '@ant-design/icons-vue'
 import 'swiper/css/navigation'
 import 'swiper/css'
 
@@ -68,98 +77,28 @@ export default {
   name: 'INews',
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    FrownOutlined
   },
   setup() {
     const { proxy } = getCurrentInstance()
     const state = reactive({
       isMobile: false,
       swiper: null,
+      bannerImg: null,
       hoverImgStatus: false,
       perView: 4,
       between: 40,
-      hotList: [
-        {
-          id: 1,
-          date: '2024/1/31',
-          name: '造光2024年造光2024年造光2024年造光2024年造光2024年造光2024年',
-          img: require('@/assets/img/news/new_3.png'),
-          tags: [
-            { id: 1, name: 'TAG标签' },
-            { id: 2, name: '5G' },
-            { id: 3, name: '政治' }
-          ]
-        },
-        {
-          id: 2,
-          date: '2024/2/11',
-          name: '造光22024年发大大大财',
-          img: require('@/assets/img/news/new_3.png'),
-          tags: [
-            { id: 1, name: 'TAG标签' },
-            { id: 2, name: '5G' }
-          ]
-        },
-        {
-          id: 3,
-          date: '2024/3/21',
-          name: '造大财，造光2024年发大大大财',
-          img: require('@/assets/img/news/new_3.png'),
-          tags: [{ id: 1, name: '5G' }]
-        },
-        {
-          id: 4,
-          date: '2024/4/4',
-          name: '造光2024年发大大大造光2024年发大大大财，造光2024年发大大大财财，造光2024年发大大大财',
-          img: require('@/assets/img/news/new_3.png'),
-          tags: [{ id: 1, name: 'Tag' }]
-        },
-        {
-          id: 5,
-          date: '2024/5/3',
-          name: '造光大大大财，造光2024年发大大大财',
-          img: require('@/assets/img/news/new_3.png'),
-          tags: [{ id: 1, name: '5G' }]
-        }
-      ],
-      newsList: [
-        { id: 1, date: '2024/1/31', name: '造光2024年', contain: '内容部分展示内容部分展展示内容部分', img: require('@/assets/img/news/new_4.png') },
-        {
-          id: 2,
-          date: '2024/2/11',
-          name: '造光22024年发大大大财',
-          contain:
-            '内容部分展示内容部分展示内容部分展示内容部分展示内容部分展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示容部分展展示容部分展展示容部分展展示内容部分展展示内容部分',
-          img: require('@/assets/img/news/new_4.png')
-        },
-        {
-          id: 3,
-          date: '2024/3/21',
-          name: '造大财，造光2024年发大大大财',
-          contain:
-            '内容部分展示内容部分展示内容部分展示内容部分展示内容部分展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示容部分展展示容部分展展示容部分展展示内容部分展展示内容部分',
-          img: require('@/assets/img/news/new_4.png')
-        },
-        {
-          id: 4,
-          date: '2024/4/4',
-          name: '造光2024年发大大大造光2024年发大大大财，造光2024年发大大大财财，造光2024年发大大大财',
-          contain:
-            '内容部分展示内容部分展示内容部分展示内容部分展示内容部分展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示容部分展展示容部分展展示容部分展展示内容部分展展示内容部分',
-          img: require('@/assets/img/news/new_4.png')
-        },
-        {
-          id: 5,
-          date: '2024/5/3',
-          name: '造光大大大财，造光2024年发大大大财',
-          contain:
-            '内容部分展示内容部分展示内容部分展示内容部分展示内容部分展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示内容部分展展示容部分展展示容部分展展示容部分展展示内容部分展展示内容部分',
-          img: require('@/assets/img/news/new_4.png')
-        }
-      ]
+      pageNum: 1,
+      pageSize: 5,
+      showButton: true,
+      hotList: [],
+      newsList: []
     })
 
     onMounted(async () => {
+      getBannerList()
+      getNewsList()
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
@@ -179,9 +118,39 @@ export default {
         state.isMobile = false
       }
     }
-    // const hoverImg = swiper => {
-    //   state.hoverImgStatus = swiper
-    // }
+    const getBannerList = () => {
+      proxy.$api.bannerList({ pType: 3 }).then(res => {
+        if (res && res.length > 0) {
+          state.bannerImg = res[0].pPath
+        }
+      })
+    }
+    const getNewsList = () => {
+      proxy.$api.newsList({ pageNum: state.pageNum, pageSize: state.pageSize }).then(res => {
+        if (res.rows && res.rows.length > 0) {
+          state.newsList = state.newsList.concat(res.rows)
+          state.pageNum += 1
+          res.rows.forEach(ele => {
+            if (ele.hotStatus == 1) {
+              state.hotList.push(ele)
+            }
+          })
+          if (state.newsList.length === res.total) {
+            state.showButton = false
+          } else {
+            state.showButton = true
+          }
+        }
+      })
+    }
+    const handleTime = time => {
+      const date = new Date(time)
+      const year = date.getFullYear() // 年份
+      const month = String(date.getMonth() + 1).padStart(2, '0') // 月份（转为字符串，并补0）
+      const day = String(date.getDate()).padStart(2, '0') // 日期（转为字符串，并补0）
+      const formattedDate = `${year}-${month}-${day}`
+      return formattedDate
+    }
     const onSwiper = swiper => {
       state.swiper = swiper
     }
@@ -191,11 +160,19 @@ export default {
     const sildeNext = e => {
       state.swiper.slideNext(500)
     }
+    const linkTo = function (e) {
+      if (e && e.aAddress) {
+        window.open(e.aAddress, '_blank')
+      }
+    }
     return {
       ...toRefs(state),
       onSwiper,
       sildePre,
-      sildeNext
+      sildeNext,
+      handleTime,
+      getNewsList,
+      linkTo
     }
   }
 }
@@ -223,6 +200,7 @@ export default {
       height: 18.75rem;
       overflow: hidden;
       border-radius: 0.625rem;
+      object-fit: cover;
     }
     .hot_name {
       height: 4.5rem;
@@ -276,6 +254,8 @@ export default {
     .home_sildePre {
       right: 3.75rem;
     }
+  }
+  .swiper_empty {
   }
 }
 .news_industry {

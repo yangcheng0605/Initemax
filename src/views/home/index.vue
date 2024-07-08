@@ -14,7 +14,7 @@
       @slideChange="e => onSlideHomeChange(e)"
       v-if="isMobile"
     >
-      <swiper-slide class="s_1">
+      <swiper-slide class="s_1" :style="`background: url(${bannerImg}) no-repeat center / cover;`">
         <div class="h_first wiper_1">
           <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">Spark More</p>
@@ -119,7 +119,7 @@
                     @swiper="e => onSwiper(e, 4)"
                     @slideChange="e => onSlideVideoChange(e)"
                   >
-                    <swiper-slide v-for="(item, index) in proList" :key="index">
+                    <swiper-slide v-for="(item, index) in proList" :key="index" @click="linkTo(item)">
                       <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
                         <img class="cover hoverImg" :src="item.proPath" alt="" />
                         <img class="play" src="@/assets/img/play.png" alt="" v-if="currentVideoIndex === index" />
@@ -135,7 +135,7 @@
                   </div>
                 </div>
                 <div class="btn_box">
-                  <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
+                  <a-button type="link" class="s_btn themeBtn" @click="linkToDetail">了解详情</a-button>
                 </div>
               </div>
             </div>
@@ -148,7 +148,7 @@
     </swiper>
 
     <full-page ref="fullpage" :options="options" id="fullpage" v-else>
-      <div class="section s_1">
+      <div class="section s_1" :style="`background: url(${bannerImg}) no-repeat center / cover;`">
         <div class="h_first wiper_1">
           <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">Spark More</p>
@@ -162,14 +162,11 @@
       <div class="section s_bg" :style="`background: url(${bannerTypeList[currentSceondIndex].pBanerPath}) no-repeat center / cover;`" v-if="bannerTypeList[currentSceondIndex]">
         <div class="h_second wiper_2">
           <div :class="['s_top', homeIndex == 1 ? 'animateFadeInUp' : '']">
-            <p class="SmileFont title">造光 IGNITEMAX</p>
+            <p class="SmileFont title">{{ bannerTypeList[currentSceondIndex].cTitle || '' }}</p>
             <p class="s_text">
-              <span>致力于艺术与科技的完美融合，利用影像让一切更有价值的企业</span>
-              <span>造光核心团队成员拥有多年创作经验与丰富执行资源</span>
-              <span>出身于华为、迈瑞千万级的视频供应商团队</span>
-              <span>华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验</span>
+              <span>{{ bannerTypeList[currentSceondIndex].cDesc || '' }}</span>
             </p>
-            <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
+            <a-button type="link" class="s_btn themeBtn" @click="linkToPro">了解详情</a-button>
           </div>
           <div :class="['s_bottom', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <swiper
@@ -188,6 +185,7 @@
               observer
               observeParents
               :space-between="0"
+              :initialSlide="2"
               :loopedSlides="3"
               :resistanceRatio="0"
               slides-per-view="auto"
@@ -258,7 +256,7 @@
                 @slideChange="e => onSlideVideoChange(e)"
                 v-if="proList && proList.length > 0"
               >
-                <swiper-slide v-for="(item, index) in proList" :key="index">
+                <swiper-slide v-for="(item, index) in proList" :key="index" @click="linkTo(item)">
                   <div :class="['about_contain']">
                     <img :class="['cover', currentVideoIndex == index ? 'hover' : '']" :src="item.proPath" alt="" />
                     <div :class="['play_box', currentVideoIndex == index ? 'animateFadeIn' : '']">
@@ -278,10 +276,11 @@
               </swiper>
               <div class="swiper_empty" v-else>
                 <FrownOutlined />
+                <!-- <p>暂无数据</p> -->
               </div>
             </div>
             <div class="btn_box">
-              <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
+              <a-button type="link" class="s_btn themeBtn" @click="linkToDetail">了解详情</a-button>
             </div>
           </div>
         </div>
@@ -350,7 +349,7 @@ export default {
       curentIndex: 0,
       perView: 8,
       between: '0.79%',
-      currentType: 1,
+      currentType: null,
       currentTypeIndex: 0,
       tags: -1,
       typeList: [],
@@ -391,7 +390,9 @@ export default {
     }
     const getBannerList = () => {
       proxy.$api.bannerList({ pType: 1 }).then(res => {
-        state.bannerImg = res
+        if (res && res.length > 0) {
+          state.bannerImg = res[0].pPath
+        }
       })
     }
     const getProCategoryList = () => {
@@ -400,7 +401,7 @@ export default {
         state.bannerTypeList = []
         if (res && res.length > 0) {
           state.typeList = res
-          state.currentType = res[0].cateId
+          state.currentType = res[2].cateId
           state.bannerTypeList = state.typeList.concat(res)
           getProListByCate()
         }
@@ -410,12 +411,25 @@ export default {
       proxy.$api.proListByCate({ cId: state.currentType, proType: state.tags }).then(res => {
         if (res.rows?.length > 0) {
           state.proList = res.rows
-          // state.proList = state.proList.concat(res.rows)
-          console.log(state.proList)
         } else {
           state.proList = []
         }
       })
+    }
+    const linkTo = function (e) {
+      if (e && e.imageUrls) {
+        window.open(e.imageUrls, '_blank')
+      }
+    }
+    const linkToPro = function (e) {
+      const currentBanner = state.bannerTypeList[state.currentSceondIndex]
+      router.replace('/products?cateId=' + currentBanner.cateId)
+    }
+    const linkToDetail = function () {
+      const currentVideo = state.proList[state.currentVideoIndex]
+      if (currentVideo && currentVideo.imageUrls) {
+        window.open(currentVideo.imageUrls, '_blank')
+      }
     }
     const onSlideHomeChange = e => {
       state.homeIndex = e.realIndex
@@ -463,6 +477,8 @@ export default {
       }
     }
     const chooseType = async (e, index) => {
+      state.proList = []
+      state.pageNum = 1
       state.currentType = e
       state.currentTypeIndex = index
       state.tags = -1
@@ -470,6 +486,8 @@ export default {
       getProListByCate()
     }
     const chooseTags = e => {
+      state.proList = []
+      state.pageNum = 1
       var id = e.id
       state.tags = id
       getProListByCate()
@@ -495,6 +513,7 @@ export default {
     const fullpageMove = e => {
       fullpage.value.api.moveTo(e)
     }
+
     return {
       ...toRefs(state),
       fullpage,
@@ -510,7 +529,10 @@ export default {
       sildeNext,
       fullpageMove,
       chooseType,
-      chooseTags
+      chooseTags,
+      linkTo,
+      linkToPro,
+      linkToDetail
     }
   }
 }
@@ -530,7 +552,6 @@ export default {
     overflow: hidden;
   }
   .s_1 {
-    background: url(../../assets/img/home/bg_1.webp) no-repeat center / cover;
   }
   .s_bg {
     transition: background 0.5s ease-out;
