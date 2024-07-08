@@ -249,7 +249,7 @@ export default {
       const windowWidth = window.innerWidth
       if (windowWidth < 750) {
         state.colSpan = 24
-        state.gutter = 20
+        state.gutter = [0, 20]
         state.isMobile = true
         state.perView = 'auto'
         state.between = 10
