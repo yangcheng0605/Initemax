@@ -28,20 +28,28 @@
       <swiper-slide class="s_bg" :style="`background: url(${bannerTypeList[currentSceondIndex]?.pBanerPath}) no-repeat center / cover;`" v-if="bannerTypeList[currentSceondIndex]">
         <div class="h_second wiper_2">
           <div :class="['s_top', homeIndex == 1 ? 'animateFadeInUp' : '']">
-            <p class="SmileFont title">造光 IGNITEMAX</p>
+            <p class="SmileFont title">{{ bannerTypeList[currentSceondIndex].cTitle }}</p>
             <p class="s_text">
-              <span>致力于艺术与科技的完美融合，利用影像让一切更有价值的企业</span>
-              <span>造光核心团队成员拥有多年创作经验与丰富执行资源</span>
-              <span>出身于华为、迈瑞千万级的视频供应商团队</span>
-              <span>华为、大疆、传音、TCL、岚图、步步高、芝华仕等服务经验</span>
+              <span>{{ bannerTypeList[currentSceondIndex].cDesc }}</span>
             </p>
           </div>
           <div :class="['s_bottom', homeIndex == 1 ? 'animateFadeInUp' : '']">
-            <swiper :modules="modules" loop observer observeParents slides-per-view="auto" :space-between="0" centeredSlides @swiper="e => onSwiper(e, 2)" @slideChange="e => onSlideSecondChange(e)">
+            <swiper
+              :modules="modules"
+              loop
+              observer
+              :initialSlide="2"
+              observeParents
+              slides-per-view="auto"
+              :space-between="0"
+              centeredSlides
+              @swiper="e => onSwiper(e, 2)"
+              @slideChange="e => onSlideSecondChange(e)"
+            >
               <swiper-slide v-for="(item, index) in bannerTypeList" :key="index">
                 <div class="type_box">
-                  <img class="type_bg" :src="item.img" alt="" />
-                  <p class="SmileFont">{{ item.name }}</p>
+                  <img class="type_bg" :src="item.pPath" alt="" />
+                  <p class="SmileFont">{{ item.cateName }}</p>
                   <div class="black"></div>
                 </div>
               </swiper-slide>
@@ -75,9 +83,9 @@
           <swiper-slide>
             <div class="h_third s_bg">
               <div class="bg_img">
-                <swiper @swiper="e => onSwiper(e, 6)" :effect="'fade'" :modules="modules">
+                <swiper @swiper="e => onSwiper(e, 6)" :initialSlide="2" :effect="'fade'" :modules="modules">
                   <swiper-slide v-for="(item, index) in typeList" :key="index">
-                    <img :src="item.bgImg" alt="" />
+                    <img v-if="item" :src="item.pBanerPath" alt="" />
                   </swiper-slide>
                 </swiper>
               </div>
@@ -95,13 +103,13 @@
               </div>
               <div :class="['h_tags', homeIndex == 2 ? 'animateFadeInUp' : '']">
                 <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
-                  <swiper-slide v-for="item in tagList" :key="item.id">
-                    <p :class="['tag', tags === item.id ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
+                  <swiper-slide v-for="item in tagList" :key="item.dictCode">
+                    <p :class="['tag', tags === item.dictCode ? 'active' : '']" @click="chooseTags(item)">{{ item.dictLabel }}</p>
                   </swiper-slide>
                 </swiper>
               </div>
               <div :class="['h_video', homeIndex == 2 ? 'animateFadeInUp' : '']">
-                <div class="swiper_box">
+                <div class="swiper_box" v-if="proList && proList.length > 0">
                   <swiper
                     :modules="modules"
                     :effect="'coverflow'"
@@ -113,6 +121,7 @@
                       slideShadows: false
                     }"
                     loop
+                    :initialSlide="2"
                     slidesPerView="auto"
                     centeredSlides
                     :speed="1000"
@@ -120,9 +129,9 @@
                     @slideChange="e => onSlideVideoChange(e)"
                   >
                     <swiper-slide v-for="(item, index) in proList" :key="index" @click="linkTo(item)">
-                      <div :class="['about_contain', currentVideoIndex === index ? 'hoverBox' : '']">
+                      <div :class="['about_contain', currentVideoIndex == index ? 'hoverBox' : '']">
                         <img class="cover hoverImg" :src="item.proPath" alt="" />
-                        <img class="play" src="@/assets/img/play.png" alt="" v-if="currentVideoIndex === index" />
+                        <img class="play" src="@/assets/img/play.png" alt="" v-if="currentVideoIndex == index" />
                       </div>
                     </swiper-slide>
                   </swiper>
@@ -131,11 +140,15 @@
                     <div class="home_sildeNext blackborder" @click="sildeNext(4)"><img src="@/assets/img/arrow_white_r.png" alt="" /></div>
                   </div>
                   <div class="content">
-                    <p class="title">{{ proList[currentVideoIndex].proName }}</p>
+                    <p class="title" v-if="proList[currentVideoIndex]">{{ proList[currentVideoIndex].proName }}</p>
                   </div>
                 </div>
-                <div class="btn_box">
+                <div class="btn_box" v-if="proList && proList.length > 0">
                   <a-button type="link" class="s_btn themeBtn" @click="linkToDetail">了解详情</a-button>
+                </div>
+                <div class="swiper_empty" v-else>
+                  <FrownOutlined />
+                  <!-- <p>暂无数据</p> -->
                 </div>
               </div>
             </div>
@@ -213,7 +226,7 @@
       </div>
       <div class="section s_bg">
         <div class="bg_img">
-          <swiper @swiper="e => onSwiper(e, 6)" :effect="'fade'" :modules="modules">
+          <swiper @swiper="e => onSwiper(e, 6)" :effect="'fade'" :initialSlide="2" :modules="modules">
             <swiper-slide v-for="(item, index) in typeList" :key="index">
               <img v-if="item" :src="item.pBanerPath" alt="" />
             </swiper-slide>
@@ -229,8 +242,8 @@
           </div>
           <div :class="['h_tags', homeIndex == 2 ? 'animateFadeInUp' : '']">
             <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
-              <swiper-slide v-for="item in tagList" :key="item.id">
-                <p :class="['tag', tags === item.id ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
+              <swiper-slide v-for="item in tagList" :key="item.dictCode">
+                <p :class="['tag', tags === item.dictCode ? 'active' : '']" @click="chooseTags(item)">{{ item.dictLabel }}</p>
               </swiper-slide>
             </swiper>
           </div>
@@ -263,7 +276,7 @@
                       <img src="@/assets/img/play.png" alt="" />
                       <div class="black_pop">
                         <div class="content">
-                          <p class="title">{{ item.proName }}</p>
+                          <p class="title" v-if="item">{{ item.proName }}</p>
                         </div>
                       </div>
                     </div>
@@ -340,7 +353,7 @@ export default {
       pcstretch: -70,
       showAnimate: false,
       homeIndex: false,
-      currentSceondIndex: 0,
+      currentSceondIndex: 2,
       currentVideoIndex: 0,
       mousewheel: true,
       isMobile: false,
@@ -351,24 +364,16 @@ export default {
       between: '0.79%',
       currentType: null,
       currentTypeIndex: 0,
-      tags: -1,
+      tags: null,
       typeList: [],
       bannerTypeList: [],
-      tagList: [
-        { id: -1, name: '全部' },
-        { id: 1, name: '宣传片' },
-        { id: 2, name: 'TVC' },
-        { id: 3, name: '短视频' },
-        { id: 4, name: '微电影' },
-        { id: 5, name: 'CG动画' },
-        { id: 6, name: '直播/发布会' },
-        { id: 7, name: '其他' }
-      ],
+      tagList: [],
       proList: []
     })
     onMounted(async () => {
       getBannerList()
       getProCategoryList()
+      getProCategorySubList()
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
@@ -404,6 +409,17 @@ export default {
           state.currentType = res[2].cateId
           state.bannerTypeList = state.typeList.concat(res)
           getProListByCate()
+        }
+      })
+    }
+    const getProCategorySubList = () => {
+      proxy.$api.proCategorySubList().then(res => {
+        if (res?.length > 0) {
+          res.unshift({ dictCode: -1, dictLabel: '全部' })
+          state.tagList = res
+          state.tags = res[0].dictCode
+        } else {
+          state.tagList = []
         }
       })
     }
@@ -488,8 +504,7 @@ export default {
     const chooseTags = e => {
       state.proList = []
       state.pageNum = 1
-      var id = e.id
-      state.tags = id
+      state.tags = e.dictCode
       getProListByCate()
       // var index = state.tags.indexOf(id)
       // if (index > -1) {

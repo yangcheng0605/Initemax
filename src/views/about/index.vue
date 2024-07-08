@@ -18,7 +18,7 @@
             delay: 5000,
             disableOnInteraction: false
           }" -->
-          <swiper-slide v-for="(item, index) in bannerImg" :key="index">
+          <swiper-slide v-for="(item, index) in bannerImg" :key="index" @click="linkTo(item)">
             <div class="about_contain">
               <img :src="item.pPath" alt="" />
               <div class="content">
@@ -256,9 +256,11 @@ export default {
     })
 
     onMounted(async () => {
-      ;[4, 6, 7, 8].forEach(ele => {
+      getUsproList()
+      ;[6, 7].forEach(ele => {
         getBannerList(ele)
       })
+      getFooterBannerList()
       getCompanyDeteil()
       getCompanyDevelops()
       nextTick(() => {
@@ -288,18 +290,27 @@ export default {
       proxy.$api.bannerList({ pType }).then(res => {
         if (res && res.length > 0) {
           switch (pType) {
-            case 4:
-              state.bannerImg = res
             case 6:
               state.introduceImg = res[0].pPath
               break
             case 7:
               state.developsImg = res[0].pPath
               break
-            case 8:
-              state.footerBannerList = res
-              break
           }
+        }
+      })
+    }
+    const getUsproList = pType => {
+      proxy.$api.usproList({ pType }).then(res => {
+        if (res && res.length > 0) {
+          state.bannerImg = res
+        }
+      })
+    }
+    const getFooterBannerList = pType => {
+      proxy.$api.pieceList({ pType }).then(res => {
+        if (res && res.length > 0) {
+          state.footerBannerList = res
         }
       })
     }
@@ -331,10 +342,16 @@ export default {
       state[`swiper${e}`].slideNext(500, true)
       state[`swiper${e}_active`] = state[`swiper${e}`].realIndex + 1
     }
+    const linkTo = function (e) {
+      if (e && e.pSPath) {
+        window.open(e.pSPath, '_blank')
+      }
+    }
     return {
       ...toRefs(state),
       onSwiper,
       onSlideChange,
+      linkTo,
       sildePre,
       sildeNext
     }

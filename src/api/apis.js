@@ -3,8 +3,17 @@ import { get, post } from '../utils/http'
 function bannerList(data) {
   return get('/zgkj/ccgj/api/pic/list', data)
 }
+function pieceList(data) {
+  return get('/zgkj/ccgj/api/piece/list', data)
+}
+function usproList(data) {
+  return get('/zgkj/ccgj/api/uspro/list', data)
+}
 function proCategoryList(data) {
   return get('/zgkj/ccgj/api/category/list', data)
+}
+function proCategorySubList(data) {
+  return get('/zgkj/ccgj/api/category/list/sub', data)
 }
 function proListByCate(data, page) {
   return get('/zgkj/ccgj/product/api/listByCate/' + data.cId + '/' + data.proType, page)
@@ -30,4 +39,4 @@ function addGuestNeed(data) {
   return post('/zgkj/ccgj/api/guestneed/addGuestNeed', data, { type: 'form' })
 }
 
-export { bannerList, proCategoryList, proListByCate, newsList, companyDeteil, companyDevelops, searchList, addGuestNeed }
+export { bannerList, pieceList, usproList, proCategoryList, proCategorySubList, proListByCate, newsList, companyDeteil, companyDevelops, searchList, addGuestNeed }

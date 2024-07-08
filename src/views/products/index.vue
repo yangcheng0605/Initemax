@@ -29,8 +29,8 @@
       </div>
       <div class="pro_tags wow animate__fadeInUp" data-wow-offset="50">
         <swiper :slides-per-view="perView" :space-between="between" :navigation="true">
-          <swiper-slide v-for="item in tagList" :key="item.id">
-            <p :class="['tag', tags === item.id ? 'active' : '']" @click="chooseTags(item)">{{ item.name }}</p>
+          <swiper-slide v-for="item in tagList" :key="item.dictCode">
+            <p :class="['tag', tags === item.dictCode ? 'active' : '']" @click="chooseTags(item)">{{ item.dictLabel }}</p>
           </swiper-slide>
         </swiper>
       </div>
@@ -157,7 +157,7 @@ export default {
       gutter: [20, 20],
       colSpan: 8,
       currentType: null,
-      currentTypeIndex: 0,
+      currentTypeIndex: 2,
       pageNum: 1,
       pageSize: 5,
       showButton: true,
@@ -165,16 +165,7 @@ export default {
       perView: 8,
       between: '0.79%',
       typeList: [],
-      tagList: [
-        { id: -1, name: '全部' },
-        { id: 1, name: '宣传片' },
-        { id: 2, name: 'TVC' },
-        { id: 3, name: '短视频' },
-        { id: 4, name: '微电影' },
-        { id: 5, name: 'CG动画' },
-        { id: 6, name: '直播/发布会' },
-        { id: 7, name: '其他' }
-      ],
+      tagList: [],
       proList: [],
       serverList: [
         { id: 1, name: '需求沟通', img: require('@/assets/img/product/s_1.png') },
@@ -196,6 +187,7 @@ export default {
 
     onMounted(async () => {
       getBannerList()
+      getProCategorySubList()
       getProCategoryList(res => {
         if (route.query.cateId) {
           state.currentType = parseInt(route.query.cateId) || ''
@@ -224,8 +216,19 @@ export default {
         state.typeList = []
         if (res && res.length > 0) {
           state.typeList = res
-          state.currentType = res[0].cateId
+          state.currentType = res[2].cateId
           typeof callback == 'function' && callback()
+        }
+      })
+    }
+    const getProCategorySubList = () => {
+      proxy.$api.proCategorySubList().then(res => {
+        if (res?.length > 0) {
+          res.unshift({ dictCode: -1, dictLabel: '全部' })
+          state.tagList = res
+          state.tags = res[0].dictCode
+        } else {
+          state.tagList = []
         }
       })
     }
@@ -269,8 +272,7 @@ export default {
     const chooseTags = e => {
       state.proList = []
       state.pageNum = 1
-      var id = e.id
-      state.tags = id
+      state.tags = e.dictCode
       getProListByCate()
     }
     const onSwiper = swiper => {
