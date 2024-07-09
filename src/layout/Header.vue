@@ -132,6 +132,11 @@ export default {
     }
     const targetShowNav = () => {
       state.show = !state.show
+      if (state.show) {
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.body.style.overflow = ''
+      }
     }
     const linkTo = e => {
       router.push({
@@ -139,6 +144,7 @@ export default {
       })
     }
     const navlinkTo = e => {
+      document.body.style.overflow = ''
       router.replace(e)
       state.show = false
     }
@@ -163,10 +169,6 @@ export default {
         }
         if (current && current.length > 0) {
           state.activeKey = current[0].key
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          })
         } else {
           state.activeKey = ''
         }

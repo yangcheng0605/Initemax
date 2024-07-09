@@ -36,16 +36,34 @@ export default defineComponent({
   setup() {
     let route = useRoute()
     const state = reactive({
+      isMobile: false,
       hidden: false,
-      isScrolled: false
+      isScrolled: false,
+      navList: [
+        { key: 0, name: '首页', path: '/', active: false },
+        { key: 1, name: '案例', path: '/products', active: false },
+        { key: 2, name: '关于我们', path: '/about', active: false },
+        { key: 3, name: '最新资讯', path: '/news', active: false },
+        { key: 4, name: '联系我们', path: '/contact', active: false }
+      ]
     })
     onMounted(async () => {
       window.addEventListener('scroll', handleScroll)
+      handleResize()
+      window.addEventListener('resize', handleResize)
       // window.onresize = resizeHeight
     })
     onBeforeUnmount(() => {
       window.removeEventListener('scroll', handleScroll)
     })
+     const handleResize = () => {
+      const windowWidth = window.innerWidth
+      if (windowWidth < 750) {
+        state.isMobile = true
+      } else {
+        state.isMobile = false
+      }
+    }
     const handleScroll = () => {
       if (window.scrollY > 0) {
         state.isScrolled = true
@@ -53,15 +71,6 @@ export default defineComponent({
         state.isScrolled = false
       }
     }
-    // const resizeHeight = (e, delay = 200) => {
-    //   // delay = 200ms仅供参考，若还出现问题可增加时间延迟
-    //   let resizeTimeout
-    //   if (!resizeTimeout) {
-    //     resizeTimeout = setTimeout(function () {
-    //       resizeTimeout = null
-    //     }, delay)
-    //   }
-    // }
     watch(
       route,
       e => {
@@ -70,6 +79,14 @@ export default defineComponent({
           state.hidden = true
         } else {
           state.hidden = false
+        }
+        if (state.isMobile) {
+          window.scrollTo(0, 0);
+        } else {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          })
         }
       },
       { immediate: true }

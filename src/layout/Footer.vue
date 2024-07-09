@@ -162,7 +162,7 @@ export default {
       state.qrUrl = null
     }
     const navlinkTo = e => {
-      router.replace(e)
+      router.push(e)
     }
     const clickshowQr = e => {
       if (e.target.className == 'icon') {

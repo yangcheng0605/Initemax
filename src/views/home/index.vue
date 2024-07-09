@@ -64,7 +64,7 @@
             </div>
           </div>
           <div :class="['btn_box', homeIndex == 1 ? 'animateFadeInUp' : '']">
-            <a-button type="link" class="s_btn themeBtn">了解详情</a-button>
+            <a-button type="link" class="s_btn themeBtn" @click="linkToPro">了解详情</a-button>
           </div>
         </div>
       </swiper-slide>
@@ -108,8 +108,8 @@
                   </swiper-slide>
                 </swiper>
               </div>
-              <div :class="['h_video', homeIndex == 2 ? 'animateFadeInUp' : '']">
-                <div class="swiper_box" v-if="proList && proList.length > 0">
+              <div :class="['h_video animateFadeInUp']">
+                <div class="swiper_box animateFadeIn" v-if="hasData && proList && proList.length > 0">
                   <swiper
                     :modules="modules"
                     :effect="'coverflow'"
@@ -132,7 +132,6 @@
                       <div :class="['about_contain', currentVideoIndex == index ? 'hoverBox' : '']">
                         <img class="cover hoverImg" :src="item.proPath" alt="" />
                         <img class="play" src="@/assets/img/play.png" alt="" v-if="currentVideoIndex == index" />
-                        {{ currentVideoIndex }}{{ index }}
                       </div>
                     </swiper-slide>
                   </swiper>
@@ -144,12 +143,11 @@
                     <p class="title" v-if="proList[currentVideoIndex]">{{ proList[currentVideoIndex].proName }}</p>
                   </div>
                 </div>
-                <div class="btn_box" v-if="proList && proList.length > 0">
+                <div class="btn_box" v-if="hasData && proList && proList.length > 0">
                   <a-button type="link" class="s_btn themeBtn" @click="linkToProDetail">了解详情</a-button>
                 </div>
-                <div class="swiper_empty" v-else>
+                <div class="swiper_empty animateFadeIn" v-else>
                   <FrownOutlined />
-                  <!-- <p>暂无数据</p> -->
                 </div>
               </div>
             </div>
@@ -268,9 +266,9 @@
                 @slideChangeTransitionStart="transitionStart"
                 @slideChangeTransitionEnd="transitionEnd"
                 @slideChange="e => onSlideVideoChange(e)"
-                v-if="proList && proList.length > 0"
+                v-if="hasData && proList && proList.length > 0"
               >
-                <swiper-slide v-for="(item, index) in proList" :key="index" @click="linkTo(item)">
+                <swiper-slide class="animateFadeIn" v-for="(item, index) in proList" :key="index" @click="linkTo(item)">
                   <div :class="['about_contain']">
                     <img :class="['cover', currentVideoIndex == index ? 'hover' : '']" :src="item.proPath" alt="" />
                     <div :class="['play_box', currentVideoIndex == index ? 'animateFadeIn' : '']">
@@ -354,6 +352,7 @@ export default {
       swiper6: null,
       stretch: 88,
       pcstretch: -70,
+      hasData: true,
       showAnimate: false,
       homeIndex: false,
       currentSceondIndex: 2,
@@ -440,6 +439,11 @@ export default {
           state.proList = res.rows
         } else {
           state.proList = []
+        }
+        if (state.proList && state.proList.length > 0) {
+          state.hasData = true
+        } else {
+          state.hasData = false
         }
       })
     }

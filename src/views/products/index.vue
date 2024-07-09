@@ -3,8 +3,11 @@
     <div class="top_banner new_banner">
       <img :src="bannerImg" alt="" />
       <div class="t_box" v-if="bannerInfo">
-        <p class="title SmileFont animateFadeInUp_20" data-wow-offset="50">
+        <p class="title SmileFont animateFadeInUp_20" data-wow-offset="50" v-if="!isMobile">
           <span>{{ bannerInfo.pName }}</span>
+        </p>
+        <p class="title SmileFont animateFadeInUp_20" data-wow-offset="50" v-else>
+          {{ bannerInfo.pName }}
         </p>
       </div>
     </div>
