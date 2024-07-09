@@ -132,6 +132,7 @@
                       <div :class="['about_contain', currentVideoIndex == index ? 'hoverBox' : '']">
                         <img class="cover hoverImg" :src="item.proPath" alt="" />
                         <img class="play" src="@/assets/img/play.png" alt="" v-if="currentVideoIndex == index" />
+                        {{ currentVideoIndex }}{{ index }}
                       </div>
                     </swiper-slide>
                   </swiper>
@@ -510,6 +511,7 @@ export default {
       state.pageNum = 1
       state.currentType = e
       state.currentTypeIndex = index
+      state.currentVideoIndex = 0
       state.tags = -1
       state.swiper6.slideTo(index)
       getProListByCate()
@@ -517,6 +519,7 @@ export default {
     const chooseTags = e => {
       state.proList = []
       state.pageNum = 1
+      state.currentVideoIndex = 0
       state.tags = e.dictValue
       getProListByCate()
       // var index = state.tags.indexOf(id)

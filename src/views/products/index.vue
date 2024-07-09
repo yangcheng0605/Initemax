@@ -37,7 +37,7 @@
         </swiper>
       </div>
       <div class="pro_list">
-        <a-row :gutter="gutter" v-if="proList && proList.length > 0">
+        <a-row :gutter="gutter" v-if="hasData">
           <a-col :span="colSpan" class="pro_col wow animateFadeInUp_20" data-wow-offset="50" v-for="item in proList" :key="item.cId" @click="linkTo(item)">
             <div class="bgImg hoverBoxNoBorder">
               <img class="hoverImg" :src="item.proPath" alt="" />
@@ -158,6 +158,7 @@ export default {
       swiper: null,
       bannerInfo: null,
       bannerImg: null,
+      hasData: true,
       industryImg: null,
       gutter: [20, 20],
       colSpan: 8,
@@ -213,7 +214,6 @@ export default {
         state.wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
         if (route.query && route.query.cateId) {
           const node = document.getElementById('pro_hot')
-          console.log(node)
           if (node) {
             const rect = node.getBoundingClientRect()
             const offsetTop = rect.top + window.pageYOffset
@@ -277,6 +277,12 @@ export default {
           } else {
             state.showButton = true
           }
+          console.log(state.proList)
+        }
+        if (state.proList.length > 0) {
+          state.hasData = true
+        } else {
+          state.hasData = false
         }
       })
     }
@@ -427,6 +433,7 @@ export default {
   }
   .pro_list {
     margin-bottom: 5rem;
+    min-height: 17.5rem;
     .pro_col {
       width: 31.25rem;
       height: 17.5rem;
