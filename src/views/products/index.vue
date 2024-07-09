@@ -162,7 +162,7 @@ export default {
       currentType: null,
       currentTypeIndex: 2,
       pageNum: 1,
-      pageSize: 5,
+      pageSize: 6,
       showButton: true,
       tags: -1,
       perView: 8,

@@ -21,7 +21,7 @@
                   </ul>
                 </div>
               </div>
-              <div class="a_content_right">
+              <div class="a_content_right hoverBox">
                 <img class="hoverImg" src="@/assets/img/contact/address.png" alt="" />
               </div>
             </div>
@@ -180,7 +180,7 @@ export default {
         .then(() => {
           proxy.$api.addGuestNeed(state.formState).then(res => {
             if (res.code === 0) {
-              proxy.$message.success('Success')
+              proxy.$message.success('提交成功')
               formRef.value.resetFields()
             } else {
               proxy.$message.error('res.msg')
@@ -257,6 +257,7 @@ export default {
       overflow: hidden;
       border-radius: 1.25rem;
       img {
+        border-radius: 1.25rem;
       }
     }
   }

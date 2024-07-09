@@ -50,7 +50,7 @@ export default {
       showButton: true,
       dataList: [],
       pageNum: 1,
-      pageSize: 5,
+      pageSize: 6,
       types: ['案例', '资讯']
     })
 

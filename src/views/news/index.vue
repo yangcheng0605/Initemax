@@ -93,7 +93,7 @@ export default {
       perView: 4,
       between: 40,
       pageNum: 1,
-      pageSize: 5,
+      pageSize: 6,
       showButton: true,
       hotList: [],
       newsList: []
