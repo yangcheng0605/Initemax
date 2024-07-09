@@ -34,9 +34,9 @@ function companyDevelops(data) {
 function searchList(data) {
   return get('/zgkj/ccgj/api/base/list', data)
 }
-// 搜索 word
+// 留言
 function addGuestNeed(data) {
-  return post('/zgkj/ccgj/api/guestneed/addGuestNeed', data, { type: 'form' })
+  return post('/zgkj/ccgj/api/guest/addGuestNeed', data, { type: 'form' })
 }
 
 export { bannerList, pieceList, usproList, proCategoryList, proCategorySubList, proListByCate, newsList, companyDeteil, companyDevelops, searchList, addGuestNeed }

@@ -16,9 +16,9 @@
     >
       <swiper-slide class="s_1" :style="`background: url(${bannerImg}) no-repeat center / cover;`">
         <div class="h_first wiper_1">
-          <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']">
-            <p class="SmileFont title">Spark More</p>
-            <p class="SmileFont subtitle">去发现，无限可能</p>
+          <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']" v-if="bannerInfo">
+            <p class="SmileFont title">{{ bannerInfo.pTitle }}</p>
+            <p class="SmileFont subtitle">{{ bannerInfo.pName }}</p>
           </div>
           <div class="downLoad" v-if="isMobile" @click="sildeNext(1)">
             <img src="@/assets/img/down.png" alt="" />
@@ -163,9 +163,9 @@
     <full-page ref="fullpage" :options="options" id="fullpage" v-else>
       <div class="section s_1" :style="`background: url(${bannerImg}) no-repeat center / cover;`">
         <div class="h_first wiper_1">
-          <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']">
-            <p class="SmileFont title">Spark More</p>
-            <p class="SmileFont subtitle">去发现，无限可能</p>
+          <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']" v-if="bannerInfo">
+            <p class="SmileFont title">{{ bannerInfo.pTitle }}</p>
+            <p class="SmileFont subtitle">{{ bannerInfo.pName }}</p>
           </div>
           <div class="downLoad" @click="fullpageMove(2)">
             <img src="@/assets/img/pc_down.png" alt="" />
@@ -335,6 +335,7 @@ export default {
     }
     const state = reactive({
       modules: [FreeMode, EffectFade, Mousewheel, EffectCoverflow],
+      bannerInfo: null,
       bannerImg: null,
       options: {
         resize: true,
@@ -397,6 +398,7 @@ export default {
       proxy.$api.bannerList({ pType: 1 }).then(res => {
         if (res && res.length > 0) {
           state.bannerImg = res[0].pPath
+          state.bannerInfo = res[0]
         }
       })
     }

@@ -2,8 +2,10 @@
   <div class="products">
     <div class="top_banner new_banner">
       <img :src="bannerImg" alt="" />
-      <div class="t_box">
-        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50"><span>创意之光</span> <span>璀璨影像</span></p>
+      <div class="t_box" v-if="bannerInfo">
+        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">
+          <span>{{ bannerInfo.pTitle }}</span> <span>{{ bannerInfo.pName }}</span>
+        </p>
       </div>
     </div>
     <div class="pro_hot">
@@ -153,6 +155,7 @@ export default {
     const state = reactive({
       isMobile: false,
       swiper: null,
+      bannerInfo: null,
       bannerImg: null,
       gutter: [20, 20],
       colSpan: 8,
@@ -208,6 +211,7 @@ export default {
       proxy.$api.bannerList({ pType: 2 }).then(res => {
         if (res && res.length > 0) {
           state.bannerImg = res[0].pPath
+          state.bannerInfo = res[0]
         }
       })
     }

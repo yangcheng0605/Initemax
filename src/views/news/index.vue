@@ -2,8 +2,10 @@
   <div class="news">
     <div class="top_banner new_banner">
       <img src="@/assets/img/news/bg_top.png" alt="" />
-      <div class="t_box">
-        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50"><span>洞悉前沿资讯</span> <span>让视频效益最大化</span></p>
+      <div class="t_box" v-if="bannerInfo">
+        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">
+          <span>{{ bannerInfo.pTitle }}</span> <span>{{ bannerInfo.pName }}</span>
+        </p>
       </div>
     </div>
     <div class="news_hot">
@@ -85,6 +87,7 @@ export default {
     const state = reactive({
       isMobile: false,
       swiper: null,
+      bannerInfo: null,
       bannerImg: null,
       hoverImgStatus: false,
       perView: 4,
@@ -121,6 +124,7 @@ export default {
     const getBannerList = () => {
       proxy.$api.bannerList({ pType: 3 }).then(res => {
         if (res && res.length > 0) {
+          state.bannerInfo = res[0]
           state.bannerImg = res[0].pPath
         }
       })

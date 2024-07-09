@@ -2,8 +2,8 @@
   <div class="contact">
     <div class="top_banner">
       <img :src="bannerImg" alt="" />
-      <div class="t_box">
-        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">联系我们</p>
+      <div class="t_box" v-if="bannerInfo">
+        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">{{ bannerInfo.pTitle }}</p>
       </div>
     </div>
     <div id="content" class="bottom_contain">
@@ -103,6 +103,7 @@ export default {
     const state = reactive({
       activeKey: 1,
       contactModal: false,
+      bannerInfo: null,
       bannerImg: null,
       colSpan: 8,
       mobile: false,
@@ -168,6 +169,7 @@ export default {
     const getBannerList = () => {
       proxy.$api.bannerList({ pType: 5 }).then(res => {
         if (res && res.length > 0) {
+          state.bannerInfo = res[0]
           state.bannerImg = res[0].pPath
         }
       })
@@ -179,6 +181,7 @@ export default {
           proxy.$api.addGuestNeed(state.formState).then(res => {
             if (res.code === 0) {
               proxy.$message.success('Success')
+              formRef.value.resetFields()
             } else {
               proxy.$message.error('res.msg')
             }
