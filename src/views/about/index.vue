@@ -126,7 +126,8 @@
           <swiper-slide v-for="(item, index) in courseList" :key="index">
             <div class="about_contain">
               <div class="contain_top hoverBoxNoBorder">
-                <img class="hoverImg" :src="item.dPath" alt="" />
+                <img :src="item.dPath" alt="" />
+                <!-- <img class="hoverImg" :src="item.dPath" alt="" /> -->
                 <div class="shadow"></div>
               </div>
               <div class="name">{{ item.dDesc }}</div>
@@ -209,6 +210,7 @@ export default {
       modules: [Autoplay, Navigation, Controller],
       isMobile: false,
       bannerImg: [],
+      introduceImg: null,
       introduceImg: null,
       developsImg: null,
       swiper1: null,

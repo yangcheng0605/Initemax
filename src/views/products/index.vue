@@ -54,9 +54,9 @@
       </div>
       <a-button type="link" class="themeBtn wow animate__fadeInUp" data-wow-offset="50" v-if="showButton && proList && proList.length > 0" @click="getProListByCate()">查看更多</a-button>
     </div>
-    <div class="pro_industry">
+    <div class="pro_industry" :style="`background: url(${industryImg}) no-repeat center / cover;`">
       <div class="new_title">
-        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">作品精选</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">服务流程</p>
       </div>
       <div class="pro_service">
         <div class="ser_text wow animate__fadeInUp" data-wow-offset="50">
@@ -157,6 +157,7 @@ export default {
       swiper: null,
       bannerInfo: null,
       bannerImg: null,
+      industryImg: null,
       gutter: [20, 20],
       colSpan: 8,
       currentType: null,
@@ -189,7 +190,9 @@ export default {
     })
 
     onMounted(async () => {
-      getBannerList()
+      ;[2, 8].forEach(ele => {
+        getBannerList(ele)
+      })
       getProCategorySubList()
       getProCategoryList(res => {
         if (route.query.cateId) {
@@ -207,11 +210,18 @@ export default {
         wow.init()
       })
     })
-    const getBannerList = () => {
-      proxy.$api.bannerList({ pType: 2 }).then(res => {
+    const getBannerList = (ele) => {
+      proxy.$api.bannerList({ pType: ele }).then(res => {
         if (res && res.length > 0) {
-          state.bannerImg = res[0].pPath
-          state.bannerInfo = res[0]
+          switch (ele) {
+            case 2:
+              state.bannerImg = res[0].pPath
+              state.bannerInfo = res[0]
+              break
+            case 8:
+              state.industryImg = res[0].pPath
+              break
+          }
         }
       })
     }
@@ -434,7 +444,7 @@ export default {
 }
 .pro_industry {
   padding: 7.5rem 18.75rem;
-  background: url(../../assets/img/product/text_bg.png) no-repeat center / cover;
+  // background: url(../../assets/img/product/text_bg.png) no-repeat center / cover;
   color: #fff;
   .new_title {
     margin-bottom: 2.25rem;
