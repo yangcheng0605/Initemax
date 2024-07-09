@@ -4,7 +4,7 @@
       <img src="@/assets/img/news/bg_top.png" alt="" />
       <div class="t_box" v-if="bannerInfo">
         <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">
-          <span>{{ bannerInfo.pTitle }}</span> <span>{{ bannerInfo.pName }}</span>
+          <span>{{ bannerInfo.pName }}</span>
         </p>
       </div>
     </div>
@@ -86,6 +86,7 @@ export default {
     const { proxy } = getCurrentInstance()
     const state = reactive({
       isMobile: false,
+      wow: null,
       swiper: null,
       bannerInfo: null,
       bannerImg: null,
@@ -102,11 +103,14 @@ export default {
     onMounted(async () => {
       getBannerList()
       getNewsList()
+      getHotList()
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
-        var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
-        wow.init()
+        state.wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
+        // setTimeout(() => {
+        // wow.init()
+        // }, 200)
       })
     })
     const handleResize = () => {
@@ -126,19 +130,27 @@ export default {
         if (res && res.length > 0) {
           state.bannerInfo = res[0]
           state.bannerImg = res[0].pPath
+          nextTick(() => {
+            state.wow.init()
+          })
+        }
+      })
+    }
+    const getHotList = () => {
+      proxy.$api.newsList({ hotStatus: 1, pageNum: 1, pageSize: 9999 }).then(res => {
+        if (res.rows && res.rows.length > 0) {
+          state.hotList = res.rows
+          nextTick(() => {
+            state.wow.init()
+          })
         }
       })
     }
     const getNewsList = () => {
-      proxy.$api.newsList({ pageNum: state.pageNum, pageSize: state.pageSize }).then(res => {
+      proxy.$api.newsList({ hotStatus: 0, pageNum: state.pageNum, pageSize: state.pageSize }).then(res => {
         if (res.rows && res.rows.length > 0) {
           state.newsList = state.newsList.concat(res.rows)
           state.pageNum += 1
-          res.rows.forEach(ele => {
-            if (ele.hotStatus == 1) {
-              state.hotList.push(ele)
-            }
-          })
           if (state.newsList.length === res.total) {
             state.showButton = false
           } else {
@@ -275,6 +287,7 @@ export default {
     img {
       width: 28.75rem;
       height: 14.375rem;
+      object-fit: cover;
     }
     .li_box {
       margin-left: 2.5rem;
@@ -307,11 +320,13 @@ export default {
     margin-top: 6.25rem;
   }
 }
-.hoverBox {
-  flex-shrink: 0;
-  border-radius: 0.625rem;
-  img {
+.news {
+  .hoverBox {
+    flex-shrink: 0;
     border-radius: 0.625rem;
+    img {
+      border-radius: 0.625rem;
+    }
   }
 }
 </style>

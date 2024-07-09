@@ -3,11 +3,11 @@
     <div class="top_banner">
       <img :src="bannerImg" alt="" />
       <div class="t_box" v-if="bannerInfo">
-        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">{{ bannerInfo.pTitle }}</p>
+        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">{{ bannerInfo.pName }}</p>
       </div>
     </div>
     <div id="content" class="bottom_contain">
-      <div class="contact_nav nav">
+      <div class="contact_nav nav wow animate__fadeInUp" data-wow-offset="50">
         <a-tabs v-model:activeKey="activeKey" :centered="mobile ? true : false">
           <a-tab-pane :key="1" tab="联系方式">
             <div class="a_content">
@@ -21,7 +21,7 @@
                   </ul>
                 </div>
               </div>
-              <div class="a_content_right hoverBox">
+              <div class="a_content_right hoverBox wow animate__fadeInUp" data-wow-offset="50">
                 <img class="hoverImg" src="@/assets/img/contact/address.png" alt="" />
               </div>
             </div>

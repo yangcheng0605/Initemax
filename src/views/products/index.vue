@@ -4,17 +4,17 @@
       <img :src="bannerImg" alt="" />
       <div class="t_box" v-if="bannerInfo">
         <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">
-          <span>{{ bannerInfo.pTitle }}</span> <span>{{ bannerInfo.pName }}</span>
+          <span>{{ bannerInfo.pName }}</span>
         </p>
       </div>
     </div>
-    <div class="pro_hot">
+    <div id="pro_hot" class="pro_hot">
       <div class="new_title">
         <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">作品精选</p>
       </div>
       <div class="pro_types wow animate__fadeInUp" data-wow-offset="50" v-if="!isMobile">
         <div class="type_box hoverBox" @click="chooseType(item.cateId, index)" v-for="(item, index) in typeList" :key="index">
-          <img class="type_bg" :src="item.pPath" alt="" />
+          <img class="type_bg" :src="item.pBanerPath" alt="" />
           <p class="SmileFont">{{ item.cateName }}</p>
           <div class="black" v-if="currentType !== item.cateId"></div>
         </div>
@@ -154,6 +154,7 @@ export default {
     const { proxy } = getCurrentInstance()
     const state = reactive({
       isMobile: false,
+      wow: null,
       swiper: null,
       bannerInfo: null,
       bannerImg: null,
@@ -195,6 +196,9 @@ export default {
       })
       getProCategorySubList()
       getProCategoryList(res => {
+        if (route.query.dictCode) {
+          state.tags = parseInt(route.query.dictCode) || -1
+        }
         if (route.query.cateId) {
           state.currentType = parseInt(route.query.cateId) || ''
           getProListByCate(state.currentType)
@@ -202,15 +206,25 @@ export default {
           getProListByCate()
         }
       })
-
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
-        var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
-        wow.init()
+        state.wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
+        if (route.query && route.query.cateId) {
+          const node = document.getElementById('pro_hot')
+          console.log(node)
+          if (node) {
+            const rect = node.getBoundingClientRect()
+            const offsetTop = rect.top + window.pageYOffset
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            })
+          }
+        }
       })
     })
-    const getBannerList = (ele) => {
+    const getBannerList = ele => {
       proxy.$api.bannerList({ pType: ele }).then(res => {
         if (res && res.length > 0) {
           switch (ele) {
@@ -233,6 +247,9 @@ export default {
           state.currentType = res[2].cateId
           typeof callback == 'function' && callback()
         }
+        nextTick(() => {
+          state.wow.init()
+        })
       })
     }
     const getProCategorySubList = () => {

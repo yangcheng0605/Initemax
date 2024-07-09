@@ -17,15 +17,15 @@
       <swiper-slide class="s_1" :style="`background: url(${bannerImg}) no-repeat center / cover;`">
         <div class="h_first wiper_1">
           <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']" v-if="bannerInfo">
-            <p class="SmileFont title">{{ bannerInfo.pTitle }}</p>
-            <p class="SmileFont subtitle">{{ bannerInfo.pName }}</p>
+            <p class="SmileFont title">{{ bannerInfo.pName }}</p>
+            <p class="SmileFont subtitle">{{ bannerInfo.pTitle }}</p>
           </div>
           <div class="downLoad" v-if="isMobile" @click="sildeNext(1)">
             <img src="@/assets/img/down.png" alt="" />
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide class="s_bg" :style="`background: url(${bannerTypeList[currentSceondIndex]?.pBanerPath}) no-repeat center / cover;`" v-if="bannerTypeList[currentSceondIndex]">
+      <swiper-slide class="s_bg" :style="`background: url(${bannerTypeList[currentSceondIndex]?.pPath}) no-repeat center / cover;`" v-if="bannerTypeList[currentSceondIndex]">
         <div class="h_second wiper_2">
           <div :class="['s_top', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">{{ bannerTypeList[currentSceondIndex].cTitle }}</p>
@@ -48,7 +48,7 @@
             >
               <swiper-slide v-for="(item, index) in bannerTypeList" :key="index">
                 <div class="type_box">
-                  <img class="type_bg" :src="item.pPath" alt="" />
+                  <img class="type_bg" :src="item.pBanerPath" alt="" />
                   <p class="SmileFont">{{ item.cateName }}</p>
                   <div class="black"></div>
                 </div>
@@ -85,7 +85,7 @@
               <div class="bg_img">
                 <swiper @swiper="e => onSwiper(e, 6)" :initialSlide="2" :effect="'fade'" :modules="modules">
                   <swiper-slide v-for="(item, index) in typeList" :key="index">
-                    <img v-if="item" :src="item.pBanerPath" alt="" />
+                    <img v-if="item" :src="item.pSPath" alt="" />
                   </swiper-slide>
                 </swiper>
               </div>
@@ -144,7 +144,7 @@
                   </div>
                 </div>
                 <div class="btn_box" v-if="proList && proList.length > 0">
-                  <a-button type="link" class="s_btn themeBtn" @click="linkToDetail">了解详情</a-button>
+                  <a-button type="link" class="s_btn themeBtn" @click="linkToProDetail">了解详情</a-button>
                 </div>
                 <div class="swiper_empty" v-else>
                   <FrownOutlined />
@@ -164,15 +164,15 @@
       <div class="section s_1" :style="`background: url(${bannerImg}) no-repeat center / cover;`">
         <div class="h_first wiper_1">
           <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']" v-if="bannerInfo">
-            <p class="SmileFont title">{{ bannerInfo.pTitle }}</p>
-            <p class="SmileFont subtitle">{{ bannerInfo.pName }}</p>
+            <p class="SmileFont title">{{ bannerInfo.pName }}</p>
+            <p class="SmileFont subtitle">{{ bannerInfo.pTitle }}</p>
           </div>
           <div class="downLoad" @click="fullpageMove(2)">
             <img src="@/assets/img/pc_down.png" alt="" />
           </div>
         </div>
       </div>
-      <div class="section s_bg" :style="`background: url(${bannerTypeList[currentSceondIndex].pBanerPath}) no-repeat center / cover;`" v-if="bannerTypeList[currentSceondIndex]">
+      <div class="section s_bg" :style="`background: url(${bannerTypeList[currentSceondIndex].pPath}) no-repeat center / cover;`" v-if="bannerTypeList[currentSceondIndex]">
         <div class="h_second wiper_2">
           <div :class="['s_top', homeIndex == 1 ? 'animateFadeInUp' : '']">
             <p class="SmileFont title">{{ bannerTypeList[currentSceondIndex].cTitle || '' }}</p>
@@ -207,7 +207,7 @@
             >
               <swiper-slide v-for="(item, index) in bannerTypeList" :key="index">
                 <div class="type_box">
-                  <img class="type_bg" :src="item.pPath" alt="" />
+                  <img class="type_bg" :src="item.pBanerPath" alt="" />
                   <p class="SmileFont">{{ item.cateName }}</p>
                   <div class="black"></div>
                 </div>
@@ -228,14 +228,14 @@
         <div class="bg_img">
           <swiper @swiper="e => onSwiper(e, 6)" :effect="'fade'" :initialSlide="2" :modules="modules">
             <swiper-slide v-for="(item, index) in typeList" :key="index">
-              <img v-if="item" :src="item.pBanerPath" alt="" />
+              <img v-if="item" :src="item.pSPath" alt="" />
             </swiper-slide>
           </swiper>
         </div>
         <div class="h_third">
           <div :class="['h_types', homeIndex == 2 ? 'animateFadeInUp' : '']">
             <div :class="['type_box', currentType == item.cateId ? 'active' : '']" @click="chooseType(item.cateId, index)" v-for="(item, index) in typeList" :key="index">
-              <img class="type_bg" :src="item.pPath" alt="" />
+              <img class="type_bg" :src="item.pBanerPath" alt="" />
               <p class="SmileFont">{{ item.cateName }}</p>
               <div class="black" v-if="currentType !== item.cateId"></div>
             </div>
@@ -293,7 +293,7 @@
               </div>
             </div>
             <div class="btn_box">
-              <a-button type="link" class="s_btn themeBtn" @click="linkToDetail">了解详情</a-button>
+              <a-button type="link" class="s_btn themeBtn" @click="linkToProDetail">了解详情</a-button>
             </div>
           </div>
         </div>
@@ -306,8 +306,8 @@
   <PopHome :swiper1="swiper1" :isMobile="isMobile" :fullpage="fullpage"></PopHome>
 </template>
 <script>
-import { getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs } from 'vue'
-import { useRouter } from 'vue-router'
+import { getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Mousewheel, EffectFade, FreeMode, EffectCoverflow } from 'swiper/modules'
 import { debounce } from 'lodash'
@@ -327,6 +327,7 @@ export default {
   },
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const { proxy } = getCurrentInstance()
     const fullpage = ref()
     const onfullpageChange = (m, n) => {
@@ -365,7 +366,7 @@ export default {
       between: '0.79%',
       currentType: null,
       currentTypeIndex: 0,
-      tags: null,
+      tags: -1,
       typeList: [],
       bannerTypeList: [],
       tagList: [],
@@ -443,12 +444,16 @@ export default {
       const currentBanner = state.bannerTypeList[state.currentSceondIndex]
       router.replace('/products?cateId=' + currentBanner.cateId)
     }
-    const linkToDetail = function () {
-      const currentVideo = state.proList[state.currentVideoIndex]
-      if (currentVideo && currentVideo.imageUrls) {
-        window.open(currentVideo.imageUrls, '_blank')
-      }
+    const linkToProDetail = function (e) {
+      const currentBanner = state.typeList[state.currentTypeIndex]
+      router.replace('/products?cateId=' + currentBanner.cateId + '&dictCode=' + state.tags)
     }
+    // const linkToDetail = function () {
+    //   const currentVideo = state.proList[state.currentVideoIndex]
+    //   if (currentVideo && currentVideo.imageUrls) {
+    //     window.open(currentVideo.imageUrls, '_blank')
+    //   }
+    // }
     const onSlideHomeChange = e => {
       state.homeIndex = e.realIndex
     }
@@ -530,7 +535,19 @@ export default {
     const fullpageMove = e => {
       fullpage.value.api.moveTo(e)
     }
-
+    watch(
+      route,
+      e => {
+        setTimeout(() => {
+          if (fullpage.value) {
+            fullpage.value.api.moveTo(1)
+          } else {
+            state.swiper1.slideTo(0)
+          }
+        }, 500)
+      },
+      { immediate: true }
+    )
     return {
       ...toRefs(state),
       fullpage,
@@ -549,7 +566,7 @@ export default {
       chooseTags,
       linkTo,
       linkToPro,
-      linkToDetail
+      linkToProDetail
     }
   }
 }
@@ -636,7 +653,7 @@ export default {
       z-index: 2;
       background: rgba(0, 0, 0, 0.5);
       transition: opacity 0.5s;
-      border-radius: 0.8125rem;
+      border-radius: 0.625rem;
     }
   }
   // .pageSwiper {
@@ -841,7 +858,9 @@ export default {
     height: 4rem;
     &.active {
       border-radius: 0.625rem;
-      border: 0.1875rem solid #ffffff;
+      img {
+        border: 0.1875rem solid #ffffff;
+      }
     }
   }
   .h_video {

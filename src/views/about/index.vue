@@ -210,6 +210,7 @@ export default {
       modules: [Autoplay, Navigation, Controller],
       isMobile: false,
       bannerImg: [],
+      wow: null,
       introduceImg: null,
       introduceImg: null,
       developsImg: null,
@@ -268,8 +269,10 @@ export default {
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
-        var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
-        wow.init()
+        state.wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
+        // setTimeout(() => {
+        //   wow.init()
+        // }, 0)
       })
     })
     const handleResize = () => {
@@ -299,6 +302,9 @@ export default {
               state.developsImg = res[0].pPath
               break
           }
+          nextTick(() => {
+            state.wow.init()
+          })
         }
       })
     }
@@ -307,6 +313,9 @@ export default {
         if (res && res.length > 0) {
           state.bannerImg = res
         }
+        nextTick(() => {
+          state.wow.init()
+        })
       })
     }
     const getFooterBannerList = pType => {
@@ -314,6 +323,9 @@ export default {
         if (res && res.length > 0) {
           state.footerBannerList = res
         }
+        nextTick(() => {
+          state.wow.init()
+        })
       })
     }
     const getCompanyDeteil = () => {
@@ -321,6 +333,9 @@ export default {
         if (res.details && res.details.length > 0) {
           state.about_contain = res.details
         }
+        nextTick(() => {
+          state.wow.init()
+        })
       })
     }
     const getCompanyDevelops = () => {
@@ -328,6 +343,9 @@ export default {
         if (res && res.length > 0) {
           state.courseList = res
         }
+        nextTick(() => {
+          state.wow.init()
+        })
       })
     }
     const onSwiper = (swiper, type) => {
