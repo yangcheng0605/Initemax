@@ -108,7 +108,7 @@
                   </swiper-slide>
                 </swiper>
               </div>
-              <div :class="['h_video animateFadeInUp']">
+              <div :class="['h_video animateFadeIn']">
                 <div class="swiper_box animateFadeIn" v-if="hasData && proList && proList.length > 0">
                   <swiper
                     :modules="modules"
@@ -143,11 +143,11 @@
                     <p class="title" v-if="proList[currentVideoIndex]">{{ proList[currentVideoIndex].proName }}</p>
                   </div>
                 </div>
-                <div class="btn_box" v-if="hasData && proList && proList.length > 0">
-                  <a-button type="link" class="s_btn themeBtn" @click="linkToProDetail">了解详情</a-button>
-                </div>
-                <div class="swiper_empty animateFadeIn" v-else>
+                <div class="swiper_empty animateFadeIn" v-if="!hasData">
                   <FrownOutlined />
+                </div>
+                <div class="btn_box" v-if="hasData">
+                  <a-button type="link" class="s_btn themeBtn" @click="linkToProDetail">了解详情</a-button>
                 </div>
               </div>
             </div>
@@ -475,7 +475,7 @@ export default {
       state.currentSceondIndex = e.realIndex
     }
     const onSlideVideoChange = e => {
-      state.currentVideoIndex = e.realIndex
+      state.currentVideoIndex = e.realIndex || 0
     }
     const transitionStart = () => {
       state.showSilde = false

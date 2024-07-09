@@ -18,7 +18,16 @@
         </div>
       </div>
       <div class="mobile-only">
-        <div :class="['main', transp && !isScrolled && !show ? 'transp' : 'main_white']">
+        <div :class="['main', transp && !show ? 'transp' : 'main_white']" v-if="isHome">
+          <div class="main_center">
+            <img :src="transp && !isScrolled && !show ? logo_white : logo_black" @click="navlinkTo('/')" />
+          </div>
+          <div class="main_Mright" @click="targetShowNav">
+            <img class="close" v-if="show" src="@/assets/img/mb_nav_close.png" alt="" />
+            <img v-else :src="transp && !isScrolled && !show ? mb_nav_white : mb_nav_black" alt="" />
+          </div>
+        </div>
+        <div :class="['main', transp && !isScrolled && !show ? 'transp' : 'main_white']" v-else>
           <div class="main_center">
             <img :src="transp && !isScrolled && !show ? logo_white : logo_black" @click="navlinkTo('/')" />
           </div>
@@ -133,8 +142,10 @@ export default {
     const targetShowNav = () => {
       state.show = !state.show
       if (state.show) {
+        state.transp = false
         document.body.style.overflow = 'hidden'
       } else {
+        state.transp = true
         document.body.style.overflow = ''
       }
     }
@@ -166,6 +177,7 @@ export default {
         const current = state.navList.filter(item => path === item.path)
         if (e.name == '/') {
           state.isHome = true
+          state.transp = true
         }
         if (current && current.length > 0) {
           state.activeKey = current[0].key
