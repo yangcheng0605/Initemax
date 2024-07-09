@@ -3,14 +3,14 @@
     <div class="top_banner new_banner">
       <img src="@/assets/img/news/bg_top.png" alt="" />
       <div class="t_box" v-if="bannerInfo">
-        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">
+        <p class="title SmileFont animateFadeInUp_20">
           <span>{{ bannerInfo.pName }}</span>
         </p>
       </div>
     </div>
     <div class="news_hot">
       <div class="new_title">
-        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">热门资讯</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp">热门资讯</p>
       </div>
       <div class="swiper_box wow animate__fadeInUp" data-wow-offset="50" v-if="hotList && hotList.length > 0">
         <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="onSwiper">
@@ -48,7 +48,7 @@
         <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">行业资讯</p>
       </div>
       <ul v-if="newsList && newsList.length > 0">
-        <li v-for="item in newsList" :key="item.nId" class="wow animate__bounceIn" data-wow-offset="50">
+        <li v-for="item in newsList" :key="item.nId" class="animateFadeInUp_20">
           <div class="hoverBox">
             <img class="hoverImg" :src="item.imageUrl" alt="" />
           </div>
@@ -130,10 +130,10 @@ export default {
         if (res && res.length > 0) {
           state.bannerInfo = res[0]
           state.bannerImg = res[0].pPath
-          nextTick(() => {
-            state.wow.init()
-          })
         }
+        nextTick(() => {
+          state.wow.init()
+        })
       })
     }
     const getHotList = () => {

@@ -22,8 +22,8 @@
             <div class="about_contain">
               <img :src="item.pPath" alt="" />
               <div class="content">
-                <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50" data-wow-delay="0.5s">{{ item.pName }}</p>
-                <p class="text SmileFont wow animate__fadeInUp" data-wow-offset="50" data-wow-delay="0.5s">{{ item.pTitle }}</p>
+                <p class="title SmileFont animateFadeInUp_20">{{ item.pName }}</p>
+                <p class="text SmileFont animateFadeInUp_20">{{ item.pTitle }}</p>
               </div>
             </div>
           </swiper-slide>

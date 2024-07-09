@@ -3,7 +3,7 @@
     <div class="top_banner new_banner">
       <img :src="bannerImg" alt="" />
       <div class="t_box" v-if="bannerInfo">
-        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">
+        <p class="title SmileFont animateFadeInUp_20" data-wow-offset="50">
           <span>{{ bannerInfo.pName }}</span>
         </p>
       </div>
@@ -31,14 +31,14 @@
       </div>
       <div class="pro_tags wow animate__fadeInUp" data-wow-offset="50">
         <swiper :slides-per-view="perView" :space-between="between" :navigation="true">
-          <swiper-slide v-for="item in tagList" :key="item.dictCode">
-            <p :class="['tag', tags === item.dictCode ? 'active' : '']" @click="chooseTags(item)">{{ item.dictLabel }}</p>
+          <swiper-slide v-for="item in tagList" :key="item.dictValue">
+            <p :class="['tag', tags === item.dictValue ? 'active' : '']" @click="chooseTags(item)">{{ item.dictLabel }}</p>
           </swiper-slide>
         </swiper>
       </div>
       <div class="pro_list">
         <a-row :gutter="gutter" v-if="proList && proList.length > 0">
-          <a-col :span="colSpan" class="pro_col wow animate__bounceIn" data-wow-offset="50" v-for="item in proList" :key="item.cId" @click="linkTo(item)">
+          <a-col :span="colSpan" class="pro_col wow animateFadeInUp_20" data-wow-offset="50" v-for="item in proList" :key="item.cId" @click="linkTo(item)">
             <div class="bgImg hoverBoxNoBorder">
               <img class="hoverImg" :src="item.proPath" alt="" />
             </div>
@@ -196,8 +196,9 @@ export default {
       })
       getProCategorySubList()
       getProCategoryList(res => {
-        if (route.query.dictCode) {
-          state.tags = parseInt(route.query.dictCode) || -1
+        if (route.query.dictValue) {
+          console.log(route.query.dictValue)
+          state.tags = route.query.dictValue == -1 ? -1 : route.query.dictValue
         }
         if (route.query.cateId) {
           state.currentType = parseInt(route.query.cateId) || ''
@@ -237,6 +238,9 @@ export default {
               break
           }
         }
+        nextTick(() => {
+          state.wow.init()
+        })
       })
     }
     const getProCategoryList = callback => {
@@ -255,9 +259,9 @@ export default {
     const getProCategorySubList = () => {
       proxy.$api.proCategorySubList().then(res => {
         if (res?.length > 0) {
-          res.unshift({ dictCode: -1, dictLabel: '全部' })
+          res.unshift({ dictValue: -1, dictLabel: '全部' })
           state.tagList = res
-          state.tags = res[0].dictCode
+          state.tags = res[0].dictValue
         } else {
           state.tagList = []
         }
@@ -303,7 +307,7 @@ export default {
     const chooseTags = e => {
       state.proList = []
       state.pageNum = 1
-      state.tags = e.dictCode
+      state.tags = e.dictValue
       getProListByCate()
     }
     const onSwiper = swiper => {
@@ -456,6 +460,9 @@ export default {
         font-weight: 500;
         color: #fff;
       }
+    }
+    .swiper_empty {
+      min-height: 17.5rem;
     }
   }
 }

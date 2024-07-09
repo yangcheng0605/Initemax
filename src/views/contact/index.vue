@@ -3,11 +3,11 @@
     <div class="top_banner">
       <img :src="bannerImg" alt="" />
       <div class="t_box" v-if="bannerInfo">
-        <p class="title SmileFont wow animate__fadeInUp" data-wow-offset="50">{{ bannerInfo.pName }}</p>
+        <p class="title SmileFont animateFadeInUp_20">{{ bannerInfo.pName }}</p>
       </div>
     </div>
     <div id="content" class="bottom_contain">
-      <div class="contact_nav nav wow animate__fadeInUp" data-wow-offset="50">
+      <div class="contact_nav nav wow animate__fadeInUp">
         <a-tabs v-model:activeKey="activeKey" :centered="mobile ? true : false">
           <a-tab-pane :key="1" tab="联系方式">
             <div class="a_content">
@@ -103,6 +103,7 @@ export default {
     const state = reactive({
       activeKey: 1,
       contactModal: false,
+      wow: null,
       bannerInfo: null,
       bannerImg: null,
       colSpan: 8,
@@ -138,8 +139,7 @@ export default {
       nextTick(() => {
         handleResize()
         window.addEventListener('resize', handleResize)
-        var wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
-        wow.init()
+        state.wow = new proxy.$wow.WOW({ boxClass: 'wow', animateClass: 'animated', offset: 0, mobile: true, live: true, callback: function () {}, scrollContainer: null, resetAnimation: true })
         if (state.query && state.query.form == 'home') {
           const node = document.getElementById('content')
           if (node) {
@@ -172,6 +172,9 @@ export default {
           state.bannerInfo = res[0]
           state.bannerImg = res[0].pPath
         }
+        nextTick(() => {
+          state.wow.init()
+        })
       })
     }
     const handleFinish = () => {

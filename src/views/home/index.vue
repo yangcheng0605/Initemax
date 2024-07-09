@@ -103,8 +103,8 @@
               </div>
               <div :class="['h_tags', homeIndex == 2 ? 'animateFadeInUp' : '']">
                 <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
-                  <swiper-slide v-for="item in tagList" :key="item.dictCode">
-                    <p :class="['tag', tags === item.dictCode ? 'active' : '']" @click="chooseTags(item)">{{ item.dictLabel }}</p>
+                  <swiper-slide v-for="item in tagList" :key="item.dictValue">
+                    <p :class="['tag', tags === item.dictValue ? 'active' : '']" @click="chooseTags(item)">{{ item.dictLabel }}</p>
                   </swiper-slide>
                 </swiper>
               </div>
@@ -161,7 +161,7 @@
     </swiper>
 
     <full-page ref="fullpage" :options="options" id="fullpage" v-else>
-      <div class="section s_1" :style="`background: url(${bannerImg}) no-repeat center / cover;`">
+      <div class="section" :style="`background: url(${bannerImg}) no-repeat center / cover;`">
         <div class="h_first wiper_1">
           <div :class="['title', homeIndex == 0 ? 'animateFadeInUp' : '']" v-if="bannerInfo">
             <p class="SmileFont title">{{ bannerInfo.pName }}</p>
@@ -242,8 +242,8 @@
           </div>
           <div :class="['h_tags', homeIndex == 2 ? 'animateFadeInUp' : '']">
             <swiper :slides-per-view="perView" :space-between="between" :navigation="true" @swiper="e => onSwiper(e, 3)">
-              <swiper-slide v-for="item in tagList" :key="item.dictCode">
-                <p :class="['tag', tags === item.dictCode ? 'active' : '']" @click="chooseTags(item)">{{ item.dictLabel }}</p>
+              <swiper-slide v-for="item in tagList" :key="item.dictValue">
+                <p :class="['tag', tags === item.dictValue ? 'active' : '']" @click="chooseTags(item)">{{ item.dictLabel }}</p>
               </swiper-slide>
             </swiper>
           </div>
@@ -306,7 +306,7 @@
   <PopHome :swiper1="swiper1" :isMobile="isMobile" :fullpage="fullpage"></PopHome>
 </template>
 <script>
-import { getCurrentInstance, nextTick, onMounted, reactive, ref, toRefs, watch } from 'vue'
+import { getCurrentInstance, nextTick, onBeforeUnmount, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Mousewheel, EffectFade, FreeMode, EffectCoverflow } from 'swiper/modules'
@@ -384,6 +384,13 @@ export default {
       if (watermarkDiv) {
         watermarkDiv.remove()
       }
+      if (state.isMobile) {
+        state.swiper1.slideTo(0)
+      } else {
+        if (fullpage.value) {
+          fullpage.value.api.moveTo(1)
+        }
+      }
     })
     const preloadImage = src => {
       const img = new Image()
@@ -418,9 +425,9 @@ export default {
     const getProCategorySubList = () => {
       proxy.$api.proCategorySubList().then(res => {
         if (res?.length > 0) {
-          res.unshift({ dictCode: -1, dictLabel: '全部' })
+          res.unshift({ dictValue: -1, dictLabel: '全部' })
           state.tagList = res
-          state.tags = res[0].dictCode
+          state.tags = res[0].dictValue
         } else {
           state.tagList = []
         }
@@ -445,8 +452,7 @@ export default {
       router.replace('/products?cateId=' + currentBanner.cateId)
     }
     const linkToProDetail = function (e) {
-      const currentBanner = state.typeList[state.currentTypeIndex]
-      router.replace('/products?cateId=' + currentBanner.cateId + '&dictCode=' + state.tags)
+      router.replace('/products?cateId=' + state.currentType + '&dictValue=' + state.tags)
     }
     // const linkToDetail = function () {
     //   const currentVideo = state.proList[state.currentVideoIndex]
@@ -511,7 +517,7 @@ export default {
     const chooseTags = e => {
       state.proList = []
       state.pageNum = 1
-      state.tags = e.dictCode
+      state.tags = e.dictValue
       getProListByCate()
       // var index = state.tags.indexOf(id)
       // if (index > -1) {
@@ -535,19 +541,15 @@ export default {
     const fullpageMove = e => {
       fullpage.value.api.moveTo(e)
     }
-    watch(
-      route,
-      e => {
-        setTimeout(() => {
-          if (fullpage.value) {
-            fullpage.value.api.moveTo(1)
-          } else {
-            state.swiper1.slideTo(0)
-          }
-        }, 500)
-      },
-      { immediate: true }
-    )
+    onBeforeUnmount(() => {
+      if (state.isMobile) {
+        state.swiper1.slideTo(0)
+      } else {
+        if (fullpage.value) {
+          fullpage.value.api.moveTo(0)
+        }
+      }
+    })
     return {
       ...toRefs(state),
       fullpage,
@@ -584,8 +586,6 @@ export default {
     background: center top / cover no-repeat;
     position: relative;
     overflow: hidden;
-  }
-  .s_1 {
   }
   .s_bg {
     transition: background 0.5s ease-out;
@@ -856,9 +856,12 @@ export default {
   .type_box {
     width: 15rem;
     height: 4rem;
+    top: 50%;
+    transform: translateY(-50%);
     &.active {
       border-radius: 0.625rem;
       img {
+        box-sizing: border-box;
         border: 0.1875rem solid #ffffff;
       }
     }
