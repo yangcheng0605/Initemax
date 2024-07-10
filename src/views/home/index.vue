@@ -146,7 +146,7 @@
                 <div class="swiper_empty animateFadeIn" v-if="!hasData">
                   <FrownOutlined />
                 </div>
-                <div class="btn_box" v-if="hasData">
+                <div class="btn_box" v-if="hasData && proList && proList.length > 0">
                   <a-button type="link" class="s_btn themeBtn" @click="linkToProDetail">了解详情</a-button>
                 </div>
               </div>

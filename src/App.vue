@@ -56,7 +56,7 @@ export default defineComponent({
     onBeforeUnmount(() => {
       window.removeEventListener('scroll', handleScroll)
     })
-     const handleResize = () => {
+    const handleResize = () => {
       const windowWidth = window.innerWidth
       if (windowWidth < 750) {
         state.isMobile = true
@@ -81,7 +81,7 @@ export default defineComponent({
           state.hidden = false
         }
         if (state.isMobile) {
-          window.scrollTo(0, 0);
+          window.scrollTo(0, 0)
         } else {
           window.scrollTo({
             top: 0,
