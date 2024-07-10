@@ -158,6 +158,7 @@ export default {
       document.body.style.overflow = ''
       router.replace(e)
       state.show = false
+      state.transp = true
     }
 
     const hoverTo = e => {
