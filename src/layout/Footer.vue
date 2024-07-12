@@ -26,7 +26,7 @@
               </div>
               <div class="nav_text">
                 <div v-for="item2 in item.children" :key="item2.id">
-                  <a :href="item2.path">{{ item2.name }}</a>
+                  <span>{{ item2.name }}</span>
                 </div>
               </div>
             </div>
@@ -103,38 +103,42 @@ export default {
         {
           id: 1,
           title: '首页',
+          path: '#/',
           children: [
-            { key: 1, path: '/xxxx', name: '主营业务' },
-            { key: 2, path: '/xxxx', name: '作品精选' }
+            { key: 1, name: '主营业务' },
+            { key: 2, name: '作品精选' }
           ]
         },
         {
           id: 2,
           title: '案例',
+          path: '#/products',
           children: [
-            { key: 1, path: '/xxxx', name: '企业宣传片' },
-            { key: 2, path: '/xxxx', name: 'TVC广告片' },
-            { key: 3, path: '/xxxx', name: 'CG动画' },
-            { key: 4, path: '/xxxx', name: '微电影' },
-            { key: 5, path: '/xxxx', name: '直播/录播/发布会' },
-            { key: 6, path: '/xxxx', name: '短枧频制作/代运营' }
+            { key: 1, name: '企业宣传片' },
+            { key: 2, name: 'TVC广告片' },
+            { key: 3, name: 'CG动画' },
+            { key: 4, name: '微电影' },
+            { key: 5, name: '直播/录播/发布会' },
+            { key: 6, name: '短枧频制作/代运营' }
           ]
         },
         {
           id: 3,
           title: '关于我们',
+          path: '#/about',
           children: [
-            { key: 1, path: '/xxxx', name: '合作品牌' },
-            { key: 2, path: '/xxxx', name: '荣誉奖项' },
-            { key: 3, path: '/xxxx', name: '公司资质' },
-            { key: 4, path: '/xxxx', name: '公司优势' },
-            { key: 5, path: '/xxxx', name: '幕后花絮' },
-            { key: 6, path: '/xxxx', name: '联系我们' }
+            { key: 1, name: '合作品牌' },
+            { key: 2, name: '荣誉奖项' },
+            { key: 3, name: '公司资质' },
+            { key: 4, name: '公司优势' },
+            { key: 5, name: '幕后花絮' },
+            { key: 6, name: '联系我们' }
           ]
         },
         {
           id: 4,
           title: '最新资讯',
+          path: '#/news',
           children: [
             { key: 1, name: '热门资讯' },
             { key: 2, name: '全部资讯' }

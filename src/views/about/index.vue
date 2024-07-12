@@ -39,7 +39,8 @@
         </div>
       </div>
     </div>
-    <div class="about_introduce" :style="`background: url(${introduceImg}) no-repeat center / cover;`">
+    <!-- :style="`background: url(${introduceImg}) no-repeat center / cover;`" -->
+    <div class="about_introduce">
       <div class="new_title">
         <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">公司介绍</p>
       </div>
@@ -54,11 +55,11 @@
           </swiper-slide>
         </swiper>
         <div class="home_silde">
-          <div class="home_sildePre hoverSilde" @click="sildePre(2)">
+          <div class="home_sildePre blackborder hoverSilde" @click="sildePre(2)">
             <div class="arrow_yellow_l"></div>
           </div>
           <p class="progress">{{ swiper2_active }}/{{ about_contain.length }}</p>
-          <div class="home_sildeNext hoverSilde" @click="sildeNext(2)">
+          <div class="home_sildeNext blackborder hoverSilde" @click="sildeNext(2)">
             <div class="arrow_yellow_r"></div>
           </div>
         </div>
@@ -78,7 +79,8 @@
         </a-col>
       </a-row>
     </div>
-    <div class="about_course" :style="`background: url(${developsImg}) no-repeat center / cover;`">
+    <!-- :style="`background: url(${developsImg}) no-repeat center / cover;`" -->
+    <div class="about_course">
       <div class="new_title">
         <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">发展历程</p>
       </div>
@@ -135,10 +137,10 @@
           </swiper-slide>
         </swiper>
         <div class="home_silde">
-          <div class="home_sildePre hoverSilde" @click="sildePre(3)">
+          <div class="home_sildePre blackborder hoverSilde" @click="sildePre(3)">
             <div class="arrow_yellow_l"></div>
           </div>
-          <div class="home_sildeNext hoverSilde" @click="sildeNext(3)">
+          <div class="home_sildeNext blackborder hoverSilde" @click="sildeNext(3)">
             <div class="arrow_yellow_r"></div>
           </div>
         </div>
@@ -212,7 +214,6 @@ export default {
       bannerImg: [],
       wow: null,
       introduceImg: null,
-      introduceImg: null,
       developsImg: null,
       swiper1: null,
       swiper2: null,
@@ -246,7 +247,15 @@ export default {
         { id: 13, img: require('@/assets/img/about/brand_13.png') },
         { id: 14, img: require('@/assets/img/about/brand_14.png') },
         { id: 15, img: require('@/assets/img/about/brand_15.png') },
-        { id: 16, img: require('@/assets/img/about/brand_16.png') }
+        { id: 16, img: require('@/assets/img/about/brand_16.png') },
+        { id: 17, img: require('@/assets/img/about/brand_17.png') },
+        { id: 18, img: require('@/assets/img/about/brand_18.png') },
+        { id: 19, img: require('@/assets/img/about/brand_19.png') },
+        { id: 20, img: require('@/assets/img/about/brand_20.png') },
+        { id: 21, img: require('@/assets/img/about/brand_21.png') },
+        { id: 22, img: require('@/assets/img/about/brand_22.png') },
+        { id: 23, img: require('@/assets/img/about/brand_23.png') },
+        { id: 24, img: require('@/assets/img/about/brand_24.png') }
       ],
       footerBannerList: [
         { id: 1, img: require('@/assets/img/about/JYSP_1.png') },
@@ -260,9 +269,9 @@ export default {
 
     onMounted(async () => {
       getUsproList()
-      ;[6, 7].forEach(ele => {
-        getBannerList(ele)
-      })
+      // ;[6,7].forEach(ele => {
+      //   getBannerList(ele)
+      // })
       getFooterBannerList()
       getCompanyDeteil()
       getCompanyDevelops()
@@ -447,7 +456,9 @@ export default {
   // height: 100vh;
   height: 67.5rem;
   // background: url(../../assets/img/about/text_bg.png) no-repeat center/cover;
-  color: #fff;
+  // color: #fff;
+  color: #232323;
+  background: #fbfbfb;
   position: relative;
   .about_contain {
     padding: 0 27.5rem;
@@ -455,7 +466,7 @@ export default {
     p {
       font-size: 1.5rem;
       line-height: 2.6875rem;
-      color: #fff;
+      color: #232323;
     }
   }
   .home_silde {
@@ -476,7 +487,8 @@ export default {
 .about_course {
   padding: 6.25rem 0;
   // background: url(../../assets/img/product/text_bg.png) no-repeat 100% / 100%;
-  color: #fff;
+  // color: #fff;
+  background: #fbfbfb;
   .new_title {
     margin-bottom: 1.25rem;
   }
@@ -497,7 +509,7 @@ export default {
           &.swiper-slide-active {
             .year {
               p {
-                color: #fff;
+                color: #232323;
                 transform: scale(1);
                 line-height: 9rem;
               }
@@ -534,7 +546,7 @@ export default {
     .line {
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #ffffff 50%, rgba(0, 0, 0, 0) 100%);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #000000 50%, rgba(255, 255, 255, 0) 100%);
       position: absolute;
       bottom: 1.1rem;
     }
@@ -555,7 +567,7 @@ export default {
                 opacity: 0;
               }
               .name {
-                color: #fff;
+                color: #232323;
                 font-size: 1.5rem;
               }
             }

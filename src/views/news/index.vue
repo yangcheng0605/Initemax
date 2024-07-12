@@ -276,8 +276,10 @@ export default {
 }
 .news_industry {
   padding: 7.5rem 15rem 10rem;
-  background: url(../../assets/img/news/bg.png);
-  color: #fff;
+  background: #fbfbfb;
+  // background: url(../../assets/img/news/bg.png);
+  // color: #fff;
+  color: #232323;
   ul li {
     display: flex;
     &:not(:last-of-type) {

@@ -57,7 +57,8 @@
       </div>
       <a-button type="link" class="themeBtn wow animate__fadeInUp" data-wow-offset="50" v-if="showButton && proList && proList.length > 0" @click="getProListByCate()">查看更多</a-button>
     </div>
-    <div class="pro_industry" :style="`background: url(${industryImg}) no-repeat center / cover;`">
+    <!-- :style="`background: url(${industryImg}) no-repeat center / cover;`" -->
+    <div class="pro_industry">
       <div class="new_title">
         <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">服务流程</p>
       </div>
@@ -195,7 +196,7 @@ export default {
     })
 
     onMounted(async () => {
-      ;[2, 8].forEach(ele => {
+      ;[2].forEach(ele => {
         getBannerList(ele)
       })
       getProCategorySubList()
@@ -351,6 +352,8 @@ export default {
 }
 .pro_hot {
   padding: 7.5rem 11.875em 5.75rem;
+  background: #fbfbfb;
+
   .pro_types {
     text-align: center;
     .type_box {
@@ -479,7 +482,7 @@ export default {
 .pro_industry {
   padding: 7.5rem 18.75rem;
   // background: url(../../assets/img/product/text_bg.png) no-repeat center / cover;
-  color: #fff;
+  // color: #fff;
   .new_title {
     margin-bottom: 2.25rem;
   }
@@ -502,8 +505,9 @@ export default {
         height: 8.75rem;
         text-align: center;
         padding: 1.5rem 0 1.25rem;
-        background: rgba(255, 255, 255, 0.5);
-        box-shadow: 0px 0px 4px 0px rgba(255, 255, 255, 0.9), inset 0px -2px 4px 0px rgba(24, 90, 108, 0.5), inset 0px 2px 4px 0px rgba(255, 255, 255, 0.5);
+        background: rgba(0, 0, 0, 0.03);
+        // background: rgba(255, 255, 255, 0.5);
+        // box-shadow: 0px 0px 4px 0px rgba(255, 255, 255, 0.9), inset 0px -2px 4px 0px rgba(24, 90, 108, 0.5), inset 0px 2px 4px 0px rgba(255, 255, 255, 0.5);
         border-radius: 0.625rem;
         display: inline-block;
         position: relative;
