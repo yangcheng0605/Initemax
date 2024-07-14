@@ -152,7 +152,7 @@
     </div>
     <div class="about_debris">
       <div class="new_title">
-        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">记忆碎片</p>
+        <p class="bottom_border SmileFont wow animate__fadeInUp" data-wow-offset="50">造光碎片</p>
       </div>
       <div class="scroll-container">
         <div class="img_box scroll-content">
