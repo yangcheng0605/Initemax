@@ -463,8 +463,8 @@ export default {
   .about_contain {
     padding: 0 27.5rem;
     text-align: center;
-    p {
-      font-size: 1.5rem;
+    p,span {
+      font-size: 1.5rem !important;
       line-height: 2.6875rem;
       color: #232323;
     }
