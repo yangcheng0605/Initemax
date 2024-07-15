@@ -990,7 +990,7 @@ export default {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      z-index: 1;
+      z-index: 20;
       width: 100%;
       .home_sildePre,
       .home_sildeNext {
